@@ -25,5 +25,6 @@ jobs:
             exit 1
           else
             echo "No merge conflicts, merging changes into main"
-            git commit -m "Merge ${{ github.event.ref }}" && git push origin main
+            git merge --continue
           fi
+
