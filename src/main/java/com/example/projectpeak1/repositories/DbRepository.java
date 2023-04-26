@@ -17,7 +17,7 @@ public class DbRepository implements IRepository {
     public TestUser login(String email, String password) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM user WHERE email = ? AND USER_password = ?";
+            String SQL = "SELECT * FROM user WHERE email = ? AND password = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, email);
             ps.setString(2, password);

@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "")
 public class LoginController {
 
-    private final IRepository repository;
+
+    IRepository repository;
 
 
     public LoginController(ApplicationContext context, @Value("${projectPeak.repository.impl}") String impl) {
@@ -26,20 +27,16 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String showLoginForm(HttpServletRequest request, Model model) {
-        if (request.getSession().getAttribute("userId") != null) {
-            return "redirect:/userFrontend";
-        } else {
-            model.addAttribute("TestUser", new TestUser());
-            return "login";
+        public String showLoginForm(Model model) {
+            model.addAttribute("testUser", new TestUser());
+                return "login";
         }
-    }
 
 
 
     @PostMapping(path = "/login")
-    public String loginUser(HttpServletRequest request, @ModelAttribute("user") TestUser user, Model model) {
-        TestUser user1 = repository.login(user.getEmail(), user.getPassword());
+        public String loginUser(@ModelAttribute("testUser") TestUser testUser, Model model) {
+        TestUser user1 = repository.login(testUser.getEmail(), testUser.getPassword());
 
         if(user1 != null) {
             return "userFrontend";
