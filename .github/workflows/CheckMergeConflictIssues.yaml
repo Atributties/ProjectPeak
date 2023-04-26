@@ -3,7 +3,7 @@ name: Check for merge confict for issues
 on:
   push:
     branches:
-      - 'issue/*'
+      - 'issus/*'
 
 jobs:
   merge-conflict-check:
