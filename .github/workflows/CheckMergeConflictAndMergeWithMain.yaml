@@ -16,7 +16,7 @@ jobs:
       - name: Merge issue branch into main branch
         run: |
           git merge --no-commit --no-ff ${{ github.event.ref }}
-
+      
       - name: Check for merge conflicts
         run: |
           if [[ -n $(git diff --name-only --diff-filter=U) ]]; then
@@ -24,7 +24,6 @@ jobs:
             git merge --abort
             exit 1
           else
-            echo "No merge conflicts, merging changes into main"
-            git merge --continue
+            echo "No merge conflicts"
           fi
 
