@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Login</title>
+</head>
+<body>
+<form th:action="@{/login}" th:object="${TestUser}" method="post">
+    <h1>Login</h1>
+    <div>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" required>
+    </div>
+    <button type="submit" class="button">Login</button>
+    <a th:href="@{/}"><button type="button">Back</button></a>
+</form>
+
+<div class="copyright">
+    &copy; 2023 Wishlist MCM. All rights reserved.
+</div>
+</body>
+</html>

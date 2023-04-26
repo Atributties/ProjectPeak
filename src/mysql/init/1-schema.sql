@@ -1,11 +1,11 @@
-DROP DATABASE IF EXISTS wishlist;
-CREATE DATABASE wishlist;
-USE wishlist;
+DROP DATABASE IF EXISTS projectpeak;
+CREATE DATABASE projectpeak;
+USE projectpeak;
 
-CREATE TABLE USER (
-                      USER_ID INT AUTO_INCREMENT,
-                      FULLNAME VARCHAR(255),
-                      EMAIL VARCHAR(255),
-                      USER_PASSWORD VARCHAR(255),
-                      PRIMARY KEY(USER_ID)
+CREATE TABLE user (
+    user_id INT AUTO_INCREMENT,
+    fullname VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    PRIMARY KEY(user_id)
 );
