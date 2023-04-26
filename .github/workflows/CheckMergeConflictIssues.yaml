@@ -2,8 +2,6 @@ name: Check for merge confict for issues
 
 on:
   push:
-    branches:
-      - 'issues/*'
 
 jobs:
   merge-conflict-check:
@@ -18,4 +16,3 @@ jobs:
             echo "Merge conflicts detected, please resolve before merging"
             exit 1
           fi
-
