@@ -4,6 +4,7 @@ Table User {
   name varchar
   email varchar
   password varchar
+  role varchar
 }
 
 Table Project {
@@ -12,6 +13,7 @@ Table Project {
   description varchar
   start_date date
   end_date date
+  user_id int [ref: > User.id]
 }
 
 Table Task {
@@ -33,8 +35,4 @@ Table Subtask {
   status varchar
   task_id int [ref: > Task.id]
 }
-
-    User "1" -- "0..*" Task
-    Task "1" -- "0..*" Subtask
-    Project "1" -- "0..*" Task
     ```
