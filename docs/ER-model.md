@@ -1,10 +1,12 @@
 ```mermaid
 erDiagram
-    PROJECT }|..|{ TASK : contains
-    TASK ||--|{ SUBTASK : contains
-    TASK }--||{ USER : assigned to
-    TASK }--||{ STATUS : has
-    TASK }--||{ PRIORITY : has
-    USER ||--|{ ROLE : has
-    ROLE }--|{ PERMISSION : has
+    User ||--|{ Project : "creates"
+    Project ||--|{ Task : "contains"
+    Task ||--|{ Subtask : "contains"
+    Task ||--o{ User : "assigned to"
+    Task ||--o{ Status : "has"
+    Task ||--o{ Priority : "has"
+    Subtask ||--o{ Status : "has"
+    Subtask ||--o{ Priority : "has"
+
 ```
