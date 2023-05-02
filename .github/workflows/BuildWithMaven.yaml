@@ -22,20 +22,19 @@ jobs:
         run: mvn --batch-mode --update-snapshots package
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify  
-        
+       
   merge-check:
-    needs: maven
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout current branch
+      - name: Checkout main branch
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.ref }}
+          ref: main
 
-      - name: Merge issue branch into current branch
+      - name: Merge issue branch into main branch
         run: |
           git merge --no-commit --no-ff ${{ github.event.ref }}
-
+      
       - name: Check for merge conflicts
         run: |
           if [[ -n $(git diff --name-only --diff-filter=U) ]]; then
@@ -45,20 +44,4 @@ jobs:
           else
             echo "No merge conflicts"
           fi
-
-      - name: Push merged changes to current branch
-        run: git push origin ${{ github.ref }}
-
-      - name: Close pull request
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const prNumber = context.payload.pull_request.number;
-            const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
-            await octokit.pulls.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber,
-              state: 'closed'
-            });
 
