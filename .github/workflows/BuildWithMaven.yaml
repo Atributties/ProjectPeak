@@ -26,8 +26,6 @@ jobs:
   merge-check:
     needs: maven
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v2
