@@ -22,3 +22,35 @@ jobs:
         run: mvn --batch-mode --update-snapshots package
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify  
+        
+  merge-check:
+     runs-on: ubuntu-latest
+     needs: maven
+     steps:
+       - name: Checkout current branch
+         uses: actions/checkout@v2
+         with:
+           ref: ${{ github.ref }}
+
+       - name: Merge issue branch into current branch
+         run: |
+           git merge --no-commit --no-ff --force ${{ github.event.ref }}
+
+       - name: Check for merge conflicts
+         run: |
+           if [[ -n $(git diff --name-only --diff-filter=U) ]]; then
+             echo "There is a merge conflict, please resolve it before merging"
+             git merge --abort
+             exit 1
+           else
+             echo "No merge conflicts"
+           fi 
+
+       - name: Push merged changes to current branch
+         run: git push origin ${{ github.ref }} --force-with-lease
+
+       - name: Close pull request
+         uses: peter-evans/close-pull-request@v1
+         with:
+           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
