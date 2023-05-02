@@ -36,7 +36,7 @@ public class LoginController {
 
     @PostMapping(path = "/login")
         public String loginUser(@ModelAttribute("testUser") TestUser testUser, Model model) {
-        TestUser user1 = repository.login(testUser.getEmail(), testUser.getPass());
+        TestUser user1 = repository.login(testUser.getEmail(), testUser.getPassword());
 
         if(user1 != null) {
             return "userFrontend";
