@@ -3,7 +3,7 @@ name: Build with maven test
 on:
   push:
     branches:
-      - ${{ github.ref }}
+      - '*'
 
 jobs:
  
