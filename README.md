@@ -53,7 +53,7 @@ ___
 * MaruusFN
 
 ## Additional Notes
-Colorcode for background: #74B396
+Colorcode for background:
 
 ## FAQs
 
