@@ -3,7 +3,7 @@ package com.example.projectpeak1.entities;
 public class TestUser {
     private String email;
     private String password;
-    private String test;
+
 
     public TestUser(String email, String password) {
         this.email = email;
