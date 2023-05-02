@@ -2,11 +2,11 @@ package com.example.projectpeak1.entities;
 
 public class TestUser {
     private String email;
-    private String password;
+    private String pass;
 
-    public TestUser(String email, String password) {
+    public TestUser(String email, String pass) {
         this.email = email;
-        this.password = password;
+        this.pass = pass;
     }
 
     public TestUser() {
@@ -20,11 +20,11 @@ public class TestUser {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }
