@@ -36,7 +36,7 @@ jobs:
 
       - name: Merge issue branch into current branch
         run: |
-          git merge --no-commit --no-ff --force ${{ github.event.ref }}
+          git merge --no-commit --no-ff ${{ github.event.ref }}
 
       - name: Check for merge conflicts
         run: |
@@ -49,7 +49,7 @@ jobs:
           fi
 
       - name: Push merged changes to current branch
-        run: git push origin ${{ github.ref }} --force-with-lease
+        run: git push origin ${{ github.ref }}
 
       - name: Close pull request
         uses: actions/github-script@v4
