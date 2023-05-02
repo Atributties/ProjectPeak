@@ -56,6 +56,79 @@ public class DbRepository implements IRepository {
             throw new LoginException(ex.getMessage());
         }
     }
+    @Override
+    public User getUserFromId(int id) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM USER WHERE USER_ID = ?;";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            User user1 = null;
+            if (rs.next()) {
+                int userId = rs.getInt("USER_ID");
+                String fullName = rs.getString("FULLNAME");
+                String email = rs.getString("EMAIL");
+                String userPassword = rs.getString("USER_PASSWORD");
+                user1 = new User(userId, email, fullName, userPassword, user1.getRole());
+
+            }
+
+            return user1;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+    @Override
+    public void editUser(User user) throws LoginException {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE USER SET USER_ID = ?, FULLNAME = ?, EMAIL = ?, USER_PASSWORD = ? WHERE user_id = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, user.getUserId());
+            ps.setString(2, user.getFullName());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPassword());
+            ps.setInt(5, user.getUserId());
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
+        }
+    }
+
+
+
+    @Override
+    public void deleteUser(int userId) throws LoginException {
+        try (Connection con = DbManager.getConnection()) {
+            // delete all wishes associated with the user
+            String SQL = "DELETE FROM WISH WHERE WISHLIST_ID IN " +
+                    "(SELECT WISHLIST_ID FROM WISHLIST WHERE USER_ID = ?)";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+
+            // delete all wishlists associated with the user
+            SQL = "DELETE FROM WISHLIST WHERE USER_ID = ?";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+
+            // delete the user record
+            SQL = "DELETE FROM USER WHERE USER_ID = ?";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
+        }
+    }
 
 
 
