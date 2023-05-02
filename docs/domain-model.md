@@ -35,4 +35,4 @@ Table Subtask {
   status varchar
   task_id int [ref: > Task.id]
 }
-    ```
+```
