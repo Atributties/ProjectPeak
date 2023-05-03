@@ -1,4 +1,4 @@
-USE projectpeak;
+USE projectPeak;
 
 ('John Doe', 'johndoe@example.com', 'password123', 'admin'),
 ('Jane Doe', 'janedoe@example.com', 'password456', 'user');
