@@ -1,7 +1,11 @@
-USE projectpeak;
+USE projectPeak;
 
-('John Doe', 'johndoe@example.com', 'password123', 'admin'),
-('Jane Doe', 'janedoe@example.com', 'password456', 'user');
+
+INSERT INTO User (name, fullname, email, user_password, role)
+VALUES
+
+    ('John Doe', 'johndoe@example.com', 'password123', 'admin'),
+    ('Jane Doe', 'janedoe@example.com', 'password456', 'user');
 
 INSERT INTO Project (name, description, start_date, end_date, user_id)
 VALUES
