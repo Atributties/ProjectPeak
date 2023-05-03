@@ -1,5 +1,6 @@
 package com.example.projectpeak1.repositories;
 
+import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.utility.DbManager;
 import org.springframework.stereotype.Repository;
@@ -130,6 +131,30 @@ public class DbRepository implements IRepository {
             throw new LoginException(ex.getMessage());
         }
     }
+
+    public Project createProject(Project project, int userId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, project.getName());
+            ps.setString(2, project.getDescription());
+            ps.setDate(3, java.sql.Date.valueOf(project.getStartDate()));
+            ps.setDate(4, java.sql.Date.valueOf(project.getEndDate()));
+            ps.setInt(5, userId);
+            ps.executeUpdate();
+            ResultSet ids = ps.getGeneratedKeys();
+            ids.next();
+            int id = ids.getInt(1);
+            Project createdProject = new Project(project.getName(), project.getDescription(), project.getStartDate(), project.getEndDate(), project.getUserId());
+            createdProject.setUserId(id);
+            return createdProject;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
 

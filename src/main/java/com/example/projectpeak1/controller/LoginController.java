@@ -29,20 +29,29 @@ public class LoginController {
 
 
     @GetMapping("/login")
-        public String showLoginForm(Model model) {
+    public String showLoginForm(HttpServletRequest request, Model model) {
+        if (request.getSession().getAttribute("userId") != null) {
+            return "redirect:/userFrontend";
+        } else {
             model.addAttribute("user", new User());
-                return "login";
+            return "login";
         }
+    }
 
 
 
     @PostMapping(path = "/login")
-        public String loginUser(@ModelAttribute("user") User user, Model model) throws LoginException {
-        User user1 = repository.login(user.getEmail(), user.getPassword());
-
-        if(user1 != null) {
-            return "userFrontend";
-        } else {
+    public String loginUser(HttpServletRequest request, @ModelAttribute("user") User user, Model model) {
+        try {
+            User user1 = repository.login(user.getEmail(), user.getPassword());
+            if (user1 != null) {
+                request.getSession().setAttribute("userId", user1.getUserId());
+                return "userFrontend";
+            } else {
+                throw new LoginException("Invalid email or password");
+            }
+        } catch (LoginException e) {
+            model.addAttribute("errorLogin", e.getMessage());
             return "login";
         }
     }
