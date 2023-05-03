@@ -4,6 +4,7 @@ package com.example.projectpeak1.controller;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.IRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,7 @@ public class LoginController {
         }
     }
 
+
     @GetMapping("/signup")
     public String showSignUp(Model model) {
         model.addAttribute("user", new User());
@@ -73,6 +75,13 @@ public class LoginController {
         return "login";
     }
 
-
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
+    }
 
 }

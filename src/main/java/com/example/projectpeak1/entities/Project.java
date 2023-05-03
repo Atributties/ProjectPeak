@@ -1,33 +1,39 @@
 package com.example.projectpeak1.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class Project {
 
     private int projectId;
-    private String name;
-    private String description;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String projectName;
+    private String projectDescription;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate projectStartDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate projectEndDate;
     private int userId;
+
 
     public Project() {
     }
 
-    public Project(int projectId, String name, String description, LocalDate startDate, LocalDate endDate, int userId) {
+    public Project(int projectId, String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectEndDate, int userId) {
         this.projectId = projectId;
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.projectName = projectName;
+        this.projectDescription = projectDescription;
+        this.projectStartDate = projectStartDate;
+        this.projectEndDate = projectEndDate;
         this.userId = userId;
     }
 
-    public Project(String name, String description, LocalDate startDate, LocalDate endDate, int userId) {
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+
+    public Project(String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectEndDate, int userId) {
+        this.projectName = projectName;
+        this.projectDescription = projectDescription;
+        this.projectStartDate = projectStartDate;
+        this.projectEndDate = projectEndDate;
         this.userId = userId;
     }
 
@@ -39,36 +45,36 @@ public class Project {
         this.projectId = projectId;
     }
 
-    public String getName() {
-        return name;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getProjectDescription() {
+        return projectDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProjectDescription(String projectDescription) {
+        this.projectDescription = projectDescription;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getProjectStartDate() {
+        return projectStartDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = LocalDate.parse(startDate);
+    public void setProjectStartDate(LocalDate newProjectStartDate) {
+        this.projectStartDate = newProjectStartDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getProjectEndDate() {
+        return projectEndDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = LocalDate.parse(endDate);
+    public void setProjectEndDate(LocalDate projectEndDate) {
+        this.projectEndDate = projectEndDate;
     }
 
     public int getUserId() {

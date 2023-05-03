@@ -6,10 +6,7 @@ import com.example.projectpeak1.utility.DbManager;
 import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 @Repository("dbRepository")
@@ -26,7 +23,9 @@ public class DbRepository implements IRepository {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                int id = rs.getInt("user_id");
                 User user = new User(email, password);
+                user.setUserId(id);
                 return user;
             } else {
                 throw new LoginException("Wrong email or password");
@@ -137,17 +136,20 @@ public class DbRepository implements IRepository {
             Connection con = DbManager.getConnection();
             String SQL = "INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setString(1, project.getName());
-            ps.setString(2, project.getDescription());
-            ps.setDate(3, java.sql.Date.valueOf(project.getStartDate()));
-            ps.setDate(4, java.sql.Date.valueOf(project.getEndDate()));
+
+            ps.setString(1, project.getProjectName());
+            ps.setString(2, project.getProjectDescription());
+            ps.setDate(3, Date.valueOf(project.getProjectStartDate()));
+            ps.setDate(4, Date.valueOf(project.getProjectEndDate()));
             ps.setInt(5, userId);
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
             ids.next();
             int id = ids.getInt(1);
-            Project createdProject = new Project(project.getName(), project.getDescription(), project.getStartDate(), project.getEndDate(), project.getUserId());
-            createdProject.setUserId(id);
+
+
+            Project createdProject = new Project(project.getProjectName(), project.getProjectDescription(), project.getProjectStartDate(), project.getProjectEndDate(), project.getUserId());
+            createdProject.setProjectId(id);
             return createdProject;
         } catch (SQLException e) {
             e.printStackTrace();

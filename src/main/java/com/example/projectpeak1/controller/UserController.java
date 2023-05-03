@@ -47,7 +47,7 @@ public class UserController {
     public String processCreateProject(HttpServletRequest request, @ModelAttribute Project project) {
         int userId = getUserId(request);
 
-        Project createdProject = repository.createProject(project, userId);
+        repository.createProject(project, userId);
         return "userFrontend";
     }
 }
