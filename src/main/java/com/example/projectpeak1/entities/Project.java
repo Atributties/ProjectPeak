@@ -14,7 +14,7 @@ public class Project {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectEndDate;
     private int userId;
-    private int test;
+
 
 
     public Project() {
