@@ -54,6 +54,7 @@ ___
 
 ## Additional Notes
 Colorcode for background:
+Logo green color: #09F885
 
 ## FAQs
 
