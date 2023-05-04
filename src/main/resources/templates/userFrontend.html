@@ -1,14 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Front page</title>
+    <title>Project Peak - User Frontend</title>
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
 </head>
 <body>
 
 <h1>Welcome to Project Peak!</h1>
 
+<h1>My Projects</h1>
+
+<table class="table-auto">
+    <thead>
+    <tr>
+        <th class="px-4 py-2">Project Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}">
+        <td class="border px-4 py-2" th:text="${project.getProjectName()}"></td>
+    </tr>
+    </tbody>
+</table>
+
 <a th:href="@{/createProject}"><button type="button">Create Project</button></a>
+<a th:href="@{/showProject}"><button type="button">Show All Projects</button></a>
 
 </body>
 </html>

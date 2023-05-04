@@ -69,4 +69,9 @@ public class StubRepository implements IRepository {
         return null;
     }
 
+    @Override
+    public List<Project> getAllProjectById(int userId) {
+        return null;
+    }
+
 }

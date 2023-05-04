@@ -47,7 +47,7 @@ public class LoginController {
             User user1 = repository.login(user.getEmail(), user.getPassword());
             if (user1 != null) {
                 request.getSession().setAttribute("userId", user1.getUserId());
-                return "userFrontend";
+                return "redirect:/userFrontend";
             } else {
                 throw new LoginException("Invalid email or password");
             }
