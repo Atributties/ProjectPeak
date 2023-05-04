@@ -1,6 +1,7 @@
 package com.example.projectpeak1.repositories;
 
 
+import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
@@ -61,6 +62,11 @@ public class StubRepository implements IRepository {
                 users.remove(user);
             }
         }
+    }
+
+    @Override
+    public Project createProject(Project list, int projectId) {
+        return null;
     }
 
 }

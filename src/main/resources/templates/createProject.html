@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/styles.css}" rel="stylesheet">
+    <title>Create project</title>
+</head>
+<body>
+
+<h1>Create project</h1>
+
+<form th:action="@{/createProject}" th:object="${project}" method="post">
+    <label for="projectName">Project Name:</label>
+    <input type="text" id="projectName" name="projectName" th:field="*{projectName}" required>
+
+    <label for="projectDescription">Description:</label>
+    <input type="text" id="projectDescription" name="projectDescription" th:field="*{projectDescription}" required>
+
+    <label for="projectStartDate">Start Date:</label>
+    <input type="date" id="projectStartDate" name="projectStartDate" th:field="*{projectStartDate}" required>
+
+    <label for="projectEndDate">End Date:</label>
+    <input type="date" id="projectEndDate" name="projectEndDate" th:field="*{projectEndDate}" required>
+
+    <button type="submit">Create Project</button>
+    <a th:href="@{/userFrontend}"><button type="button">Back</button></a>
+</form>
+
+<div class="copyright">
+    &copy; 2023 Project Peak. All rights reserved.
+</div>
+</body>
+</html>

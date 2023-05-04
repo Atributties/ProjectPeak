@@ -1,14 +1,12 @@
 package com.example.projectpeak1.repositories;
 
+import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.utility.DbManager;
 import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 @Repository("dbRepository")
@@ -18,14 +16,16 @@ public class DbRepository implements IRepository {
     public User login(String email, String password) throws LoginException {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM user WHERE email = ? AND password = ?";
+            String SQL = "SELECT * FROM user WHERE email = ? AND user_password = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                int id = rs.getInt("user_id");
                 User user = new User(email, password);
+                user.setUserId(id);
                 return user;
             } else {
                 throw new LoginException("Wrong email or password");
@@ -130,6 +130,33 @@ public class DbRepository implements IRepository {
             throw new LoginException(ex.getMessage());
         }
     }
+
+    public Project createProject(Project project, int userId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, project.getProjectName());
+            ps.setString(2, project.getProjectDescription());
+            ps.setDate(3, Date.valueOf(project.getProjectStartDate()));
+            ps.setDate(4, Date.valueOf(project.getProjectEndDate()));
+            ps.setInt(5, userId);
+            ps.executeUpdate();
+            ResultSet ids = ps.getGeneratedKeys();
+            ids.next();
+            int id = ids.getInt(1);
+
+
+            Project createdProject = new Project(project.getProjectName(), project.getProjectDescription(), project.getProjectStartDate(), project.getProjectEndDate(), project.getUserId());
+            createdProject.setProjectId(id);
+            return createdProject;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
 

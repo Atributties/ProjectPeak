@@ -1,6 +1,7 @@
 package com.example.projectpeak1.repositories;
 
 
+import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,7 @@ public interface IRepository {
     User getUserFromId(int id);
 
     void deleteUser(int userId) throws LoginException;
+
+
+    Project createProject(Project list, int projectId);
 }
