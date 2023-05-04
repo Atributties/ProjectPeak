@@ -25,22 +25,23 @@ jobs:
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
 
-  merge-conflict-check:
-    runs-on: ubuntu-latest
+  merge:
     needs: maven
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Check for merge conflicts
+      - name: Check for Merge Conflicts
         run: |
-          git fetch
-          conflicts=$(git diff origin/${{ github.head_ref }}...${{ github.ref }} --name-only --diff-filter=U)
-          if [ -n "$conflicts" ]; then
-            echo "Merge conflicts detected!"
-            echo "$conflicts" > merge_conflicts.txt
-            exit 1
-          else
-            git merge "${{ github.ref }}"
-          fi
+          git fetch origin
+          git diff --name-only --diff-filter=U origin/main || exit 1
+      - name: Merge Changes
+        if: ${{ success() }}
+        run: |
+          git merge origin/main
+          # Continue with the merge process here
+      - name: Abort Merge
+        if: ${{ failure() }}
+        run: echo "There are merge conflicts. Aborting merge."
 
 
 
