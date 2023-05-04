@@ -33,12 +33,13 @@ jobs:
       - name: Check for merge conflicts
         run: |
           git fetch
-          conflicts=$(git diff origin/${{ github.head_ref }}...HEAD --name-only --diff-filter=U)
+          conflicts=$(git diff origin/${{ github.head_ref }}...HEAD --name-only --diff-filter=U --)
           if [ -n "$conflicts" ]; then
             echo "Merge conflicts detected!"
             echo "$conflicts" > merge_conflicts.txt
             exit 1
           fi
+
       - name: Merge changes with parent branch
         if: steps.check-for-merge-conflicts.outcome != 'failure'
         env:
