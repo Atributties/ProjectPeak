@@ -30,18 +30,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get target branch name
+        id: get_branch
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/USERSTORY*-} | sed 's/USERSTORY\(.*\)/USERSTORY\1/')"
       - name: Check for Merge Conflicts
         run: |
-          git fetch origin
-          git diff --name-only --diff-filter=U origin/main || exit 1
+          if [[ "${{ steps.get_branch.outputs.branch }}" == "USERSTORY"* ]]; then
+            git fetch origin
+            git diff --name-only --diff-filter=U origin/${{ steps.get_branch.outputs.branch }} || exit 1
+          fi
       - name: Merge Changes
         if: ${{ success() }}
         run: |
-          git merge origin/main
-          # Continue with the merge process here
+          if [[ "${{ steps.get_branch.outputs.branch }}" == "USERSTORY"* ]]; then
+            git merge origin/${{ steps.get_branch.outputs.branch }}
+            # Continue with the merge process here
+          fi
       - name: Abort Merge
         if: ${{ failure() }}
         run: echo "There are merge conflicts. Aborting merge."
+
 
 
 
