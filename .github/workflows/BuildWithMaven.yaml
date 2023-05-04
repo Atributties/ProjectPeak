@@ -33,17 +33,22 @@ jobs:
       - name: Check for merge conflicts
         run: |
           git fetch
-          git diff origin/main...HEAD --name-only --diff-filter=U | tee merge_conflicts.txt
-      - name: Merge conflicts
-        if: steps.check-for-merge-conflicts.outputs.stdout != ''
+          conflicts=$(git diff origin/${{ github.head_ref }}...HEAD --name-only --diff-filter=U)
+          if [ -n "$conflicts" ]; then
+            echo "Merge conflicts detected!"
+            echo "$conflicts" > merge_conflicts.txt
+            exit 1
+          fi
+      - name: Merge changes with parent branch
+        if: steps.check-for-merge-conflicts.outcome != 'failure'
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          PARENT_BRANCH: ${{ github.head_ref }}
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_EMAIL}"
-          git checkout -b resolve-merge-conflicts
-          git merge --no-ff --no-edit origin/main
-          git push origin resolve-merge-conflicts
+          git checkout $PARENT_BRANCH
+          git merge --no-ff --no-edit HEAD
+          git push origin $PARENT_BRANCH
+
 
 
