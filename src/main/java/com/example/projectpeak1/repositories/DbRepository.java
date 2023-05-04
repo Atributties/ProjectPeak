@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository("dbRepository")
@@ -156,7 +159,30 @@ public class DbRepository implements IRepository {
         }
         return null;
     }
-
+    @Override
+    public List<Project> getAllProjectById(int userId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM project WHERE user_id = ?;";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            List<Project> list = new ArrayList<>();
+            while (rs.next()) {
+                int projectId = rs.getInt("project_id");
+                String projectName = rs.getString("name");
+                String projectDescription = rs.getString("description");
+                LocalDate projectStartDate = rs.getDate("start_date").toLocalDate();
+                LocalDate projectEndDate = rs.getDate("start_date").toLocalDate();
+                Project project = new Project(projectId, projectName, projectDescription, projectStartDate, projectEndDate, userId);
+                list.add(project);
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
 
 
