@@ -1,31 +1,38 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Project Peak - User Frontend</title>
-    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Peak</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
 <body>
-
-<h1>Welcome to Project Peak!</h1>
-
-<h1>My Projects</h1>
-
-<table class="table-auto">
-    <thead>
-    <tr>
-        <th class="px-4 py-2">Project Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="project : ${projects}">
-        <td class="border px-4 py-2" th:text="${project.getProjectName()}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<a th:href="@{/createProject}"><button type="button">Create Project</button></a>
-<a th:href="@{/showProject}"><button type="button">Show All Projects</button></a>
-
-</body>
+<div>
+    <a th:href="@{/login}" >Login</a>
+    <a th:href="@{/signup}" >Signup</a>
+</div>
+<div>
+    &copy; 2023 project Peak
+    <body class="bg-main-blue min-h-screen">
+    <div class="flex flex-col min-h-screen container mx-auto px-4 pt-8 pb-4">
+        <header class="flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/">
+                    <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10" />
+                </a>
+            </div>
+            <nav class="flex">
+                <a th:href="@{/login}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Login</a>
+                <a th:href="@{/signup}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Signup</a>
+            </nav>
+        </header>
+        <main class="mt-16 flex-grow flex items-center justify-center">
+            <img src="/images/logo-lg.png" alt="Logo" id="img-front" />
+        </main>
+        <footer class="mt-8 border-t border-gray-300 py-4 text-center text-white">
+            &copy; 2023 Project Peak
+        </footer>
+    </div>
+    </body>
 </html>
