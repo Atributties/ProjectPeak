@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping({""})
 public class UserController {
@@ -29,12 +31,14 @@ public class UserController {
 
     @GetMapping(value = {"/userFrontend"})
     public String index(HttpServletRequest request, Model model) {
-        model.addAttribute("userId", getUserId(request));
-        if (getUserId(request) != 0) {
-            return "userFrontend";
-        } else {
-            return "index";
+        int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
         }
+        List<Project> list = repository.getAllProjectById(userId);
+        model.addAttribute("projects", list);
+        return "userFrontend";
+
     }
 
     @GetMapping("/createProject")
@@ -48,7 +52,9 @@ public class UserController {
         int userId = getUserId(request);
 
         repository.createProject(project, userId);
-        return "userFrontend";
+        return "redirect:/userFrontend";
     }
+
+
 }
 

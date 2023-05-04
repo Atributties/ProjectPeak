@@ -6,6 +6,7 @@ import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
 
 @Repository
 public interface IRepository {
@@ -22,4 +23,6 @@ public interface IRepository {
 
 
     Project createProject(Project list, int projectId);
+
+    List<Project> getAllProjectById(int userId);
 }

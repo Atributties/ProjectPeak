@@ -3,47 +3,54 @@ name: Build with Maven and Merge Conflicts
 on:
   push:
     branches:
-      - '*'
+      - '*USERSTORY*'
 
 jobs:
   maven:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Output state
         run: |
           pwd
           ls
           env | sort
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v2
         with:
           java-version: '17'
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
       - name: Run the Maven verify phase
-        run: mvn --batch-mode --update-snapshots verify  
+        run: mvn --batch-mode --update-snapshots verify
 
-  merge-conflict-check:
-    runs-on: ubuntu-latest
+  merge:
     needs: maven
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Check for merge conflicts
+      - name: Get target branch name
+        id: get_branch
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF##*/USERSTORY*-} | sed 's/USERSTORY\(.*\)/USERSTORY\1/')"
+      - name: Check for Merge Conflicts
         run: |
-          git fetch
-          git diff origin/main...HEAD --name-only --diff-filter=U | tee merge_conflicts.txt
-      - name: Merge conflicts
-        if: steps.check-for-merge-conflicts.outputs.stdout != ''
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          if [[ "${{ steps.get_branch.outputs.branch }}" == "USERSTORY"* ]]; then
+            git fetch origin
+            git diff --name-only --diff-filter=U origin/${{ steps.get_branch.outputs.branch }} || exit 1
+          fi
+      - name: Merge Changes
+        if: ${{ success() }}
         run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_EMAIL}"
-          git checkout -b resolve-merge-conflicts
-          git merge --no-ff --no-edit origin/main
-          git push origin resolve-merge-conflicts
+          if [[ "${{ steps.get_branch.outputs.branch }}" == "USERSTORY"* ]]; then
+            git merge origin/${{ steps.get_branch.outputs.branch }}
+            # Continue with the merge process here
+          fi
+      - name: Abort Merge
+        if: ${{ failure() }}
+        run: echo "There are merge conflicts. Aborting merge."
+
+
+
 
 
