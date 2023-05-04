@@ -53,8 +53,9 @@ ___
 * MaruusFN
 
 ## Additional Notes
-Colorcode for background:
-Logo green color: #09F885
+___Colorcodes___
+* background blue: #0E2355
+* Logo green color: #09F885
 
 ## FAQs
 
