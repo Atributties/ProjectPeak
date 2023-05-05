@@ -73,5 +73,4 @@ public class StubRepository implements IRepository {
     public List<Project> getAllProjectById(int userId) {
         return null;
     }
-
 }

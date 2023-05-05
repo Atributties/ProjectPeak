@@ -1,7 +1,7 @@
 USE projectPeak;
 
 
-INSERT INTO User (name, fullname, email, user_password, role)
+INSERT INTO User (fullname, email, user_password, role)
 VALUES
 
     ('John Doe', 'johndoe@example.com', 'password123', 'admin'),

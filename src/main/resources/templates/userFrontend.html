@@ -3,29 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Project Peak - User Frontend</title>
-    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
-<body>
-
-<h1>Welcome to Project Peak!</h1>
-
-<h1>My Projects</h1>
-
-<table class="table-auto">
-    <thead>
-    <tr>
-        <th class="px-4 py-2">Project Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="project : ${projects}">
-        <td class="border px-4 py-2" th:text="${project.getProjectName()}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<a th:href="@{/createProject}"><button type="button">Create Project</button></a>
-<a th:href="@{/showProject}"><button type="button">Show All Projects</button></a>
-
+<body class="bg-main-blue min-h-screen">
+<div class="flex flex-col min-h-screen container mx-auto px-4 pt-8 pb-4">
+    <header class="flex justify-between items-center mb-8">
+        <div class="flex items-center">
+            <a th:href="@{/userFrontend}">
+                <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10" />
+            </a>
+        </div>
+        <nav class="flex items-center">
+            <i class="fa fa-user text-white mr-2"></i>
+            <span class="text-white font-bold mr-4" th:text="${user.getFullName}"></span>
+            <a th:href="@{/logout}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Logout</a>
+        </nav>
+    </header>
+    <main class="flex-grow">
+        <h1 class="text-4xl font-bold text-white text-center mb-6">Welcome to Project Peak!</h1>
+        <table class="table-auto w-full mb-6">
+            <thead>
+            <tr>
+                <th class="py-2 text-white items-center">Your Projects</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="project : ${projects}" class="hover:bg-blue-900">
+                <td class="border px-4 py-2 text-white flex justify-between items-center">
+                    <span th:text="${project.getProjectName()}"></span>
+                    <form class="inline-block">
+                        <span>Deadline:</span>
+                        <span th:text="${project.getProjectEndDate()}"></span>
+                        <button type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+                            <i class="fa fa-eye fa-lg"></i>
+                        </button>
+                        <button type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+                            <i class="fa fa-pencil-square-o fa-lg"></i>
+                        </button>
+                        <button type="submit" class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                            <i class="fa fa-trash fa-lg"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="flex justify-center space-x-4">
+            <a th:href="@{/createProject}">
+                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Create Project</button>
+            </a>
+            <a th:href="@{/showProject}">
+                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Show All Projects</button>
+            </a>
+        </div>
+    </main>
+    <footer class="mt-8 border-t border-gray-300 py-4 text-center text-white">
+        &copy; 2023 Project Peak
+    </footer>
+</div>
 </body>
 </html>
+
+
