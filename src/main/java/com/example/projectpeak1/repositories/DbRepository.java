@@ -74,8 +74,7 @@ public class DbRepository implements IRepository {
                 String email = rs.getString("EMAIL");
                 String userPassword = rs.getString("USER_PASSWORD");
                 String userRole = rs.getString("USER_PASSWORD");
-                user1 = new User(userId, email, fullName, userPassword, userRole);
-
+                user1 = new User(userId, fullName, email, userPassword, userRole);
             }
 
             return user1;
@@ -183,7 +182,6 @@ public class DbRepository implements IRepository {
             return null;
         }
     }
-
 
 
 }

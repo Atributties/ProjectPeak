@@ -1,6 +1,7 @@
 package com.example.projectpeak1.controller;
 
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.IRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,10 +36,12 @@ public class UserController {
         if (userId == 0) {
             return "login";
         }
+        User user = repository.getUserFromId(userId);
+        model.addAttribute("user", user);
+
         List<Project> list = repository.getAllProjectById(userId);
         model.addAttribute("projects", list);
         return "userFrontend";
-
     }
 
     @GetMapping("/createProject")
