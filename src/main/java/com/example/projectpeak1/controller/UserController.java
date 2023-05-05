@@ -76,6 +76,29 @@ public class UserController {
             //TODO add access denied like the one from wishlist
     }
 
+    @PostMapping("/editProject")
+    public String updateProject(@ModelAttribute Project project) {
+        repository.updateProject(project);
+        return "redirect:/userFrontend";
+    }
+
+    @GetMapping("/editProject/{id}")
+    public String editProject(HttpServletRequest request, @PathVariable("id") int projectId, Model model) {
+        int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
+        }
+        User user = repository.getUserFromId(userId);
+        model.addAttribute("user", user);
+
+        Project project = repository.getProjectById(projectId);
+        model.addAttribute("project", project);
+
+        return "editProject";
+    }
+
+
+
 
 
 }

@@ -77,4 +77,14 @@ public class StubRepository implements IRepository {
     @Override
     public void deleteProject(int id) throws LoginException {
     }
+
+    @Override
+    public Project getProjectById(int id) {
+        return null;
+    }
+
+    @Override
+    public void updateProject(Project project) {
+
+    }
 }
