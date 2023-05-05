@@ -36,15 +36,15 @@
                     <form class="inline-block">
                         <span>Deadline:</span>
                         <span th:text="${project.getProjectEndDate()}"></span>
-                        <button type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+                        <a type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
                             <i class="fa fa-eye fa-lg"></i>
-                        </button>
-                        <button type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+                        </a>
+                        <a type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
                             <i class="fa fa-pencil-square-o fa-lg"></i>
-                        </button>
-                        <button type="submit" class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                        </a>
+                        <a th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}" type="submit" class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
                             <i class="fa fa-trash fa-lg"></i>
-                        </button>
+                        </a>
                     </form>
                 </td>
             </tr>

@@ -183,5 +183,21 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public void deleteProject(int projectId) throws LoginException {
+        try (Connection con = DbManager.getConnection()) {
+            // delete the project record
+            String SQL = "DELETE FROM project WHERE project_id = ?";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, projectId);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
+        }
+    }
+
+
+
 
 }

@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
 
 @Controller
@@ -65,6 +63,19 @@ public class UserController {
         repository.createProject(project, userId);
         return "redirect:/userFrontend";
     }
+
+    @GetMapping(value = {"/deleteProject/{id}"})
+    public String deleteProject(HttpServletRequest request, @PathVariable("id") int id) throws LoginException {
+        int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
+        }
+            repository.deleteProject(id);
+            return "redirect:/userFrontend";
+
+            //TODO add access denied like the one from wishlist
+    }
+
 
 
 }
