@@ -183,5 +183,64 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public void deleteProject(int projectId) throws LoginException {
+        try (Connection con = DbManager.getConnection()) {
+            // delete the project record
+            String SQL = "DELETE FROM project WHERE project_id = ?";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, projectId);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public Project getProjectById(int id) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM project WHERE project_id = ?;";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            Project project = null;
+            if (rs.next()) {
+                int userId = rs.getInt("user_id");
+                String projectName = rs.getString("name");
+                String projectDescription = rs.getString("description");
+                LocalDate projectStartDate = rs.getDate("start_date").toLocalDate();
+                LocalDate projectEndDate = rs.getDate("end_date").toLocalDate();
+                project = new Project(id, projectName, projectDescription, projectStartDate, projectEndDate, userId);
+            }
+            return project;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void updateProject(Project project) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE project SET name = ?, description = ?, start_date = ?, end_date = ? WHERE project_id = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, project.getProjectName());
+            ps.setString(2, project.getProjectDescription());
+            ps.setDate(3, Date.valueOf(project.getProjectStartDate()));
+            ps.setDate(4, Date.valueOf(project.getProjectEndDate()));
+            ps.setInt(5, project.getProjectId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+
+
 
 }

@@ -25,4 +25,10 @@ public interface IRepository {
     Project createProject(Project list, int projectId);
 
     List<Project> getAllProjectById(int userId);
+
+    void deleteProject(int id) throws LoginException;
+
+    Project getProjectById(int id);
+
+    void updateProject(Project project);
 }
