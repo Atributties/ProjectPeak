@@ -21,6 +21,7 @@
     </header>
     <main class="flex-grow flex items-center justify-center">
         <form th:action="@{/createProject}" th:object="${project}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 mb-4 w-2/5">
+            <h1 class="text-4xl font-bold text-white text-center mb-6">Create a new Project!</h1>
             <div class="mb-4">
                 <label class="block text-white text-sm font-bold mb-2" for="projectName">Project Name:</label>
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="projectName" name="projectName" th:field="*{projectName}" required>
