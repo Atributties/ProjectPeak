@@ -39,7 +39,8 @@
                     <form class="inline-block">
                         <span>Deadline:</span>
                         <span th:text="${project.getProjectEndDate()}"></span>
-                        <a type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+                        <a th:href="@{/project/{id}(id=${project.getProjectId()})}"
+                           class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
                             <i class="fa fa-eye fa-lg"></i>
                         </a>
                         <a th:href="@{/editProject/{id}(id=${project.getProjectId()})}"
