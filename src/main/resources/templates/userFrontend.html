@@ -28,7 +28,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="project : ${projects}">
+            <tr th:each="project : ${projects}" class="hover:bg-blue-900">
                 <td class="border px-4 py-2 text-white flex justify-between items-center">
                     <span th:text="${project.getProjectName()}"></span>
                     <form class="inline-block">
