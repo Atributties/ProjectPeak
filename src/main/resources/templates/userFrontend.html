@@ -32,7 +32,10 @@
                 <td class="border px-4 py-2 text-white flex justify-between items-center">
                     <span th:text="${project.getProjectName()}"></span>
                     <form class="inline-block">
-                        <button type="submit" class="text-white font-bold py-1 px-2 rounded">
+                        <button type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+                            <i class="fa fa-eye fa-lg"></i>
+                        </button>
+                        <button type="submit" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
                             <i class="fa fa-pencil-square-o fa-lg"></i>
                         </button>
                         <button type="submit" class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
