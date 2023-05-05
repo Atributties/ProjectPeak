@@ -45,10 +45,18 @@ public class UserController {
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model) {
+    public String createProject(HttpServletRequest request, Model model) {
+        int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
+        }
+        User user = repository.getUserFromId(userId);
+        model.addAttribute("user", user);
+
         model.addAttribute("project", new Project());
         return "createProject";
     }
+
 
     @PostMapping(value = {"/createProject"})
     public String processCreateProject(HttpServletRequest request, @ModelAttribute Project project) {

@@ -15,7 +15,9 @@
                 <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10" />
             </a>
         </div>
-        <nav class="flex">
+        <nav class="flex items-center">
+            <i class="fa fa-user text-white mr-2"></i>
+            <span class="text-white font-bold mr-4" th:text="${user.getFullName}"></span>
             <a th:href="@{/logout}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Logout</a>
         </nav>
     </header>
