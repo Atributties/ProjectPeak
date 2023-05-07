@@ -1,6 +1,7 @@
 package com.example.projectpeak1.repositories;
 
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.utility.DbManager;
 import org.springframework.stereotype.Repository;
@@ -238,9 +239,31 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public Task createTask(Task task, int projectId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "INSERT INTO Task (name, description, start_date, end_date, status, task_id) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, task.getTaskName());
+            ps.setString(2, task.getTaskDescription());
+            ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
+            ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
+            ps.setBoolean(5, task.isStatus());
+            ps.setInt(6, projectId);
+            ps.executeUpdate();
+            ResultSet ids = ps.getGeneratedKeys();
+            ids.next();
+            int id = ids.getInt(1);
 
 
-
-
+            Task createdTask = new Task(task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.isStatus(), projectId);
+            createdTask.setProjectId(id);
+            return createdTask;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

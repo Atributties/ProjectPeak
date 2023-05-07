@@ -2,6 +2,7 @@ package com.example.projectpeak1.repositories;
 
 
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
@@ -31,4 +32,6 @@ public interface IRepository {
     Project getProjectById(int id);
 
     void updateProject(Project project);
+
+    public Task createTask(Task task, int projectId);
 }

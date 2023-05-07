@@ -12,15 +12,26 @@ public class Task {
     private LocalDate taskStartDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate taskEndDate;
-    private int userId;
+    private boolean status;
+    private int projectId;
 
-    public Task(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, int userId) {
+    public Task(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, boolean status, int projectId) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStartDate = taskStartDate;
         this.taskEndDate = taskEndDate;
-        this.userId = userId;
+        this.status = status;
+        this.projectId = projectId;
+    }
+
+    public Task(String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, boolean status, int projectId) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskStartDate = taskStartDate;
+        this.taskEndDate = taskEndDate;
+        this.status = status;
+        this.projectId = projectId;
     }
 
     public int getTaskId() {
@@ -63,11 +74,19 @@ public class Task {
         this.taskEndDate = taskEndDate;
     }
 
-    public int getUserId() {
-        return userId;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }
