@@ -1,6 +1,7 @@
 package com.example.projectpeak1.controller;
 
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.IRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -104,6 +105,13 @@ public class UserController {
         return "project";
     }
 
+    @PostMapping(value = {"/createTask"})
+    public String processCreateProject(HttpServletRequest request, @ModelAttribute Task task) {
+        int userId = getUserId(request);
+
+        repository.createTask(task, userId);
+        return "redirect:/project";
+    }
 
 
 
