@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 public class Project {
-
     private int projectId;
     private String projectName;
     private String projectDescription;
@@ -14,7 +13,6 @@ public class Project {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectEndDate;
     private int userId;
-    private int test;
 
 
     public Project() {
