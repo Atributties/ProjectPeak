@@ -109,12 +109,24 @@ public class UserController {
         return "project";
     }
 
-    @PostMapping(value = {"/createTask"})
-    public String processCreateProject(HttpServletRequest request, @ModelAttribute Task task) {
+    @GetMapping("/createTask/{id}")
+    public String createTask(@PathVariable("id") int id, HttpServletRequest request, Model model) {
         int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
+        }
 
-        repository.createTask(task, userId);
-        return "redirect:/project";
+        model.addAttribute("projectId", id);
+        model.addAttribute("Task", new Task());
+        return "createTask";
+    }
+
+
+    @PostMapping(value = {"/createTask/{id}"})
+    public String createTask(@PathVariable("id") int id, HttpServletRequest request, @ModelAttribute Task task) {
+
+        repository.createTask(task, id);
+        return "redirect:/showProject/" + id;
     }
 
 

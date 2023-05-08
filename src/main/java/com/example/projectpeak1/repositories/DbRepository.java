@@ -243,7 +243,7 @@ public class DbRepository implements IRepository {
     public Task createTask(Task task, int projectId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "INSERT INTO Task (name, description, start_date, end_date, status, task_id) VALUES (?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO Task (name, description, start_date, end_date, status, project_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, task.getTaskName());
             ps.setString(2, task.getTaskDescription());
@@ -258,7 +258,7 @@ public class DbRepository implements IRepository {
 
 
             Task createdTask = new Task(task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.getStatus(), projectId);
-            createdTask.setProjectId(id);
+            createdTask.setTaskId(id);
             return createdTask;
         } catch (SQLException e) {
             e.printStackTrace();
