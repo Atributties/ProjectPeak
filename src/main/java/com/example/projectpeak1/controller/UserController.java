@@ -132,23 +132,22 @@ public class UserController {
 
 
 
-    @GetMapping("/editTask/{id}")
-    public String editTask(HttpServletRequest request, @PathVariable("id") int taskId, Model model) {
-        int userId = getUserId(request);
-        if (userId == 0) {
-            return "login";
-        }
-
+    @GetMapping("/editTask/{taskId}")
+    public String editTask(@PathVariable("taskId") int taskId, Model model) {
         Task task = repository.getTaskById(taskId);
         model.addAttribute("task", task);
-
+        model.addAttribute("taskID", task.getProjectId());
         return "editTask";
     }
-    @PostMapping("/editTask")
-    public String editTask(@ModelAttribute Task task) {
+
+    @PostMapping("/editTask/{id}")
+    public String updateTask(@PathVariable("id") int projectId, @ModelAttribute Task task) {
+        task.setProjectId(projectId);
         repository.editTask(task);
-        return "redirect:/showProject/" + task.getProjectId();
+        return "redirect:/showProject/" + projectId;
     }
+
+
 
 
 
