@@ -92,4 +92,9 @@ public class StubRepository implements IRepository {
     public Task createTask(Task task, int projectId){
         return null;
     }
+
+    @Override
+    public List<Task> getTaskById(int id) {
+        return null;
+    }
 }

@@ -249,7 +249,7 @@ public class DbRepository implements IRepository {
             ps.setString(2, task.getTaskDescription());
             ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
             ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
-            ps.setBoolean(5, task.isStatus());
+            ps.setString(5, task.getStatus());
             ps.setInt(6, projectId);
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
@@ -257,7 +257,7 @@ public class DbRepository implements IRepository {
             int id = ids.getInt(1);
 
 
-            Task createdTask = new Task(task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.isStatus(), projectId);
+            Task createdTask = new Task(task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.getStatus(), projectId);
             createdTask.setProjectId(id);
             return createdTask;
         } catch (SQLException e) {
@@ -265,7 +265,36 @@ public class DbRepository implements IRepository {
         }
         return null;
     }
-    // get taskFromProjectId method
+
+    @Override
+    public List<Task> getTaskById(int id) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM Task WHERE project_id = ?;";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            List<Task> taskList = new ArrayList<>();
+
+            while (rs.next()) {
+                int taskId = rs.getInt("task_id");
+                String taskName = rs.getString("name");
+                String taskDescription = rs.getString("description");
+                LocalDate taskStartDate = rs.getDate("start_date").toLocalDate();
+                LocalDate taskEndDate = rs.getDate("end_date").toLocalDate();
+                String taskStatus = rs.getString("status");
+                Task task = new Task(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, id);
+                taskList.add(task);
+            }
+            return taskList;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 
 
 }

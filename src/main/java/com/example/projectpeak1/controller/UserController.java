@@ -101,7 +101,11 @@ public class UserController {
     @GetMapping("/showProject/{id}")
     public String showProjectDetails(@PathVariable("id") int projectId, Model model) {
         Project project = repository.getProjectById(projectId);
+
+        List<Task> list = repository.getTaskById(projectId);
+
         model.addAttribute("project", project);
+        model.addAttribute("listOfTask", list);
         return "project";
     }
 

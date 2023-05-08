@@ -34,4 +34,6 @@ public interface IRepository {
     void updateProject(Project project);
 
     public Task createTask(Task task, int projectId);
+
+    List<Task> getTaskById(int id);
 }

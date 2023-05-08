@@ -45,6 +45,29 @@
         <p class="text-gray-700">
             <span th:text="${project.getProjectEndDate()}"></span>
         </p>
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">
+            Tasks:
+        </h2>
+        <table class="table-auto">
+            <thead>
+            <tr>
+                <th class="px-4 py-2">Task Name</th>
+                <th class="px-4 py-2">Description</th>
+                <th class="px-4 py-2">Start Date</th>
+                <th class="px-4 py-2">End Date</th>
+                <th class="px-4 py-2">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${listOfTask}">
+                <td class="border px-4 py-2" th:text="${task.getTaskName()}"></td>
+                <td class="border px-4 py-2" th:text="${task.getTaskDescription()}"></td>
+                <td class="border px-4 py-2" th:text="${task.getTaskStartDate()}"></td>
+                <td class="border px-4 py-2" th:text="${task.getTaskEndDate()}"></td>
+                <td class="border px-4 py-2" th:text="${task.getStatus()}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
