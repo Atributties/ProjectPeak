@@ -56,7 +56,9 @@
                 <th class="px-4 py-2">Start Date</th>
                 <th class="px-4 py-2">End Date</th>
                 <th class="px-4 py-2">Status</th>
+                <th class="px-4 py-2">Subtasks</th>
                 <th class="px-4 py-2">Edit</th>
+                <th class="px-4 py-2">Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -67,15 +69,34 @@
                 <td class="border px-4 py-2" th:text="${task.getTaskEndDate()}"></td>
                 <td class="border px-4 py-2" th:text="${task.getStatus()}"></td>
                 <td class="border px-4 py-2">
+                    <div class="relative inline-block text-left">
+                        <button type="button" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded inline-flex items-center focus:outline-none focus:shadow-outline">
+                            <span>Subtasks</span>
+                            <svg class="fill-current h-4 w-4" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9l4 4 4-4"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 invisible opacity-0">
+                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">View Subtasks</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Add Subtask</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="border px-4 py-2">
                     <a th:href="@{/editTask/{id}(id=${task.getTaskId()})}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Edit
+                    </a>
+                </td>
+                <td class="border px-4 py-2">
+                    <a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Delete
                     </a>
                 </td>
             </tr>
             </tbody>
         </table>
-
-
         <a th:href="@{/createTask/{id}(id=${project.getProjectId()})}">
             <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 Create Task
