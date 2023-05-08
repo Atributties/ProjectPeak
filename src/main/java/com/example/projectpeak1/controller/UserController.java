@@ -98,7 +98,7 @@ public class UserController {
         return "editProject";
     }
 
-    @GetMapping("/project/{id}")
+    @GetMapping("/showProject/{id}")
     public String showProjectDetails(@PathVariable("id") int projectId, Model model) {
         Project project = repository.getProjectById(projectId);
         model.addAttribute("project", project);
