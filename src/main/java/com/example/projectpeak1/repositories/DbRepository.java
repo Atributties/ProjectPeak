@@ -267,7 +267,7 @@ public class DbRepository implements IRepository {
     }
 
     @Override
-    public List<Task> getTaskById(int id) {
+    public List<Task> getAllTaskById(int id) {
         try {
             Connection con = DbManager.getConnection();
             String SQL = "SELECT * FROM Task WHERE project_id = ?;";
@@ -293,8 +293,51 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public Task getTaskById(int id) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM Task WHERE task_id = ?;";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            Task task = new Task();
 
+            if (rs.next()) {
+                int taskId = rs.getInt("task_id");
+                String taskName = rs.getString("name");
+                String taskDescription = rs.getString("description");
+                LocalDate taskStartDate = rs.getDate("start_date").toLocalDate();
+                LocalDate taskEndDate = rs.getDate("end_date").toLocalDate();
+                String taskStatus = rs.getString("status");
+                int projectId = rs.getInt("project_id");
+                task = new Task(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, projectId);
 
+            }
+            return task;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void editTask(Task task) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE task SET name = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE task_id = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, task.getTaskName());
+            ps.setString(2, task.getTaskDescription());
+            ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
+            ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
+            ps.setString(5, task.getStatus());
+            ps.setInt(6, task.getTaskId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
 }

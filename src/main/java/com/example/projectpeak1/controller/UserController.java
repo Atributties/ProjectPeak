@@ -77,11 +77,7 @@ public class UserController {
             //TODO add access denied like the one from wishlist
     }
 
-    @PostMapping("/editProject")
-    public String updateProject(@ModelAttribute Project project) {
-        repository.updateProject(project);
-        return "redirect:/userFrontend";
-    }
+
 
     @GetMapping("/editProject/{id}")
     public String editProject(HttpServletRequest request, @PathVariable("id") int projectId, Model model) {
@@ -97,12 +93,17 @@ public class UserController {
 
         return "editProject";
     }
+    @PostMapping("/editProject")
+    public String updateProject(@ModelAttribute Project project) {
+        repository.updateProject(project);
+        return "redirect:/userFrontend";
+    }
 
     @GetMapping("/showProject/{id}")
     public String showProjectDetails(@PathVariable("id") int projectId, Model model) {
         Project project = repository.getProjectById(projectId);
 
-        List<Task> list = repository.getTaskById(projectId);
+        List<Task> list = repository.getAllTaskById(projectId);
 
         model.addAttribute("project", project);
         model.addAttribute("listOfTask", list);
@@ -128,6 +129,27 @@ public class UserController {
         repository.createTask(task, id);
         return "redirect:/showProject/" + id;
     }
+
+
+
+    @GetMapping("/editTask/{id}")
+    public String editTask(HttpServletRequest request, @PathVariable("id") int taskId, Model model) {
+        int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
+        }
+
+        Task task = repository.getTaskById(taskId);
+        model.addAttribute("task", task);
+
+        return "editTask";
+    }
+    @PostMapping("/editTask")
+    public String editTask(@ModelAttribute Task task) {
+        repository.editTask(task);
+        return "redirect:/showProject/" + task.getProjectId();
+    }
+
 
 
 

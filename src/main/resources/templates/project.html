@@ -56,6 +56,7 @@
                 <th class="px-4 py-2">Start Date</th>
                 <th class="px-4 py-2">End Date</th>
                 <th class="px-4 py-2">Status</th>
+                <th class="px-4 py-2">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -65,9 +66,15 @@
                 <td class="border px-4 py-2" th:text="${task.getTaskStartDate()}"></td>
                 <td class="border px-4 py-2" th:text="${task.getTaskEndDate()}"></td>
                 <td class="border px-4 py-2" th:text="${task.getStatus()}"></td>
+                <td class="border px-4 py-2">
+                    <a th:href="@{/editTask/{id}(id=${task.getTaskId()})}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Edit
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
+
 
         <a th:href="@{/createTask/{id}(id=${project.getProjectId()})}">
             <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">

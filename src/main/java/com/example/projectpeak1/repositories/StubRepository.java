@@ -94,7 +94,17 @@ public class StubRepository implements IRepository {
     }
 
     @Override
-    public List<Task> getTaskById(int id) {
+    public List<Task> getAllTaskById(int id) {
         return null;
+    }
+
+    @Override
+    public Task getTaskById(int id) {
+        return null;
+    }
+
+    @Override
+    public void editTask(Task task) {
+
     }
 }

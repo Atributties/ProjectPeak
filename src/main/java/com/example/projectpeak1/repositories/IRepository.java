@@ -35,5 +35,9 @@ public interface IRepository {
 
     public Task createTask(Task task, int projectId);
 
-    List<Task> getTaskById(int id);
+    List<Task> getAllTaskById(int id);
+
+    Task getTaskById(int id);
+
+    void editTask(Task task);
 }
