@@ -37,28 +37,25 @@
                 <p class="text-white">
                     <span th:text="${project.getProjectName()}"></span>
                 </p>
-                <h2 class="text-xl font-semibold mb-2 text-white">
+                <h2 class="text-xl font-semibold my-2 text-white">
                     Description:
                 </h2>
                 <p class="text-white">
                     <span th:text="${project.getProjectDescription()}"></span>
                 </p>
-                <h2 class="text-xl font-semibold mb-2 text-white">
+                <h2 class="text-xl font-semibold my-2 text-white">
                     Start Date:
                 </h2>
                 <p class="text-white">
                     <span th:text="${project.getProjectStartDate()}"></span>
                 </p>
-                <h2 class="text-xl font-semibold mb-2 text-white">
+                <h2 class="text-xl font-semibold my-2 text-white">
                     End Date:
                 </h2>
                 <p class="text-white">
                     <span th:text="${project.getProjectEndDate()}"></span>
                 </p>
-                <h2 class="text-xl font-semibold mb-2 text-white">
-                    Tasks:
-                </h2>
-        <table class="table-auto w-full mb-6">
+        <table class="table-auto w-full mb-6 mt-6">
             <thead>
             <tr>
                 <th class="px-4 py-2 text-white">Task Name</th>
@@ -91,8 +88,8 @@
                     <td class="border px-4 py-2" th:text="${subtask.getSubTaskStartDate()}"></td>
                     <td class="border px-4 py-2" th:text="${subtask.getSubTaskEndDate()}"></td>
                     <td class="border px-4 py-2" th:text="${subtask.getStatus()}"></td>
-                    <td class="border px-4 py-2">Edit</td>
-                    <td class="border px-4 py-2">Delete</td>
+                    <td class="border px-4 py-2"><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}" class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded"><i class="fa fa-pencil-square-o fa-lg"></i></a></td>
+                    <td class="border px-4 py-2"><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" onclick="return confirm('Are you sure you want to delete this task?')" class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded"><i class="fa fa-trash fa-lg"></i></a></td>
                 </tr>
             </th:block>
             </tbody>
