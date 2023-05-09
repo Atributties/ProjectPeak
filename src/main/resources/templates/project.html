@@ -6,6 +6,12 @@
     <title>Project Peak - Project Details</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/styles.css}" rel="stylesheet">
+    <script>
+        function toggleSubtasks(taskId) {
+            const subtasksContainer = document.getElementById(`subtasks-${taskId}`);
+            subtasksContainer.classList.toggle('hidden');
+        }
+    </script>
 </head>
 <body>
 <div>
@@ -51,63 +57,59 @@
         <table class="table-auto">
             <thead>
             <tr>
-                <th class="px-4 py-2">Task Number</th>
                 <th class="px-4 py-2">Task Name</th>
                 <th class="px-4 py-2">Description</th>
                 <th class="px-4 py-2">Start Date</th>
                 <th class="px-4 py-2">End Date</th>
                 <th class="px-4 py-2">Status</th>
-                <th class="px-4 py-2">Subtasks</th>
                 <th class="px-4 py-2">Edit</th>
                 <th class="px-4 py-2">Delete</th>
             </tr>
             </thead>
+            </thead>
             <tbody>
-            <tr th:each="task : ${listOfTask}">
-                <td class="border px-4 py-2" th:text="${task.getTaskNumber()}"></td>
-                <td class="border px-4 py-2" th:text="${task.getTaskName()}"></td>
-                <td class="border px-4 py-2" th:text="${task.getTaskDescription()}"></td>
-                <td class="border px-4 py-2" th:text="${task.getTaskStartDate()}"></td>
-                <td class="border px-4 py-2" th:text="${task.getTaskEndDate()}"></td>
-                <td class="border px-4 py-2" th:text="${task.getStatus()}"></td>
-                <td class="border px-4 py-2"><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}">Edit</a></td>
-                <td class="border px-4 py-2"><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a></td>
-                <td class="border px-4 py-2">
-                    <div class="relative inline-block text-left">
-                    </div>
-                    <div>
-                        <table class="table-auto">
-                            <thead>
-                            <tr>
-                                <th class="px-4 py-2">Subtask Number</th>
-                                <th class="px-4 py-2">Subtask Name</th>
-                                <th class="px-4 py-2">Description</th>
-                                <th class="px-4 py-2">Start Date</th>
-                                <th class="px-4 py-2">End Date</th>
-                                <th class="px-4 py-2">Status</th>
-                                <th class="px-4 py-2">Edit</th>
-                                <th class="px-4 py-2">Delete</th>
+            <th:block th:each="task : ${listOfTask}">
+                <tr>
+                    <td class="border px-4 py-2">
+                        <button onclick="toggleSubtasks('${task.getTaskId()}')" type="button" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                            <span th:text="${task.getTaskName()}"></span>
+                        </button>
+                    </td>
+                    <td class="border px-4 py-2" th:text="${task.getTaskDescription()}"></td>
+                    <td class="border px-4 py-2" th:text="${task.getTaskStartDate()}"></td>
+                    <td class="border px-4 py-2" th:text="${task.getTaskEndDate()}"></td>
+                    <td class="border px-4 py-2" th:text="${task.getStatus()}"></td>
+                    <td class="border px-4 py-2"><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}">Edit</a></td>
+                    <td class="border px-4 py-2"><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a></td>
+                </tr>
+                <tr class="hidden" id="subtasks-${task.getTaskId()}">
+                    <td class="border px-4 py-2"></td>
+                    <td colspan="8" class="border px-4 py-2">
+                        <table class="table-auto w-full">
 
-                            </tr>
-                            </thead>
+                            <tbody>
                             <tr th:each="subtask : ${task.getSubTaskList()}">
-                                <td class="border px-4 py-2" th:text="${subtask.getSubtaskNumber()}"></td>
                                 <td class="border px-4 py-2" th:text="${subtask.getSubTaskName()}"></td>
                                 <td class="border px-4 py-2" th:text="${subtask.getSubTaskDescription()}"></td>
                                 <td class="border px-4 py-2" th:text="${subtask.getSubTaskStartDate()}"></td>
                                 <td class="border px-4 py-2" th:text="${subtask.getSubTaskEndDate()}"></td>
                                 <td class="border px-4 py-2" th:text="${subtask.getStatus()}"></td>
-                                <td class="border px-4 py-2"><a th:href="@{/editSubtask/{id}(id=${subtask.getSubTaskId()})}">Edit</a></td>
-                                <td class="border px-4 py-2"><a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubTaskId()})}" onclick="return confirm('Are you sure you want to delete this subtask?')">Delete</a></td>
+                                <td class="border px-4 py-2">Edit</td>
+                                <td class="border px-4 py-2">Delete</td>
+                                <!-- Add more subtask cells as needed -->
                             </tr>
-
+                            </tbody>
                         </table>
-                    </div>
-                </td>
-            </tr>
+                        <a th:href="@{/addSubtask/{taskId}(taskId=${task.getTaskId()})}">
+                            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+                                Add Subtask
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            </th:block>
             </tbody>
         </table>
-
 
         <a>
             <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
@@ -118,3 +120,5 @@
 </div>
 </body>
 </html>
+
+
