@@ -1,7 +1,10 @@
 package com.example.projectpeak1.repositories;
 
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.SubTask;
+import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
@@ -31,4 +34,18 @@ public interface IRepository {
     Project getProjectById(int id);
 
     void updateProject(Project project);
+
+    public Task createTask(Task task, int projectId);
+
+    List<Task> getAllTaskById(int id);
+
+    Task getTaskById(int id);
+
+    void editTask(Task task);
+
+    SubTask createSubTask(SubTask subTask, int projectId);
+
+    SubTask getSubTaskById(int id);
+
+    List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId);
 }

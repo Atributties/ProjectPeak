@@ -1,6 +1,9 @@
 package com.example.projectpeak1.controller;
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.SubTask;
+import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.IRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -76,11 +79,7 @@ public class UserController {
             //TODO add access denied like the one from wishlist
     }
 
-    @PostMapping("/editProject")
-    public String updateProject(@ModelAttribute Project project) {
-        repository.updateProject(project);
-        return "redirect:/userFrontend";
-    }
+
 
     @GetMapping("/editProject/{id}")
     public String editProject(HttpServletRequest request, @PathVariable("id") int projectId, Model model) {
@@ -96,13 +95,61 @@ public class UserController {
 
         return "editProject";
     }
+    @PostMapping("/editProject")
+    public String updateProject(@ModelAttribute Project project) {
+        repository.updateProject(project);
+        return "redirect:/userFrontend";
+    }
 
-    @GetMapping("/project/{id}")
+    @GetMapping("/showProject/{id}")
     public String showProjectDetails(@PathVariable("id") int projectId, Model model) {
         Project project = repository.getProjectById(projectId);
+
+        List<TaskAndSubtaskDTO> task = repository.getTaskAndSubTask(projectId);
         model.addAttribute("project", project);
+        model.addAttribute("listOfTask", task);
+
         return "project";
     }
+
+    @GetMapping("/createTask/{id}")
+    public String createTask(@PathVariable("id") int id, HttpServletRequest request, Model model) {
+        int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
+        }
+
+        model.addAttribute("projectId", id);
+        model.addAttribute("Task", new Task());
+        return "createTask";
+    }
+
+
+    @PostMapping(value = {"/createTask/{id}"})
+    public String createTask(@PathVariable("id") int id, HttpServletRequest request, @ModelAttribute Task task) {
+
+        repository.createTask(task, id);
+        return "redirect:/showProject/" + id;
+    }
+
+
+
+    @GetMapping("/editTask/{taskId}")
+    public String editTask(@PathVariable("taskId") int taskId, Model model) {
+        Task task = repository.getTaskById(taskId);
+        model.addAttribute("task", task);
+        model.addAttribute("taskID", task.getProjectId());
+        return "editTask";
+    }
+
+    @PostMapping("/editTask/{id}")
+    public String updateTask(@PathVariable("id") int projectId, @ModelAttribute Task task) {
+        task.setProjectId(projectId);
+        repository.editTask(task);
+        return "redirect:/showProject/" + projectId;
+    }
+
+
 
 
 

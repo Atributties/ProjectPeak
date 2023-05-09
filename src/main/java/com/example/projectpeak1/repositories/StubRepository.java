@@ -1,7 +1,10 @@
 package com.example.projectpeak1.repositories;
 
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.SubTask;
+import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
@@ -86,5 +89,38 @@ public class StubRepository implements IRepository {
     @Override
     public void updateProject(Project project) {
 
+    }
+    @Override
+    public Task createTask(Task task, int projectId){
+        return null;
+    }
+
+    @Override
+    public List<Task> getAllTaskById(int id) {
+        return null;
+    }
+
+    @Override
+    public Task getTaskById(int id) {
+        return null;
+    }
+
+    @Override
+    public void editTask(Task task) {
+
+    }
+    public SubTask createSubTask(SubTask subTask, int projectId) {
+        return null;
+    }
+
+    @Override
+    public SubTask getSubTaskById(int id) {
+        return null;
+    }
+
+
+    @Override
+    public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId) {
+        return null;
     }
 }

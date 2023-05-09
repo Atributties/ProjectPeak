@@ -13,7 +13,7 @@ public class Project {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectEndDate;
     private int userId;
-    private int test;
+    private int taskNumber;
 
 
     public Project() {
