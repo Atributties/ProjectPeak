@@ -1,6 +1,8 @@
 package com.example.projectpeak1.controller;
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.SubTask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.IRepository;
@@ -103,10 +105,10 @@ public class UserController {
     public String showProjectDetails(@PathVariable("id") int projectId, Model model) {
         Project project = repository.getProjectById(projectId);
 
-        List<Task> list = repository.getAllTaskById(projectId);
-
+        List<TaskAndSubtaskDTO> task = repository.getTaskAndSubTask(projectId);
         model.addAttribute("project", project);
-        model.addAttribute("listOfTask", list);
+        model.addAttribute("listOfTask", task);
+
         return "project";
     }
 

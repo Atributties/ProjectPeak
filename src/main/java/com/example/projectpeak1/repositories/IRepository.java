@@ -1,6 +1,7 @@
 package com.example.projectpeak1.repositories;
 
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.SubTask;
 import com.example.projectpeak1.entities.Task;
@@ -42,5 +43,9 @@ public interface IRepository {
 
     void editTask(Task task);
 
-    SubTask createsubTask(SubTask subTask, int projectId);
+    SubTask createSubTask(SubTask subTask, int projectId);
+
+    SubTask getSubTaskById(int id);
+
+    List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId);
 }

@@ -1,10 +1,13 @@
-package com.example.projectpeak1.entities;
+package com.example.projectpeak1.dto;
 
+import com.example.projectpeak1.entities.SubTask;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public class Task {
+public class TaskAndSubtaskDTO {
+
     private int taskId;
     private int taskNumber;
     private String taskName;
@@ -15,12 +18,13 @@ public class Task {
     private LocalDate taskEndDate;
     private String status;
     private int projectId;
+    private List<SubTask> subTaskList;
 
 
-    public Task() {
+    public TaskAndSubtaskDTO() {
     }
 
-    public Task(int taskId, int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId) {
+    public TaskAndSubtaskDTO(int taskId, int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId, List<SubTask> subTaskList) {
         this.taskId = taskId;
         this.taskNumber = taskNumber;
         this.taskName = taskName;
@@ -29,9 +33,10 @@ public class Task {
         this.taskEndDate = taskEndDate;
         this.status = status;
         this.projectId = projectId;
+        this.subTaskList = subTaskList;
     }
 
-    public Task(int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId) {
+    public TaskAndSubtaskDTO(int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId,List<SubTask> subTaskList) {
         this.taskNumber = taskNumber;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -39,6 +44,7 @@ public class Task {
         this.taskEndDate = taskEndDate;
         this.status = status;
         this.projectId = projectId;
+        this.subTaskList = subTaskList;
     }
 
     public int getTaskNumber() {
@@ -103,5 +109,14 @@ public class Task {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+
+    public List<SubTask> getSubTaskList() {
+        return subTaskList;
+    }
+
+    public void setSubTaskList(List<SubTask> subTaskList) {
+        this.subTaskList = subTaskList;
     }
 }

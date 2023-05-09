@@ -1,6 +1,7 @@
 package com.example.projectpeak1.repositories;
 
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.SubTask;
 import com.example.projectpeak1.entities.Task;
@@ -108,7 +109,18 @@ public class StubRepository implements IRepository {
     public void editTask(Task task) {
 
     }
-    public SubTask createsubTask(SubTask subTask, int projectId) {
+    public SubTask createSubTask(SubTask subTask, int projectId) {
+        return null;
+    }
+
+    @Override
+    public SubTask getSubTaskById(int id) {
+        return null;
+    }
+
+
+    @Override
+    public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId) {
         return null;
     }
 }

@@ -6,7 +6,8 @@ import java.time.LocalDate;
 
 public class SubTask {
     private int subTaskId;
-    private String SubTaskName;
+    private double subtaskNumber;
+    private String subTaskName;
     private String subTaskDescription;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate subTaskStartDate;
@@ -15,17 +16,19 @@ public class SubTask {
     private String status;
     private int taskId;
 
-    public SubTask(int subTaskId, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
+    public SubTask(int subTaskId, double subtaskNumber, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
         this.subTaskId = subTaskId;
-        SubTaskName = subTaskName;
+        this.subtaskNumber = subtaskNumber;
+        this.subTaskName = subTaskName;
         this.subTaskDescription = subTaskDescription;
         this.subTaskStartDate = subTaskStartDate;
         this.subTaskEndDate = subTaskEndDate;
         this.status = status;
         this.taskId = taskId;
     }
-    public SubTask( String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
-        SubTaskName = subTaskName;
+    public SubTask(double subtaskNumber, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
+        this.subtaskNumber = subtaskNumber;
+        this.subTaskName = subTaskName;
         this.subTaskDescription = subTaskDescription;
         this.subTaskStartDate = subTaskStartDate;
         this.subTaskEndDate = subTaskEndDate;
@@ -34,6 +37,14 @@ public class SubTask {
     }
 
     public SubTask() {
+    }
+
+    public double getSubtaskNumber() {
+        return subtaskNumber;
+    }
+
+    public void setSubtaskNumber(double subtaskNumber) {
+        this.subtaskNumber = subtaskNumber;
     }
 
     public int getSubTaskId() {
@@ -45,11 +56,11 @@ public class SubTask {
     }
 
     public String getSubTaskName() {
-        return SubTaskName;
+        return subTaskName;
     }
 
     public void setSubTaskName(String subTaskName) {
-        SubTaskName = subTaskName;
+        this.subTaskName = subTaskName;
     }
 
     public String getSubTaskDescription() {
