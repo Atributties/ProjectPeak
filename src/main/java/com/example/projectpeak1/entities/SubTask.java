@@ -12,10 +12,10 @@ public class SubTask {
     private LocalDate subTaskStartDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate subTaskEndDate;
-    private boolean status;
+    private String status;
     private int taskId;
 
-    public SubTask(int subTaskId, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,boolean status, int taskId) {
+    public SubTask(int subTaskId, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
         this.subTaskId = subTaskId;
         SubTaskName = subTaskName;
         this.subTaskDescription = subTaskDescription;
@@ -23,6 +23,17 @@ public class SubTask {
         this.subTaskEndDate = subTaskEndDate;
         this.status = status;
         this.taskId = taskId;
+    }
+    public SubTask( String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
+        SubTaskName = subTaskName;
+        this.subTaskDescription = subTaskDescription;
+        this.subTaskStartDate = subTaskStartDate;
+        this.subTaskEndDate = subTaskEndDate;
+        this.status = status;
+        this.taskId = taskId;
+    }
+
+    public SubTask() {
     }
 
     public int getSubTaskId() {
@@ -65,11 +76,11 @@ public class SubTask {
         this.subTaskEndDate = subTaskEndDate;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

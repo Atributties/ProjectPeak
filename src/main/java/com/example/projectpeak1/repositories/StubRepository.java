@@ -2,6 +2,7 @@ package com.example.projectpeak1.repositories;
 
 
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.SubTask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
@@ -106,5 +107,8 @@ public class StubRepository implements IRepository {
     @Override
     public void editTask(Task task) {
 
+    }
+    public SubTask createsubTask(SubTask subTask, int projectId) {
+        return null;
     }
 }

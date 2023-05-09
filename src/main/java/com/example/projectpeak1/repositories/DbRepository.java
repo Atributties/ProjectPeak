@@ -1,6 +1,7 @@
 package com.example.projectpeak1.repositories;
 
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.SubTask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.utility.DbManager;
@@ -338,6 +339,31 @@ public class DbRepository implements IRepository {
             ex.printStackTrace();
         }
     }
+    @Override
+    public SubTask createsubTask(SubTask subTask, int projectId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "INSERT INTO subtask (name, description, start_date, end_date, status, task_id) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, subTask.getSubTaskName());
+            ps.setString(2, subTask.getSubTaskDescription());
+            ps.setDate(3, Date.valueOf(subTask.getSubTaskStartDate()));
+            ps.setDate(4, Date.valueOf(subTask.getSubTaskEndDate()));
+            ps.setString(5, subTask.getStatus());
+            ps.setInt(6, projectId);
+            ps.executeUpdate();
+            ResultSet ids = ps.getGeneratedKeys();
+            ids.next();
+            int id = ids.getInt(1);
 
+
+            SubTask createdsubTask = new SubTask(subTask.getSubTaskName(), subTask.getSubTaskDescription(), subTask.getSubTaskStartDate(), subTask.getSubTaskEndDate(), subTask.getStatus(), projectId);
+            createdsubTask.setTaskId(id);
+            return createdsubTask;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
