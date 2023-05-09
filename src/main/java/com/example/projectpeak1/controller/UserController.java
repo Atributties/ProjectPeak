@@ -102,10 +102,15 @@ public class UserController {
     }
 
     @GetMapping("/showProject/{id}")
-    public String showProjectDetails(@PathVariable("id") int projectId, Model model) {
-        Project project = repository.getProjectById(projectId);
-
+    public String showProjectDetails(HttpServletRequest request, @PathVariable("id") int projectId, Model model) {
+        int userId = getUserId(request);
+        if (userId == 0) {
+            return "login";
+        }
+        User user = repository.getUserFromId(userId);
+        model.addAttribute("user", user);
         List<TaskAndSubtaskDTO> task = repository.getTaskAndSubTask(projectId);
+        Project project = repository.getProjectById(projectId);
         model.addAttribute("project", project);
         model.addAttribute("listOfTask", task);
 
