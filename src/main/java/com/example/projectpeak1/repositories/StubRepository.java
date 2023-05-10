@@ -68,8 +68,7 @@ public class StubRepository implements IRepository {
     }
 
     @Override
-    public Project createProject(Project list, int projectId) {
-        return null;
+    public void createProject(Project list, int projectId) {
     }
 
     @Override
@@ -91,8 +90,7 @@ public class StubRepository implements IRepository {
 
     }
     @Override
-    public Task createTask(Task task, int projectId){
-        return null;
+    public void createTask(Task task, int projectId){
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.SubTask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
-import com.example.projectpeak1.utility.DbManager;
+import com.example.projectpeak1.repositories.utility.DbManager;
 import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
@@ -136,7 +136,7 @@ public class DbRepository implements IRepository {
         }
     }
 
-    public Project createProject(Project project, int userId) {
+    public void createProject(Project project, int userId) {
         try {
             Connection con = DbManager.getConnection();
             String SQL = "INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
@@ -155,11 +155,9 @@ public class DbRepository implements IRepository {
 
             Project createdProject = new Project(project.getProjectName(), project.getProjectDescription(), project.getProjectStartDate(), project.getProjectEndDate(), project.getUserId());
             createdProject.setProjectId(id);
-            return createdProject;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
     }
     @Override
     public List<Project> getAllProjectById(int userId) {
@@ -242,7 +240,7 @@ public class DbRepository implements IRepository {
     }
 
     @Override
-    public Task createTask(Task task, int projectId) {
+    public void createTask(Task task, int projectId) {
         try {
             Connection con = DbManager.getConnection();
             String SQL = "INSERT INTO Task (task_number, name, description, start_date, end_date, status, project_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -262,11 +260,9 @@ public class DbRepository implements IRepository {
 
             Task createdTask = new Task(task.getTaskNumber(), task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.getStatus(), projectId);
             createdTask.setTaskId(id);
-            return createdTask;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override

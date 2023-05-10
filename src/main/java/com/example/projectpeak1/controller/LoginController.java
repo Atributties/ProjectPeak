@@ -1,19 +1,15 @@
 package com.example.projectpeak1.controller;
 
-
 import com.example.projectpeak1.entities.User;
-import com.example.projectpeak1.repositories.IRepository;
+import com.example.projectpeak1.services.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.security.auth.login.LoginException;
 
 @Controller
@@ -21,17 +17,15 @@ import javax.security.auth.login.LoginException;
 public class LoginController {
 
 
-    IRepository repository;
+    LoginService loginService;
 
-
-    public LoginController(ApplicationContext context, @Value("${projectPeak.repository.impl}") String impl) {
-        repository = (IRepository) context.getBean(impl);
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
-
     @GetMapping("/login")
-    public String showLoginForm(HttpServletRequest request, Model model) {
-        if (request.getSession().getAttribute("userId") != null) {
+    public String showLoginForm(HttpSession session, Model model) {
+        if (session.getAttribute("userId") != null) {
             return "redirect:/userFrontend";
         } else {
             model.addAttribute("user", new User());
@@ -41,12 +35,13 @@ public class LoginController {
 
 
 
+
     @PostMapping(path = "/login")
-    public String loginUser(HttpServletRequest request, @ModelAttribute("user") User user, Model model) {
+    public String loginUser(HttpSession session, @ModelAttribute("user") User user, Model model) {
         try {
-            User user1 = repository.login(user.getEmail(), user.getPassword());
+            User user1 = loginService.login(user.getEmail(), user.getPassword());
             if (user1 != null) {
-                request.getSession().setAttribute("userId", user1.getUserId());
+                session.setAttribute("userId", user1.getUserId());
                 return "redirect:/userFrontend";
             } else {
                 throw new LoginException("Invalid email or password");
@@ -58,6 +53,7 @@ public class LoginController {
     }
 
 
+
     @GetMapping("/signup")
     public String showSignUp(Model model) {
         model.addAttribute("user", new User());
@@ -65,23 +61,19 @@ public class LoginController {
     }
 
     @PostMapping("/signup")
-    public String signUp(HttpServletRequest request, @ModelAttribute User user, Model model) throws LoginException {
-
-        if (!user.getPassword().equals(request.getParameter("passwordConfirm"))) {
-            model.addAttribute("errorSignup", "Passwords do not match");
-            return "signup";
-        }
-        User user1 = repository.createUser(user);
+    public String signUp(@ModelAttribute User user, Model model) throws LoginException {
+        User user1 = loginService.createUser(user);
         return "login";
     }
 
+
+
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/";
     }
+
+
 
 }
