@@ -9,18 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <header class="flex justify-between items-center mb-8">
-        <div class="flex items-center">
-            <a th:href="@{/userFrontend}">
-                <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10" />
-            </a>
-        </div>
-        <nav class="flex items-center">
-            <i class="fa fa-user text-white mr-2"></i>
-            <span class="text-white font-bold mr-4" th:text="${user.getFullName}"></span>
-            <a th:href="@{/logout}" class="btn-green ml-4">Logout</a>
-        </nav>
-    </header>
+    <div th:replace="header :: site-header"></div>
     <main class="flex-grow flex items-center justify-center">
         <form th:action="@{/editProject}" th:object="${project}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
             <h1 class="text-4xl font-bold text-white text-center mb-6">Edit Project</h1>

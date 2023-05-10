@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="flex justify-between items-center mb-8" th:fragment="site-header">
+  <div class="flex items-center">
+    <a th:href="@{/userFrontend}">
+      <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10"/>
+    </a>
+  </div>
+  <nav class="flex items-center">
+    <i class="fa fa-user text-white mr-2"></i>
+    <span class="text-white font-bold mr-4" th:text="${user.getFullName()}"></span>
+    <a th:href="@{/logout}" class="btn-green ml-4">Logout</a>
+  </nav>
+</header>
+</body>
+</html>
