@@ -19,8 +19,7 @@ public class TaskController {
     }
 
     private int getUserId(HttpSession session) {
-        int userId = (int) session.getAttribute("userId");
-        return userId;
+        return (int) session.getAttribute("userId");
     }
 
     @GetMapping("/createTask/{id}")

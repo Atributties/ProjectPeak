@@ -60,8 +60,8 @@ public class LoginController {
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute User user, Model model) throws LoginException {
-        User user1 = loginService.createUser(user);
+    public String signUp(@ModelAttribute User user) throws LoginException {
+        loginService.createUser(user);
         return "login";
     }
 
