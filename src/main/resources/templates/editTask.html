@@ -42,7 +42,7 @@
 
       <div class="flex items-center justify-between">
         <button type="submit" class="btn-green">Save Changes</button>
-        <a class="inline-block align-baseline font-bold text-sm text-white" th:href="@{/showProject/{id}(id=${task.getProjectId()})}">Back</a>
+        <a class="back" th:href="@{/showProject/{id}(id=${task.getProjectId()})}">Back</a>
       </div>
     </form>
   </main>

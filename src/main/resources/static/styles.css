@@ -19,6 +19,23 @@
     display: block;
 }
 
+/*TABLE */
+.th {
+    padding: 1rem 0.5rem; /* px-4 py-2 */
+    color: white; /* text-white */
+}
+
+/* BACK BUTTON */
+.back {
+    display: inline-block; /* inline-block */
+    vertical-align: baseline; /* align-baseline */
+    font-weight: bold; /* font-bold */
+    font-size: 0.875rem; /* text-sm */
+    color: white; /* text-white */
+    text-decoration: none; /* to remove the underline */
+}
+
+
 
 /* BUTTONS */
 .btn-green {
