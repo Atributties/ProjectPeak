@@ -23,8 +23,8 @@ public class LoginService {
         return repository.login(email, password);
     }
 
-    public User createUser(User user) throws LoginException {
-        return repository.createUser(user);
+    public void createUser(User user) throws LoginException {
+        repository.createUser(user);
     }
 
 

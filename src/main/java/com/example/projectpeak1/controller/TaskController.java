@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginException;
+
 
 @Controller
 @RequestMapping({""})
@@ -57,6 +59,19 @@ public class TaskController {
         task.setProjectId(projectId);
         taskService.editTask(task);
         return "redirect:/showProject/" + projectId;
+    }
+
+
+    @GetMapping(value = {"/deleteTask/{id}"})
+    public String deleteTask(HttpSession session, @PathVariable("id") int taskId) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        taskService.deleteTask(taskId);
+        return "redirect:/userFrontend";
+
+        //TODO add access denied like the one from wishlist
     }
 
 

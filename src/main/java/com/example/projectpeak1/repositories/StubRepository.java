@@ -3,7 +3,7 @@ package com.example.projectpeak1.repositories;
 
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
-import com.example.projectpeak1.entities.SubTask;
+import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
@@ -15,6 +15,18 @@ import java.util.List;
 
 @Repository
 public class StubRepository implements IRepository {
+
+    //_____________LOGIN CONTROLLER________________
+
+    //_____________PROJECT CONTROLLER______________
+
+    //_____________SUBTASK CONTROLLER______________
+
+    //_____________TASK CONTROLLER_________________
+
+
+
+
 
     //Test data USERS
     private User user1 = new User(1, "John Doe", "johndoe@example.com", "password", "admin");
@@ -107,18 +119,38 @@ public class StubRepository implements IRepository {
     public void editTask(Task task) {
 
     }
-    public SubTask createSubTask(SubTask subTask, int projectId) {
-        return null;
-    }
-
-    @Override
-    public SubTask getSubTaskById(int id) {
-        return null;
-    }
-
-
     @Override
     public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId) {
         return null;
+    }
+
+    @Override
+    public void deleteTask(int taskId) throws LoginException {
+
+    }
+
+    @Override
+    public void createSubtask(Subtask subtask, int taskId) {
+
+    }
+
+    @Override
+    public Subtask getSubtaskById(int subtaskId) {
+        return null;
+    }
+
+    @Override
+    public void editSubtask(Subtask subtask) {
+
+    }
+
+    @Override
+    public int getProjectIdBySubtaskId(int subtaskId) {
+        return 0;
+    }
+
+    @Override
+    public void deleteSubtask(int subtaskId) throws LoginException {
+
     }
 }

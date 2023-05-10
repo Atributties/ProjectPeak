@@ -1,6 +1,6 @@
 package com.example.projectpeak1.dto;
 
-import com.example.projectpeak1.entities.SubTask;
+import com.example.projectpeak1.entities.Subtask;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -18,13 +18,13 @@ public class TaskAndSubtaskDTO {
     private LocalDate taskEndDate;
     private String status;
     private int projectId;
-    private List<SubTask> subTaskList;
+    private List<Subtask> subTaskList;
 
 
     public TaskAndSubtaskDTO() {
     }
 
-    public TaskAndSubtaskDTO(int taskId, int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId, List<SubTask> subTaskList) {
+    public TaskAndSubtaskDTO(int taskId, int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId, List<Subtask> subTaskList) {
         this.taskId = taskId;
         this.taskNumber = taskNumber;
         this.taskName = taskName;
@@ -36,7 +36,7 @@ public class TaskAndSubtaskDTO {
         this.subTaskList = subTaskList;
     }
 
-    public TaskAndSubtaskDTO(int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId,List<SubTask> subTaskList) {
+    public TaskAndSubtaskDTO(int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId,List<Subtask> subTaskList) {
         this.taskNumber = taskNumber;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -112,11 +112,11 @@ public class TaskAndSubtaskDTO {
     }
 
 
-    public List<SubTask> getSubTaskList() {
+    public List<Subtask> getSubTaskList() {
         return subTaskList;
     }
 
-    public void setSubTaskList(List<SubTask> subTaskList) {
+    public void setSubTaskList(List<Subtask> subTaskList) {
         this.subTaskList = subTaskList;
     }
 }
