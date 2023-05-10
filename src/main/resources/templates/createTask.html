@@ -30,7 +30,7 @@
 
         <div class="mb-4">
             <label class="label" for="taskStatus">Task Status:</label>
-            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="taskStatus" name="taskStatus" th:field="*{status}" required>
+            <select class="select-class" id="taskStatus" name="taskStatus" th:field="*{status}" required>
                 <option value="">Choose a status</option>
                 <option value="Not Started">Not Started</option>
                 <option value="In Progress">In Progress</option>

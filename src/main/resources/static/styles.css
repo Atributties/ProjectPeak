@@ -121,6 +121,26 @@ td {
     background-color: #48BB78; /* hover:bg-green-500 */
 }
 
+/* SELECT CLASS */
+.select-class {
+    display: block; /* block */
+    appearance: none; /* appearance-none */
+    width: 100%; /* w-full */
+    background-color: #edf2f7; /* bg-gray-200 */
+    border: 1px solid #edf2f7; /* border border-gray-200 */
+    color: #4a5568; /* text-gray-700 */
+    padding: 0.75rem 2rem 0.75rem 1rem; /* py-3 px-4 pr-8 */
+    border-radius: 0.25rem; /* rounded */
+    line-height: 1.5; /* leading-tight */
+}
+
+.select-class:focus {
+    outline: none; /* focus:outline-none */
+    background-color: #ffffff; /* focus:bg-white */
+    border-color: #718096; /* focus:border-gray-500 */
+}
+
+
 /*FOOTER */
 .footer {
     margin-top: 2rem; /* mt-8 */
