@@ -18,3 +18,16 @@
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+
+/*FOOTER */
+
+.footer {
+    margin-top: 2rem; /* mt-8 */
+    border-top: 1px solid #D1D5DB; /* border-t border-gray-300 */
+    padding: 1rem 0; /* py-4 */
+    text-align: center; /* text-center */
+    color: white; /* text-white */
+}
+
+
