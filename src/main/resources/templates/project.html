@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="components/headerUser :: site-header-user"></div>
+    <div th:replace="~{components/headerUser :: site-header-user}"></div>
     <main class="flex-grow">
         <h1 class="text-4xl font-bold text-white text-center mb-6" th:text="${project.getProjectName()}"></h1>
         <hr class="mt-8 border-t border-gray-300 py-4 text-center">
@@ -82,7 +82,7 @@
                     <a class="back" th:href="@{/userFrontend}">Back</a>
                 </div>
     </main>
-    <div th:replace="components/footer :: site-footer"></div>
+    <div th:replace="~{components/footer :: site-footer}"></div>
 </div>
 </body>
 </html>

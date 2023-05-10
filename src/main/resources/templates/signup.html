@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="components/headerFront :: site-header"></div>
+    <div th:replace="~{components/headerFront :: site-header}"></div>
     <main class="flex-grow flex items-center justify-center">
         <form class="bg-main-blue p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/signup}" th:object="${user}" method="post">
             <div class="mb-4">
@@ -35,7 +35,7 @@
             </div>
         </form>
     </main>
-    <div th:replace="components/footer :: site-footer"></div>
+    <div th:replace="~{components/footer :: site-footer}"></div>
 </div>
 </body>
 </html>
