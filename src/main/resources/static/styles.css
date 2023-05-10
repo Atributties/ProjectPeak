@@ -25,6 +25,15 @@ body {
     min-height: 100vh; /* min-h-screen */
 }
 
+h1 {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700; /* font-bold */
+    color: #ffffff; /* text-white */
+    text-align: center; /* text-center */
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+
 /* CONTAINER */
 .container {
     display: flex; /* flex */
