@@ -27,19 +27,19 @@
             <input type="hidden" th:field="*{projectId}"/>
             <div class="mb-4">
                 <label class="block text-white text-sm font-bold mb-2" for="projectName">Project Name:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="projectName" th:field="*{projectName}" required>
+                <input class="input" type="text" id="projectName" th:field="*{projectName}" required>
             </div>
             <div class="mb-4">
                 <label class="block text-white text-sm font-bold mb-2" for="projectDescription">Project Description:</label>
-                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="projectDescription" th:field="*{projectDescription}" required></textarea>
+                <textarea class="input" id="projectDescription" th:field="*{projectDescription}" required></textarea>
             </div>
             <div class="mb-4">
                 <label class="block text-white text-sm font-bold mb-2" for="projectStartDate">Start Date:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectStartDate" th:field="*{projectStartDate}" required>
+                <input class="input" type="date" id="projectStartDate" th:field="*{projectStartDate}" required>
             </div>
             <div class="mb-6">
                 <label class="block text-white text-sm font-bold mb-2" for="projectEndDate">End Date:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectEndDate" th:field="*{projectEndDate}" required>
+                <input class="input" type="date" id="projectEndDate" th:field="*{projectEndDate}" required>
             </div>
 
 

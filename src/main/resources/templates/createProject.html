@@ -26,19 +26,19 @@
             <h1 class="text-4xl font-bold text-white text-center mb-6">Create a new Project!</h1>
             <div class="mb-4">
                 <label class="block text-white text-sm font-bold mb-2" for="projectName">Project Name:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="projectName" name="projectName" th:field="*{projectName}" required>
+                <input class="input" type="text" id="projectName" name="projectName" th:field="*{projectName}" required>
             </div>
             <div class="mb-4">
                 <label class="block text-white text-sm font-bold mb-2" for="projectDescription">Description:</label>
-                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="projectDescription" name="projectDescription" th:field="*{projectDescription}" rows="2" required></textarea>
+                <textarea class="input" id="projectDescription" name="projectDescription" th:field="*{projectDescription}" rows="2" required></textarea>
             </div>
             <div class="mb-4">
                 <label class="block text-white text-sm font-bold mb-2" for="projectStartDate">Start Date:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectStartDate" name="projectStartDate" th:field="*{projectStartDate}" required>
+                <input class="input" type="date" id="projectStartDate" name="projectStartDate" th:field="*{projectStartDate}" required>
             </div>
             <div class="mb-6">
                 <label class="block text-white text-sm font-bold mb-2" for="projectEndDate">End Date:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectEndDate" name="projectEndDate" th:field="*{projectEndDate}" required>
+                <input class="input" type="date" id="projectEndDate" name="projectEndDate" th:field="*{projectEndDate}" required>
             </div>
             <div class="flex items-center justify-between">
                 <button type="submit" class="btn-green">Create Project</button>

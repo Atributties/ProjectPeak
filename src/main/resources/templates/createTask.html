@@ -12,19 +12,19 @@
         <h1 class="text-4xl font-bold text-white text-center mb-6">Create a new Task!</h1>
         <div class="mb-4">
             <label class="block text-white text-sm font-bold mb-2" for="projectName">Task Name:</label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="projectName" name="projectName" th:field="*{taskName}" required>
+            <input class="input" type="text" id="projectName" name="projectName" th:field="*{taskName}" required>
         </div>
         <div class="mb-4">
             <label class="block text-white text-sm font-bold mb-2" for="projectDescription">Description:</label>
-            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="projectDescription" name="projectDescription" th:field="*{taskDescription}" rows="2" required></textarea>
+            <textarea class="input" id="projectDescription" name="projectDescription" th:field="*{taskDescription}" rows="2" required></textarea>
         </div>
         <div class="mb-4">
             <label class="block text-white text-sm font-bold mb-2" for="projectStartDate">Start Date:</label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectStartDate" name="projectStartDate" th:field="*{taskStartDate}" required>
+            <input class="input" type="date" id="projectStartDate" name="projectStartDate" th:field="*{taskStartDate}" required>
         </div>
         <div class="mb-6">
             <label class="block text-white text-sm font-bold mb-2" for="projectEndDate">End Date:</label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectEndDate" name="projectEndDate" th:field="*{taskEndDate}" required>
+            <input class="input" type="date" id="projectEndDate" name="projectEndDate" th:field="*{taskEndDate}" required>
         </div>
 
         <div class="mb-4">
