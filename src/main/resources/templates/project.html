@@ -21,24 +21,12 @@
         <hr class="mt-8 border-t border-gray-300 py-4 text-center">
         <div class="p-6">
             <div class="bg-main-blue rounded-lg shadow-lg p-6">
-                <h2 class="text-xl font-semibold my-2 text-white">
-                    Description:
-                </h2>
-                <p class="text-white">
-                    <span th:text="${project.getProjectDescription()}"></span>
-                </p>
-                <h2 class="text-xl font-semibold my-2 text-white">
-                    Start Date:
-                </h2>
-                <p class="text-white">
-                    <span th:text="${project.getProjectStartDate()}"></span>
-                </p>
-                <h2 class="text-xl font-semibold my-2 text-white">
-                    End Date:
-                </h2>
-                <p class="text-white">
-                    <span th:text="${project.getProjectEndDate()}"></span>
-                </p>
+                <h2>Description:</h2>
+                <p><span th:text="${project.getProjectDescription()}"></span></p>
+                <h2>Start Date:</h2>
+                <p><span th:text="${project.getProjectStartDate()}"></span></p>
+                <h2>End Date:</h2>
+                <p><span th:text="${project.getProjectEndDate()}"></span></p>
         <table class="table-auto w-full mb-6 mt-6">
             <thead>
             <tr>
