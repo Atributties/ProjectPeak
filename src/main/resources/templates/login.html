@@ -9,17 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <header class="flex justify-between items-center">
-        <div class="flex items-center">
-            <a href="/">
-                <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10" />
-            </a>
-        </div>
-        <nav class="flex">
-            <a th:href="@{/login}" class="btn-green">Login</a>
-            <a th:href="@{/signup}" class="btn-green ml-4">Signup</a>
-        </nav>
-    </header>
+    <div th:replace="components/headerFront :: site-header"></div>
     <main class="mb-44 flex-grow flex items-center justify-center">
         <form class="bg-main-blue p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/login}" th:object="${user}" method="post">
 
