@@ -24,11 +24,11 @@
         <form class="bg-main-blue p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/login}" th:object="${user}" method="post">
 
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="email">Email:</label>
+                <label class="label" for="email">Email:</label>
                 <input class="input" id="email" type="email" th:field="*{email}" required>
             </div>
             <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="password">Password:</label>
+                <label class="label" for="password">Password:</label>
                 <input class="input" id="password" type="password" th:field="*{password}" required>
             </div>
             <div class="flex items-center justify-between">

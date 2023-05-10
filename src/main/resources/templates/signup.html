@@ -23,19 +23,19 @@
     <main class="flex-grow flex items-center justify-center">
         <form class="bg-main-blue p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/signup}" th:object="${user}" method="post">
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="email">Email:</label>
+                <label class="label" for="email">Email:</label>
                 <input class="input" id="email" type="email" th:field="*{email}" required>
             </div>
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="fullname">Full Name:</label>
+                <label class="label" for="fullname">Full Name:</label>
                 <input class="input" id="fullname" type="text" th:field="*{fullName}" required>
             </div>
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="password1">Password:</label>
+                <label class="label" for="password1">Password:</label>
                 <input class="input" id="password1" type="password" th:field="*{password}" required>
             </div>
             <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="password2">Retype Password:</label>
+                <label class="label" for="password2">Retype Password:</label>
                 <input class="input" id="password2" type="password" name="passwordConfirm" required>
             </div>
             <div th:if="${errorSignup}" class="error-message mb-6 text-red-500" th:text="${errorSignup}"></div>

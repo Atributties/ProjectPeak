@@ -15,24 +15,24 @@
     <h1 class="text-4xl font-bold text-white text-center mb-6">Edit Project</h1>
       <input type="hidden" th:field="*{taskId}"/>
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="projectName">Task Name:</label>
+        <label class="label" for="projectName">Task Name:</label>
         <input class="input" type="text" id="projectName" th:field="*{taskName}" required>
       </div>
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="projectDescription">Task Description:</label>
+        <label class="label" for="projectDescription">Task Description:</label>
         <textarea class="input" id="projectDescription" th:field="*{taskDescription}" required></textarea>
       </div>
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="projectStartDate">Start Date:</label>
+        <label class="label" for="projectStartDate">Start Date:</label>
         <input class="input" type="date" id="projectStartDate" th:field="*{taskStartDate}" required>
       </div>
       <div class="mb-6">
-        <label class="block text-white text-sm font-bold mb-2" for="projectEndDate">End Date:</label>
+        <label class="label" for="projectEndDate">End Date:</label>
         <input class="input" type="date" id="projectEndDate" th:field="*{taskEndDate}" required>
       </div>
 
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="status">Status:</label>
+        <label class="label" for="status">Status:</label>
         <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status" th:field="*{status}">
           <option value="Not Started">Not Started</option>
           <option value="In Progress">In Progress</option>

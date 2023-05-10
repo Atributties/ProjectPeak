@@ -35,6 +35,15 @@
     background-color: #48BB78; /* hover:bg-green-700 */
 }
 
+/* LABEL */
+.label {
+    display: block; /* block */
+    color: white; /* text-white */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: bold; /* font-bold */
+    margin-bottom: 0.5rem; /* mb-2 */
+}
+
 
 
 /* INPUT */
