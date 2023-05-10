@@ -25,6 +25,19 @@ body {
     min-height: 100vh; /* min-h-screen */
 }
 
+/* CONTAINER */
+.container {
+    display: flex; /* flex */
+    flex-direction: column; /* flex-col */
+    min-height: 100vh; /* min-h-screen */
+    width: 100%; /* container */
+    margin-left: auto; /* mx-auto */
+    margin-right: auto; /* mx-auto */
+    padding: 2rem 1rem 1rem; /* px-4 pt-8 pb-4 */
+    box-sizing: border-box; /* To include padding in width calculation */
+}
+
+
 
 /*TABLE */
 th {
