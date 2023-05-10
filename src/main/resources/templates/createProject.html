@@ -18,35 +18,35 @@
         <nav class="flex items-center">
             <i class="fa fa-user text-white mr-2"></i>
             <span class="text-white font-bold mr-4" th:text="${user.getFullName}"></span>
-            <a th:href="@{/logout}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Logout</a>
+            <a th:href="@{/logout}" class="btn-green ml-4">Logout</a>
         </nav>
     </header>
     <main class="flex-grow flex items-center justify-center">
         <form th:action="@{/createProject}" th:object="${project}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
             <h1 class="text-4xl font-bold text-white text-center mb-6">Create a new Project!</h1>
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="projectName">Project Name:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="projectName" name="projectName" th:field="*{projectName}" required>
+                <label class="label" for="projectName">Project Name:</label>
+                <input class="input" type="text" id="projectName" name="projectName" th:field="*{projectName}" required>
             </div>
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="projectDescription">Description:</label>
-                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="projectDescription" name="projectDescription" th:field="*{projectDescription}" rows="2" required></textarea>
+                <label class="label" for="projectDescription">Description:</label>
+                <textarea class="input" id="projectDescription" name="projectDescription" th:field="*{projectDescription}" rows="2" required></textarea>
             </div>
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="projectStartDate">Start Date:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectStartDate" name="projectStartDate" th:field="*{projectStartDate}" required>
+                <label class="label" for="projectStartDate">Start Date:</label>
+                <input class="input" type="date" id="projectStartDate" name="projectStartDate" th:field="*{projectStartDate}" required>
             </div>
             <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="projectEndDate">End Date:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectEndDate" name="projectEndDate" th:field="*{projectEndDate}" required>
+                <label class="label" for="projectEndDate">End Date:</label>
+                <input class="input" type="date" id="projectEndDate" name="projectEndDate" th:field="*{projectEndDate}" required>
             </div>
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Create Project</button>
+                <button type="submit" class="btn-green">Create Project</button>
                     <a class="inline-block align-baseline font-bold text-sm text-white" th:href="@{/userFrontend}">Back</a>
             </div>
         </form>
     </main>
-    <footer class="mt-8 border-t border-gray-300 py-4 text-center text-white">
+    <footer class="footer">
         &copy; 2023 Project Peak
     </footer>
 </div>

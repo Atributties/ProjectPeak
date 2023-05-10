@@ -15,24 +15,24 @@
     <h1 class="text-4xl font-bold text-white text-center mb-6">Edit Project</h1>
       <input type="hidden" th:field="*{taskId}"/>
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="projectName">Task Name:</label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="projectName" th:field="*{taskName}" required>
+        <label class="label" for="projectName">Task Name:</label>
+        <input class="input" type="text" id="projectName" th:field="*{taskName}" required>
       </div>
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="projectDescription">Task Description:</label>
-        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="projectDescription" th:field="*{taskDescription}" required></textarea>
+        <label class="label" for="projectDescription">Task Description:</label>
+        <textarea class="input" id="projectDescription" th:field="*{taskDescription}" required></textarea>
       </div>
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="projectStartDate">Start Date:</label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectStartDate" th:field="*{taskStartDate}" required>
+        <label class="label" for="projectStartDate">Start Date:</label>
+        <input class="input" type="date" id="projectStartDate" th:field="*{taskStartDate}" required>
       </div>
       <div class="mb-6">
-        <label class="block text-white text-sm font-bold mb-2" for="projectEndDate">End Date:</label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectEndDate" th:field="*{taskEndDate}" required>
+        <label class="label" for="projectEndDate">End Date:</label>
+        <input class="input" type="date" id="projectEndDate" th:field="*{taskEndDate}" required>
       </div>
 
       <div class="mb-4">
-        <label class="block text-white text-sm font-bold mb-2" for="status">Status:</label>
+        <label class="label" for="status">Status:</label>
         <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status" th:field="*{status}">
           <option value="Not Started">Not Started</option>
           <option value="In Progress">In Progress</option>
@@ -41,12 +41,12 @@
       </div>
 
       <div class="flex items-center justify-between">
-        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>
+        <button type="submit" class="btn-green">Save Changes</button>
         <a class="inline-block align-baseline font-bold text-sm text-white" th:href="@{/showProject/{id}(id=${task.getProjectId()})}">Back</a>
       </div>
     </form>
   </main>
-  <footer class="mt-8 border-t border-gray-300 py-4 text-center text-white">
+  <footer class="footer">
     &copy; 2023 Project Peak
   </footer>
 </div>
