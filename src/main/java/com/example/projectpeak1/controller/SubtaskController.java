@@ -3,7 +3,6 @@ package com.example.projectpeak1.controller;
 
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
-import com.example.projectpeak1.services.ProjectService;
 import com.example.projectpeak1.services.SubtaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;

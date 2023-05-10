@@ -2,7 +2,6 @@ package com.example.projectpeak1.services;
 
 
 import com.example.projectpeak1.entities.Subtask;
-import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.repositories.IRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
