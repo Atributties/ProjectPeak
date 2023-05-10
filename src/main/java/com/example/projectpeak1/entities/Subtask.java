@@ -4,7 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-public class SubTask {
+public class Subtask {
     private int subTaskId;
     private double subtaskNumber;
     private String subTaskName;
@@ -16,7 +16,7 @@ public class SubTask {
     private String status;
     private int taskId;
 
-    public SubTask(int subTaskId, double subtaskNumber, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
+    public Subtask(int subTaskId, double subtaskNumber, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate, String status, int taskId) {
         this.subTaskId = subTaskId;
         this.subtaskNumber = subtaskNumber;
         this.subTaskName = subTaskName;
@@ -26,7 +26,7 @@ public class SubTask {
         this.status = status;
         this.taskId = taskId;
     }
-    public SubTask(double subtaskNumber, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate,String status, int taskId) {
+    public Subtask(double subtaskNumber, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate, String status, int taskId) {
         this.subtaskNumber = subtaskNumber;
         this.subTaskName = subTaskName;
         this.subTaskDescription = subTaskDescription;
@@ -36,7 +36,7 @@ public class SubTask {
         this.taskId = taskId;
     }
 
-    public SubTask() {
+    public Subtask() {
     }
 
     public double getSubtaskNumber() {

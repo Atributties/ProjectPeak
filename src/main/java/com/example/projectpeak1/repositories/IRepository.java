@@ -3,7 +3,7 @@ package com.example.projectpeak1.repositories;
 
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
-import com.example.projectpeak1.entities.SubTask;
+import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
@@ -13,6 +13,17 @@ import java.util.List;
 
 @Repository
 public interface IRepository {
+
+
+
+
+    //_____________LOGIN CONTROLLER________________
+
+    //_____________PROJECT CONTROLLER______________
+
+    //_____________SUBTASK CONTROLLER______________
+
+    //_____________TASK CONTROLLER_________________
     User login(String email, String password) throws LoginException;
 
     User createUser(User user) throws LoginException;
@@ -43,9 +54,17 @@ public interface IRepository {
 
     void editTask(Task task);
 
-    SubTask createSubTask(SubTask subTask, int projectId);
-
-    SubTask getSubTaskById(int id);
-
     List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId);
+
+    void deleteTask(int taskId) throws LoginException;
+
+    void createSubtask(Subtask subtask, int taskId);
+
+    Subtask getSubtaskById(int subtaskId);
+
+    void editSubtask(Subtask subtask);
+
+    int getProjectIdBySubtaskId(int subtaskId);
+
+    void deleteSubtask(int subtaskId) throws LoginException;
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.LoginException;
+
 @Service
 public class TaskService {
 
@@ -30,4 +32,7 @@ public class TaskService {
     }
 
 
+    public void deleteTask(int taskId) throws LoginException {
+        repository.deleteTask(taskId);
+    }
 }
