@@ -16,8 +16,8 @@
             </a>
         </div>
         <nav class="flex">
-            <a th:href="@{/login}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Login</a>
-            <a th:href="@{/signup}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Signup</a>
+            <a th:href="@{/login}" class="btn-green">Login</a>
+            <a th:href="@{/signup}" class="btn-green ml-4">Signup</a>
         </nav>
     </header>
     <main class="mb-44 flex-grow flex items-center justify-center">
@@ -32,7 +32,7 @@
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" th:field="*{password}" required>
             </div>
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+                <button type="submit" class="btn-green">Login</button>
                 <a class="inline-block align-baseline font-bold text-sm text-white" th:href="@{/}">Back</a>
             </div>
         </form>

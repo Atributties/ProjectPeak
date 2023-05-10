@@ -16,8 +16,8 @@
             </a>
         </div>
         <nav class="flex">
-            <a th:href="@{/login}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Login</a>
-            <a th:href="@{/signup}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Signup</a>
+            <a th:href="@{/login}" class="btn-green">Login</a>
+            <a th:href="@{/signup}" class="btn-green ml-4">Signup</a>
         </nav>
     </header>
     <main class="flex-grow flex items-center justify-center">
@@ -40,7 +40,7 @@
             </div>
             <div th:if="${errorSignup}" class="error-message mb-6 text-red-500" th:text="${errorSignup}"></div>
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sign up</button>
+                <button type="submit" class="btn-green">Sign up</button>
                 <a class="inline-block align-baseline font-bold text-sm text-white" th:href="@{/}">Back</a>
             </div>
         </form>

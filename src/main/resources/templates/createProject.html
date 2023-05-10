@@ -18,7 +18,7 @@
         <nav class="flex items-center">
             <i class="fa fa-user text-white mr-2"></i>
             <span class="text-white font-bold mr-4" th:text="${user.getFullName}"></span>
-            <a th:href="@{/logout}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Logout</a>
+            <a th:href="@{/logout}" class="btn-green ml-4">Logout</a>
         </nav>
     </header>
     <main class="flex-grow flex items-center justify-center">
@@ -41,7 +41,7 @@
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date" id="projectEndDate" name="projectEndDate" th:field="*{projectEndDate}" required>
             </div>
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Create Project</button>
+                <button type="submit" class="btn-green">Create Project</button>
                     <a class="inline-block align-baseline font-bold text-sm text-white" th:href="@{/userFrontend}">Back</a>
             </div>
         </form>

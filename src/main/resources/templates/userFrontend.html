@@ -18,7 +18,7 @@
         <nav class="flex items-center">
             <i class="fa fa-user text-white mr-2"></i>
             <span class="text-white font-bold mr-4" th:text="${user.getFullName}"></span>
-            <a th:href="@{/logout}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Logout</a>
+            <a th:href="@{/logout}" class="btn-green">Logout</a>
         </nav>
     </header>
     <main class="flex-grow">
@@ -58,12 +58,12 @@
         </table>
         <div class="flex justify-center space-x-4">
             <a th:href="@{/createProject}">
-                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                <button type="button" class="btn-green">
                     Create Project
                 </button>
             </a>
             <a th:href="@{/showProject}">
-                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                <button type="button" class="btn-green">
                     Show All Projects
                 </button>
             </a>
