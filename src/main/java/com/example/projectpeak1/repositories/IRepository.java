@@ -25,7 +25,7 @@ public interface IRepository {
     void deleteUser(int userId) throws LoginException;
 
 
-    Project createProject(Project list, int projectId);
+    void createProject(Project list, int projectId);
 
     List<Project> getAllProjectById(int userId);
 
@@ -35,7 +35,7 @@ public interface IRepository {
 
     void updateProject(Project project);
 
-    public Task createTask(Task task, int projectId);
+    void createTask(Task task, int projectId);
 
     List<Task> getAllTaskById(int id);
 
