@@ -19,11 +19,23 @@
     display: block;
 }
 
+/* BODY BACKGROUND */
+body {
+    background-color: #0E2355/* bg-main-blue. Replace this comment with the correct color */;
+    min-height: 100vh; /* min-h-screen */
+}
+
+
 /*TABLE */
-.th {
+th {
     padding: 1rem 0.5rem; /* px-4 py-2 */
     color: white; /* text-white */
 }
+td {
+    border: 1px solid #e5e7eb; /* border */
+    padding: 1rem 0.5rem; /* px-4 py-2 */
+}
+
 
 /* BACK BUTTON */
 .back {

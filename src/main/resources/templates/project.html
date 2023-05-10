@@ -13,7 +13,7 @@
         }
     </script>
 </head>
-<body class="bg-main-blue min-h-screen">
+<body>
 <div class="flex flex-col min-h-screen container mx-auto px-4 pt-8 pb-4">
     <header class="flex justify-between items-center mb-8">
         <div class="flex items-center">
@@ -53,37 +53,37 @@
         <table class="table-auto w-full mb-6 mt-6">
             <thead>
             <tr>
-                <th class="th">Task Name</th>
-                <th class="th">Description</th>
-                <th class="th">Start Date</th>
-                <th class="th">End Date</th>
-                <th class="th">Status</th>
-                <th class="th">Edit</th>
-                <th class="th">Delete</th>
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
             <th:block th:each="task : ${listOfTask}">
                 <tr class="text-white text-center">
-                    <td class="border px-4 py-2 flex justify-center items-center">
+                    <td class="flex justify-center items-center">
                             <p class="mr-2 text-center"><span th:text="${task.getTaskName()}"></span></p>
                             <a onclick="toggleSubtasks('${task.getTaskId()}')" class="hover:text-green-500 cursor-pointer" type="button"><i class="fa fa-chevron-down"></i></a>
                     </td>
-                    <td class="border px-4 py-2" th:text="${task.getTaskDescription()}"></td>
-                    <td class="border px-4 py-2" th:text="${task.getTaskStartDate()}"></td>
-                    <td class="border px-4 py-2" th:text="${task.getTaskEndDate()}"></td>
-                    <td class="border px-4 py-2" th:text="${task.getStatus()}"></td>
-                    <td class="border px-4 py-2"><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}" class="btn-green"><i class="fa fa-pencil-square-o fa-lg"></i></a></td>
-                    <td class="border px-4 py-2"><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" onclick="return confirm('Are you sure you want to delete this task?')" class="btn-green"><i class="fa fa-trash fa-lg"></i></a></td>
+                    <td th:text="${task.getTaskDescription()}"></td>
+                    <td th:text="${task.getTaskStartDate()}"></td>
+                    <td th:text="${task.getTaskEndDate()}"></td>
+                    <td th:text="${task.getStatus()}"></td>
+                    <td><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}" class="btn-green"><i class="fa fa-pencil-square-o fa-lg"></i></a></td>
+                    <td><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" onclick="return confirm('Are you sure you want to delete this task?')" class="btn-green"><i class="fa fa-trash fa-lg"></i></a></td>
                 </tr>
                 <tr class="hidden text-white text-center" id="subtasks-${task.getTaskId()}" th:each="subtask : ${task.getSubTaskList()}">
-                    <td class="border px-4 py-2" th:text="${subtask.getSubTaskName()}"></td>
-                    <td class="border px-4 py-2" th:text="${subtask.getSubTaskDescription()}"></td>
-                    <td class="border px-4 py-2" th:text="${subtask.getSubTaskStartDate()}"></td>
-                    <td class="border px-4 py-2" th:text="${subtask.getSubTaskEndDate()}"></td>
-                    <td class="border px-4 py-2" th:text="${subtask.getStatus()}"></td>
-                    <td class="border px-4 py-2"><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}" class="btn-green"><i class="fa fa-pencil-square-o fa-lg"></i></a></td>
-                    <td class="border px-4 py-2"><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" onclick="return confirm('Are you sure you want to delete this task?')" class="btn-green"><i class="fa fa-trash fa-lg"></i></a></td>
+                    <td th:text="${subtask.getSubTaskName()}"></td>
+                    <td th:text="${subtask.getSubTaskDescription()}"></td>
+                    <td th:text="${subtask.getSubTaskStartDate()}"></td>
+                    <td th:text="${subtask.getSubTaskEndDate()}"></td>
+                    <td th:text="${subtask.getStatus()}"></td>
+                    <td><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}" class="btn-green"><i class="fa fa-pencil-square-o fa-lg"></i></a></td>
+                    <td><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}" onclick="return confirm('Are you sure you want to delete this task?')" class="btn-green"><i class="fa fa-trash fa-lg"></i></a></td>
                 </tr>
             </th:block>
             </tbody>
