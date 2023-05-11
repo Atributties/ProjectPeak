@@ -75,7 +75,7 @@
             </tbody>
         </table>
                 <div class="flex items-center justify-between">
-                    <button type="submit" class="btn-green">Add Task</button>
+                    <a th:href="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" class="btn-green">Add Task</a>
                     <a class="back" th:href="@{/userFrontend}">Back</a>
                 </div>
     </main>
