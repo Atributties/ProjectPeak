@@ -70,20 +70,17 @@ public class TaskController {
     }
 
 
-
-
-
-
     @GetMapping(value = {"/deleteTask/{id}"})
     public String deleteTask(HttpSession session, @PathVariable("id") int taskId) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login";
         }
-        taskService.deleteTask(taskId);
-        return "redirect:/userFrontend";
+        int projectId = taskService.getProjectIdFromTaskId(taskId);
 
-        //TODO add access denied like the one from wishlist
+        taskService.deleteTask(taskId);
+
+        return "redirect:/showProject/" + projectId;
     }
 
     @GetMapping("/addTask/{id}")

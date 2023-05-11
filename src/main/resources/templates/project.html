@@ -30,6 +30,9 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
+                    <th>Subtask</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,7 +44,13 @@
                     <td th:text="${taskAndSubtask.endDate}"></td>
                     <td th:text="${taskAndSubtask.status}"></td>
                     <td class="flex items-center justify-between">
+                        <a th:href="@{/showSubTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Show Subtasks</a>
+                    </td>
+                    <td class="flex items-center justify-between">
                         <a th:href="@{/editTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Edit Task</a>
+                    </td>
+                    <td class="flex items-center justify-between">
+                        <a th:href="@{/deleteTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Delete Task</a>
                     </td>
                 </tr>
                 </tbody>

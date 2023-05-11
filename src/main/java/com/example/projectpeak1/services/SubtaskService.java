@@ -1,6 +1,7 @@
 package com.example.projectpeak1.services;
 
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.repositories.IRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,5 +38,10 @@ public class SubtaskService {
 
     public void deleteSubtask(int subtaskId) throws LoginException {
         repository.deleteSubtask(subtaskId);
+    }
+
+
+    public TaskAndSubtaskDTO getTaskAndSubTaskById(int taskId) {
+        return repository.getTaskAndSubTask(taskId);
     }
 }

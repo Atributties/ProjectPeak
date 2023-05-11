@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subtask Details</title>
+</head>
+<body>
+<h1>Subtask Details</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Subtask ID</th>
+        <th>Subtask Name</th>
+        <th>Subtask Description</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subtask : ${taskAndSubtask.subTaskList}">
+        <td th:text="${subtask.subTaskName}"></td>
+        <td th:text="${subtask.subTaskDescription}"></td>
+        <td th:text="${subtask.subTaskStartDate}"></td>
+        <td th:text="${subtask.subTaskEndDate}"></td>
+        <td th:text="${subtask.status}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

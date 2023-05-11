@@ -1,6 +1,7 @@
 package com.example.projectpeak1.controller;
 
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.services.SubtaskService;
@@ -37,6 +38,15 @@ public class SubtaskController {
         model.addAttribute("task", new Task());
         return "createTask";
     }
+
+    @GetMapping("/showSubTask/{taskId}")
+    public String showSubtaskDetails(@PathVariable("taskId") int taskId, Model model) {
+        TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId); // Replace with your actual service method to retrieve the TaskAndSubtaskDTO by ID
+        model.addAttribute("taskAndSubtask", taskAndSubtask);
+        return "showSubtask";
+    }
+
+
 
 
     @PostMapping(value = {"/createSubtask/{id}"})
