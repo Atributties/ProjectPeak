@@ -53,6 +53,7 @@ public class SubtaskController {
     @GetMapping("/editSubtask/{id}")
     public String editSubtask(@PathVariable("id") int subtaskId, Model model) {
         Subtask subtask1 = subtaskService.getSubtaskById(subtaskId); //get the subtask, so we can show in html edit site.
+
         model.addAttribute("subtask", subtask1);
         model.addAttribute("taskId", subtask1.getTaskId());
         return "editTask";

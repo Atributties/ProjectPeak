@@ -39,7 +39,7 @@
             </div>
             <div class="flex items-center justify-between">
                 <button type="submit" class="btn-green">Add task</button>
-                <a class="back" th:href="@{/userFrontend}">Back</a>
+                <a class="back" th:href="@{/showProject/{projectId}(projectId=${project.getProjectId()})}">Back</a>
             </div>
         </form>
     </main>

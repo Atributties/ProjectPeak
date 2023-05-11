@@ -32,9 +32,7 @@ public class TaskService {
         return repository.getTaskAndSubTask(id);
     }
 
-    public void editTask(Task task){
-        repository.editTask(task);
-    }
+
 
     public void deleteTask(int taskId) throws LoginException {
         repository.deleteTask(taskId);
@@ -46,6 +44,18 @@ public class TaskService {
 
     public Project getProjectFromId(int projectId) {
         return repository.getProjectById(projectId);
+    }
+
+    public void updateTask(Task task) {
+        repository.editTask(task);
+    }
+
+    public int getProjectIdFromTaskId(int taskId) {
+        return repository.getProjectIdByTaskId(taskId);
+    }
+
+    public Project getProjectByTaskId(int taskId) {
+        return repository.getProjectByTaskId(taskId);
     }
 }
 

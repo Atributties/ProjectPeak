@@ -329,23 +329,7 @@ public class DbRepository implements IRepository {
         }
     }
 
-    @Override
-    public void editTask(Task task) {
-        try {
-            Connection con = DbManager.getConnection();
-            String SQL = "UPDATE task SET name = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE task_id = ?";
-            PreparedStatement ps = con.prepareStatement(SQL);
-            ps.setString(1, task.getTaskName());
-            ps.setString(2, task.getTaskDescription());
-            ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
-            ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
-            ps.setString(5, task.getStatus());
-            ps.setInt(6, task.getTaskId());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+
 
     @Override
     public List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId) {
@@ -378,10 +362,13 @@ public class DbRepository implements IRepository {
                     LocalDate subtaskStartDate = subtaskRs.getDate("start_date").toLocalDate();
                     LocalDate subtaskEndDate = subtaskRs.getDate("end_date").toLocalDate();
                     String subtaskStatus = subtaskRs.getString("status");
-                    subtasks.add(new Subtask(subtaskId, subtaskName, subtaskDescription, subtaskStartDate, subtaskEndDate, subtaskStatus, taskId));
-                }
+                    Subtask sub1 = new Subtask(subtaskId, subtaskName, subtaskDescription, subtaskStartDate, subtaskEndDate, subtaskStatus, taskId);
+                    subtasks.add(sub1);
 
-                taskAndSubtaskDTOs.add(new TaskAndSubtaskDTO(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, projectId, subtasks));
+                }
+                TaskAndSubtaskDTO taskAndSubtaskDTO = new TaskAndSubtaskDTO(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, projectId, subtasks);
+
+                taskAndSubtaskDTOs.add(taskAndSubtaskDTO);
             }
             return taskAndSubtaskDTOs;
         } catch (SQLException ex) {
@@ -411,7 +398,10 @@ public class DbRepository implements IRepository {
         }
     }
 
-
+    @Override
+    public User getUserFromTaskId(int taskId) {
+        return null;
+    }
 
 
     //_____________SUBTASK CONTROLLER______________
@@ -599,6 +589,69 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public int getProjectIdByTaskId(int taskId) {
+        int projectId = 0;
+
+        try {
+            Connection con = DbManager.getConnection();
+            String sql = "SELECT project_id FROM Task WHERE task_id = ?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, taskId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                projectId = resultSet.getInt("project_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projectId;
+    }
+
+    @Override
+    public void editTask(Task task) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE Task SET name = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE task_id = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, task.getTaskName());
+            ps.setString(2, task.getTaskDescription());
+            ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
+            ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
+            ps.setString(5, task.getStatus());
+            ps.setInt(6, task.getProjectId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public Project getProjectByTaskId(int taskId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM project WHERE project_id = (SELECT project_id FROM task WHERE task_id = ?);";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ResultSet rs = ps.executeQuery();
+            Project project = null;
+            if (rs.next()) {
+                int projectId = rs.getInt("project_id");
+                int userId = rs.getInt("user_id");
+                String projectName = rs.getString("name");
+                String projectDescription = rs.getString("description");
+                LocalDate projectStartDate = rs.getDate("start_date").toLocalDate();
+                LocalDate projectEndDate = rs.getDate("end_date").toLocalDate();
+                project = new Project(projectId, projectName, projectDescription, projectStartDate, projectEndDate, userId);
+            }
+            return project;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
 
 

@@ -48,27 +48,30 @@ public class TaskController {
     }
 
 
-
-    @GetMapping("/editTask/{taskId}")
-    public String editTask(HttpSession session,@PathVariable("taskId") int taskId, Model model) {
+    @GetMapping("/editTask/{id}")
+    public String editTask(HttpSession session, @PathVariable("id") int taskId, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login";
         }
         User user = taskService.getUserFromId(userId);
         model.addAttribute("user", user);
-        TaskAndSubtaskDTO task = taskService.getTaskAndSubTask(taskId);
+
+        Task task = taskService.getTaskById(taskId);
         model.addAttribute("task", task);
-        model.addAttribute("taskID", task.getProjectId());
+
         return "editTask";
     }
 
-    @PostMapping("/editTask/{taskId}")
-    public String updateTask(@PathVariable("taskId") int projectId, @ModelAttribute Task task) {
-        task.setProjectId(projectId);
-        taskService.editTask(task);
+    @PostMapping("/editTask")
+    public String updateProject(@ModelAttribute Task task, @RequestParam("projectId") int projectId) {
+        taskService.updateTask(task);
         return "redirect:/showProject/" + projectId;
     }
+
+
+
+
 
 
     @GetMapping(value = {"/deleteTask/{id}"})

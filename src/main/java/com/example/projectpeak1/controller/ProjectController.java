@@ -49,10 +49,11 @@ public class ProjectController {
         }
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
-        List<TaskAndSubtaskDTO> task = projectService.getTaskAndSubTask(projectId);
+        List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
+        model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
-        model.addAttribute("listOfTask", task);
+
 
         return "project";
     }

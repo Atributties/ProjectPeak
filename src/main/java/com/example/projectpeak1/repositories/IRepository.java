@@ -52,11 +52,12 @@ public interface IRepository {
 
     Task getTaskById(int id);
 
-    void editTask(Task task);
 
     List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId);
 
     void deleteTask(int taskId) throws LoginException;
+
+    User getUserFromTaskId(int taskId);
 
     void createSubtask(Subtask subtask, int taskId);
 
@@ -69,4 +70,10 @@ public interface IRepository {
     void deleteSubtask(int subtaskId) throws LoginException;
 
     TaskAndSubtaskDTO getTaskAndSubTask(int id);
+
+    int getProjectIdByTaskId(int taskId);
+
+    void editTask(Task task);
+
+    Project getProjectByTaskId(int taskId);
 }
