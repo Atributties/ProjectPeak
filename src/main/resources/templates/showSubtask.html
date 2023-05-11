@@ -24,8 +24,18 @@
         <td th:text="${subtask.subTaskStartDate}"></td>
         <td th:text="${subtask.subTaskEndDate}"></td>
         <td th:text="${subtask.status}"></td>
+
+
     </tr>
+
+
     </tbody>
+
+
 </table>
+
+<div class="flex items-center justify-between">
+    <a class="back" th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}">Back</a>
+</div>
 </body>
 </html>
