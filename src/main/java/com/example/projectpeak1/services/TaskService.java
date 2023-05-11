@@ -2,6 +2,7 @@ package com.example.projectpeak1.services;
 
 
 import com.example.projectpeak1.entities.Task;
+import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.IRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -34,5 +35,9 @@ public class TaskService {
 
     public void deleteTask(int taskId) throws LoginException {
         repository.deleteTask(taskId);
+    }
+
+    public User getUserFromId(int id){
+        return repository.getUserFromId(id);
     }
 }

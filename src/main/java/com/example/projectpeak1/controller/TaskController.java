@@ -1,6 +1,7 @@
 package com.example.projectpeak1.controller;
 
 import com.example.projectpeak1.entities.Task;
+import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.services.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,13 @@ public class TaskController {
 
 
     @GetMapping("/editTask/{taskId}")
-    public String editTask(@PathVariable("taskId") int taskId, Model model) {
+    public String editTask(HttpSession session,@PathVariable("taskId") int taskId, Model model) {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        User user = taskService.getUserFromId(userId);
+        model.addAttribute("user", user);
         Task task = taskService.getTaskById(taskId);
         model.addAttribute("task", task);
         model.addAttribute("taskID", task.getProjectId());
