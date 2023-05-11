@@ -1,6 +1,7 @@
 package com.example.projectpeak1.services;
 
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
@@ -25,6 +26,10 @@ public class TaskService {
 
     public Task getTaskById(int id){
         return repository.getTaskById(id);
+    }
+
+    public TaskAndSubtaskDTO getTaskAndSubTask(int id){
+        return repository.getTaskAndSubTask(id);
     }
 
     public void editTask(Task task){

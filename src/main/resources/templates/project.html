@@ -6,12 +6,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/styles.css}" rel="stylesheet">
-    <script>
-        function toggleSubtasks(taskId) {
-            const subtasksContainer = document.getElementById(`subtasks-${taskId}`);
-            subtasksContainer.classList.toggle('hidden');
-        }
-    </script>
 </head>
 <body>
 <div class="container">
@@ -40,34 +34,27 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="task : ${listOfTask}">
+            <th:block th:each="taskItem : ${listOfTask}">
                 <tr class="text-white text-center">
                     <td class="flex justify-center items-center">
-                            <p class="mr-2 text-center"><span th:text="${task.getTaskName()}"></span></p>
+                        <p class="mr-2 text-center"><span th:text="${taskItem.taskName}"></span></p>
                     </td>
-                    <td th:text="${task.getTaskDescription()}"></td>
-                    <td th:text="${task.getTaskStartDate()}"></td>
-                    <td th:text="${task.getTaskEndDate()}"></td>
-                    <td th:text="${task.getStatus()}"></td>
-                    <td><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}"
-                           class="btn-green"><i class="fa fa-pencil-square-o fa-lg"></i></a></td>
-                    <td><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}"
+                    <td th:text="${taskItem.taskDescription}"></td>
+                    <td th:text="${taskItem.taskStartDate}"></td>
+                    <td th:text="${taskItem.taskEndDate}"></td>
+                    <td th:text="${taskItem.status}"></td>
+                    <td>
+                        <a th:href="@{/editTask/{id}(id=${taskItem.getTaskId()})}" class="btn-green">
+                            <i class="fa fa-pencil-square-o fa-lg"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/deleteTask/{id}(id=${taskItem.taskId})}"
                            onclick="return confirm('Are you sure you want to delete this task?')"
-                           class="btn-green"><i class="fa fa-trash fa-lg"></i></a></td>
-                </tr>
-                <tr class="hidden text-white text-center"
-                    id="subtasks-${task.getTaskId()}"
-                    th:each="subtask : ${task.getSubTaskList()}">
-                    <td th:text="${subtask.getSubTaskName()}"></td>
-                    <td th:text="${subtask.getSubTaskDescription()}"></td>
-                    <td th:text="${subtask.getSubTaskStartDate()}"></td>
-                    <td th:text="${subtask.getSubTaskEndDate()}"></td>
-                    <td th:text="${subtask.getStatus()}"></td>
-                    <td><a th:href="@{/editTask/{id}(id=${task.getTaskId()})}"
-                           class="btn-green"><i class="fa fa-pencil-square-o fa-lg"></i></a></td>
-                    <td><a th:href="@{/deleteTask/{id}(id=${task.getTaskId()})}"
-                           onclick="return confirm('Are you sure you want to delete this task?')"
-                           class="btn-green"><i class="fa fa-trash fa-lg"></i></a></td>
+                           class="btn-green">
+                            <i class="fa fa-trash fa-lg"></i>
+                        </a>
+                    </td>
                 </tr>
             </th:block>
             </tbody>

@@ -11,24 +11,24 @@
 <div class="container">
   <div th:replace="~{components/headerUser :: site-header-user}"></div>
   <main class="flex-grow flex items-center justify-center">
-    <form th:action="@{/editTask/{id}(id=${task.projectId})}" th:object="${task}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
+    <form th:action="@{/editTask/{taskId}(taskId=${task.taskId})}" th:object="${task}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
     <h1>Edit Task</h1>
       <input type="hidden" th:field="*{taskId}"/>
       <div class="mb-4">
-        <label class="label" for="projectName">Task Name:</label>
-        <input class="input" type="text" id="projectName" th:field="*{taskName}" required>
+        <label class="label" for="taskName">Task Name:</label>
+        <input class="input" type="text" id="taskName" th:field="*{taskName}" required>
       </div>
       <div class="mb-4">
-        <label class="label" for="projectDescription">Task Description:</label>
-        <textarea class="input" id="projectDescription" th:field="*{taskDescription}" required></textarea>
+        <label class="label" for="taskDescription">Task Description:</label>
+        <textarea class="input" id="taskDescription" th:field="*{taskDescription}" required></textarea>
       </div>
       <div class="mb-4">
-        <label class="label" for="projectStartDate">Start Date:</label>
-        <input class="input" type="date" id="projectStartDate" th:field="*{taskStartDate}" required>
+        <label class="label" for="taskStartDate">Start Date:</label>
+        <input class="input" type="date" id="taskStartDate" th:field="*{taskStartDate}" required>
       </div>
       <div class="mb-6">
-        <label class="label" for="projectEndDate">End Date:</label>
-        <input class="input" type="date" id="projectEndDate" th:field="*{taskEndDate}" required>
+        <label class="label" for="taskEndDate">End Date:</label>
+        <input class="input" type="date" id="taskEndDate" th:field="*{taskEndDate}" required>
       </div>
 
       <div class="mb-4">

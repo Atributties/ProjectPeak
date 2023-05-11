@@ -54,7 +54,7 @@ public interface IRepository {
 
     void editTask(Task task);
 
-    List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId);
+    List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId);
 
     void deleteTask(int taskId) throws LoginException;
 
@@ -67,4 +67,6 @@ public interface IRepository {
     int getProjectIdBySubtaskId(int subtaskId);
 
     void deleteSubtask(int subtaskId) throws LoginException;
+
+    TaskAndSubtaskDTO getTaskAndSubTask(int id);
 }

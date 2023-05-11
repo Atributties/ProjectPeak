@@ -1,5 +1,6 @@
 package com.example.projectpeak1.controller;
 
+import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
@@ -56,14 +57,14 @@ public class TaskController {
         }
         User user = taskService.getUserFromId(userId);
         model.addAttribute("user", user);
-        Task task = taskService.getTaskById(taskId);
+        TaskAndSubtaskDTO task = taskService.getTaskAndSubTask(taskId);
         model.addAttribute("task", task);
         model.addAttribute("taskID", task.getProjectId());
         return "editTask";
     }
 
-    @PostMapping("/editTask/{id}")
-    public String updateTask(@PathVariable("id") int projectId, @ModelAttribute Task task) {
+    @PostMapping("/editTask/{taskId}")
+    public String updateTask(@PathVariable("taskId") int projectId, @ModelAttribute Task task) {
         task.setProjectId(projectId);
         taskService.editTask(task);
         return "redirect:/showProject/" + projectId;

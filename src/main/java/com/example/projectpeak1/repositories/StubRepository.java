@@ -120,7 +120,7 @@ public class StubRepository implements IRepository {
 
     }
     @Override
-    public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId) {
+    public List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId) {
         return null;
     }
 
@@ -152,5 +152,10 @@ public class StubRepository implements IRepository {
     @Override
     public void deleteSubtask(int subtaskId) throws LoginException {
 
+    }
+
+    @Override
+    public TaskAndSubtaskDTO getTaskAndSubTask(int id) {
+        return null;
     }
 }

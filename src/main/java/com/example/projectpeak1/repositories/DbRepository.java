@@ -348,7 +348,7 @@ public class DbRepository implements IRepository {
     }
 
     @Override
-    public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId) {
+    public List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId) {
         try {
             List<TaskAndSubtaskDTO> taskAndSubtaskDTOs = new ArrayList<>();
             Connection con = DbManager.getConnection();
@@ -526,6 +526,56 @@ public class DbRepository implements IRepository {
             throw new LoginException(ex.getMessage());
         }
     }
+
+    @Override
+    public TaskAndSubtaskDTO getTaskAndSubTask(int taskId) {
+        try {
+            Connection con = DbManager.getConnection();
+
+            // Retrieve the task
+            String taskSql = "SELECT * FROM Task WHERE task_id = ?;";
+            PreparedStatement taskPs = con.prepareStatement(taskSql);
+            taskPs.setInt(1, taskId);
+            ResultSet taskRs = taskPs.executeQuery();
+
+            if (taskRs.next()) {
+                int projectId = taskRs.getInt("project_id");
+                String taskName = taskRs.getString("name");
+                String taskDescription = taskRs.getString("description");
+                LocalDate taskStartDate = taskRs.getDate("start_date").toLocalDate();
+                LocalDate taskEndDate = taskRs.getDate("end_date").toLocalDate();
+                String taskStatus = taskRs.getString("status");
+
+                // Retrieve the subtasks for the task
+                String subtaskSql = "SELECT * FROM Subtask WHERE task_id = ?;";
+                PreparedStatement subtaskPs = con.prepareStatement(subtaskSql);
+                subtaskPs.setInt(1, taskId);
+                ResultSet subtaskRs = subtaskPs.executeQuery();
+
+                List<Subtask> subtasks = new ArrayList<>();
+                while (subtaskRs.next()) {
+                    int subtaskId = subtaskRs.getInt("subtask_id");
+                    String subtaskName = subtaskRs.getString("name");
+                    String subtaskDescription = subtaskRs.getString("description");
+                    LocalDate subtaskStartDate = subtaskRs.getDate("start_date").toLocalDate();
+                    LocalDate subtaskEndDate = subtaskRs.getDate("end_date").toLocalDate();
+                    String subtaskStatus = subtaskRs.getString("status");
+                    subtasks.add(new Subtask(subtaskId, subtaskName, subtaskDescription, subtaskStartDate, subtaskEndDate, subtaskStatus, taskId));
+                }
+
+                return new TaskAndSubtaskDTO(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, projectId, subtasks);
+            }
+
+            // No task found for the provided task ID
+            return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 
     public void addTask(Task task, int projectId) {
         try {
