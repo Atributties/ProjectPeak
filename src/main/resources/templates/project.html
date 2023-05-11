@@ -44,8 +44,6 @@
                 <tr class="text-white text-center">
                     <td class="flex justify-center items-center">
                             <p class="mr-2 text-center"><span th:text="${task.getTaskName()}"></span></p>
-                            <a onclick="toggleSubtasks('${task.getTaskId()}')" class="hover:text-green-500 cursor-pointer"
-                               type="button"><i class="fa fa-chevron-down"></i></a>
                     </td>
                     <td th:text="${task.getTaskDescription()}"></td>
                     <td th:text="${task.getTaskStartDate()}"></td>
