@@ -37,19 +37,19 @@
                 </thead>
                 <tbody>
                 <tr th:each="taskAndSubtask : ${listOfTaskAndSub}">
-                    <td th:text="${taskAndSubtask.id}"></td>
-                    <td th:text="${taskAndSubtask.name}"></td>
-                    <td th:text="${taskAndSubtask.description}"></td>
-                    <td th:text="${taskAndSubtask.startDate}"></td>
-                    <td th:text="${taskAndSubtask.endDate}"></td>
-                    <td th:text="${taskAndSubtask.status}"></td>
-                    <td class="flex items-center justify-between">
+                    <td class="text-white" th:text="${taskAndSubtask.id}"></td>
+                    <td class="text-white" th:text="${taskAndSubtask.name}"></td>
+                    <td class="text-white" th:text="${taskAndSubtask.description}"></td>
+                    <td class="text-white" th:text="${taskAndSubtask.startDate}"></td>
+                    <td class="text-white" th:text="${taskAndSubtask.endDate}"></td>
+                    <td class="text-white" th:text="${taskAndSubtask.status}"></td>
+                    <td class="flex flex-row items-center justify-between">
                         <a th:href="@{/showSubTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Show Subtasks</a>
                     </td>
-                    <td class="flex items-center justify-between">
+                    <td class="flex flex-row items-center justify-between">
                         <a th:href="@{/editTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Edit Task</a>
                     </td>
-                    <td class="flex items-center justify-between">
+                    <td class="flex flex-row items-center justify-between">
                         <a th:href="@{/deleteTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Delete Task</a>
                     </td>
                 </tr>
