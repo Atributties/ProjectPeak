@@ -109,27 +109,37 @@ public class DbRepository implements IRepository {
     @Override
     public void deleteUser(int userId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
-            // delete all wishes associated with the user
-            String SQL = "DELETE FROM WISH WHERE WISHLIST_ID IN " +
-                    "(SELECT WISHLIST_ID FROM WISHLIST WHERE USER_ID = ?)";
+            // delete all subtasks associated with the user's tasks
+            String SQL = "DELETE FROM subtask WHERE task_id IN " +
+                    "(SELECT task_id FROM task WHERE project_id IN " +
+                    "(SELECT project_id FROM project WHERE user_id = ?))";
             try (PreparedStatement stmt = con.prepareStatement(SQL)) {
                 stmt.setInt(1, userId);
                 stmt.executeUpdate();
             }
 
-            // delete all wishlists associated with the user
-            SQL = "DELETE FROM WISHLIST WHERE USER_ID = ?";
+            // delete all tasks associated with the user's projects
+            SQL = "DELETE FROM task WHERE project_id IN " +
+                    "(SELECT project_id FROM project WHERE user_id = ?)";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+
+            // delete all projects associated with the user
+            SQL = "DELETE FROM project WHERE user_id = ?";
             try (PreparedStatement stmt = con.prepareStatement(SQL)) {
                 stmt.setInt(1, userId);
                 stmt.executeUpdate();
             }
 
             // delete the user record
-            SQL = "DELETE FROM USER WHERE USER_ID = ?";
+            SQL = "DELETE FROM user WHERE user_id = ?";
             try (PreparedStatement stmt = con.prepareStatement(SQL)) {
                 stmt.setInt(1, userId);
                 stmt.executeUpdate();
             }
+
 
         } catch (SQLException ex) {
             throw new LoginException(ex.getMessage());
