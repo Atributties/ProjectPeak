@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Subtask Details</title>
+    <title>Subtask Details - Project Peak</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
@@ -32,7 +32,7 @@
     </tbody>
 </table>
     <div class="flex items-center justify-between mt-2">
-        <a class="btn-green">Add Subtask</a>
+        <a th:href="@{/addSubtask}" class="btn-green">Add Subtask</a>
         <a class="back" th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}">Back</a>
     </div>
 <div th:replace="~{components/footer :: site-footer}"></div>
