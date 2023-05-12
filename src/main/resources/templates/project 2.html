@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Peak - Project Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div>
+    <a th:text="${project.getProjectName()}"></a>
+    <a th:href="@{/userFrontend}">
+        <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Return
+        </button>
+    </a>
+</div>
+<div class="p-6">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">
+        Project Details
+    </h1>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">
+            Name:
+        </h2>
+        <p class="text-gray-700">
+            <span th:text="${project.getProjectName()}"></span>
+        </p>
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">
+            Description:
+        </h2>
+        <p class="text-gray-700">
+            <span th:text="${project.getProjectDescription()}"></span>
+        </p>
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">
+            Start Date:
+        </h2>
+        <p class="text-gray-700">
+            <span th:text="${project.getProjectStartDate()}"></span>
+        </p>
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">
+            End Date:
+        </h2>
+        <p class="text-gray-700">
+            <span th:text="${project.getProjectEndDate()}"></span>
+        </p>
+    </div>
+</div>
+</body>
+</html>

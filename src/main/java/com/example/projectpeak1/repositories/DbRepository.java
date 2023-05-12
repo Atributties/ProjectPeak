@@ -173,6 +173,7 @@ public class DbRepository implements IRepository {
             e.printStackTrace();
         }
     }
+
     @Override
     public List<Project> getAllProjectById(int userId) {
         try {
@@ -195,20 +196,6 @@ public class DbRepository implements IRepository {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
-        }
-    }
-
-    @Override
-    public void deleteProject(int projectId) throws LoginException {
-        try (Connection con = DbManager.getConnection()) {
-            // delete the project record
-            String SQL = "DELETE FROM project WHERE project_id = ?";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, projectId);
-                stmt.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            throw new LoginException(ex.getMessage());
         }
     }
 
@@ -250,6 +237,20 @@ public class DbRepository implements IRepository {
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteProject(int projectId) throws LoginException {
+        try (Connection con = DbManager.getConnection()) {
+            // delete the project record
+            String SQL = "DELETE FROM project WHERE project_id = ?";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, projectId);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
         }
     }
 

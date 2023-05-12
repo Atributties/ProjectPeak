@@ -11,7 +11,7 @@ import static com.jayway.jsonpath.internal.path.PathCompiler.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class LoginApplicationTests {
+public class LoginRepositoryApplicationTests {
 
     @Autowired
     private DbRepository dbRepository;
