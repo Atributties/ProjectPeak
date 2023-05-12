@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Project Peak - Project Details</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
@@ -56,7 +55,7 @@
                 </tbody>
             </table>
 
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between mt-2">
                 <a th:href="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" class="btn-green">Add Task</a>
                 <a class="back" th:href="@{/userFrontend}">Back</a>
             </div>

@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Subtask Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Subtask Details</h1>
+<div class="container">
+<div th:replace="~{components/headerUser :: site-header-user}"></div>
+    <h1>Subtask details for <span th:text="${taskAndSubtask.getName()}"></span></h1>
+    <hr class="mt-8 border-t border-gray-300 py-4 text-center">
 <table>
     <thead>
     <tr>
-        <th>Subtask ID</th>
         <th>Subtask Name</th>
         <th>Subtask Description</th>
         <th>Start Date</th>
@@ -19,23 +23,19 @@
     </thead>
     <tbody>
     <tr th:each="subtask : ${taskAndSubtask.subTaskList}">
-        <td th:text="${subtask.subTaskName}"></td>
-        <td th:text="${subtask.subTaskDescription}"></td>
-        <td th:text="${subtask.subTaskStartDate}"></td>
-        <td th:text="${subtask.subTaskEndDate}"></td>
-        <td th:text="${subtask.status}"></td>
-
-
+        <td class="text-white" th:text="${subtask.subTaskName}"></td>
+        <td class="text-white"  th:text="${subtask.subTaskDescription}"></td>
+        <td class="text-white"  th:text="${subtask.subTaskStartDate}"></td>
+        <td class="text-white"  th:text="${subtask.subTaskEndDate}"></td>
+        <td class="text-white"  th:text="${subtask.status}"></td>
     </tr>
-
-
     </tbody>
-
-
 </table>
-
-<div class="flex items-center justify-between">
-    <a class="back" th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}">Back</a>
+    <div class="flex items-center justify-between mt-2">
+        <a class="btn-green">Add Subtask</a>
+        <a class="back" th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}">Back</a>
+    </div>
+<div th:replace="~{components/footer :: site-footer}"></div>
 </div>
 </body>
 </html>

@@ -4,6 +4,7 @@ package com.example.projectpeak1.controller;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
+import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.services.SubtaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -40,8 +41,14 @@ public class SubtaskController {
     }
 
     @GetMapping("/showSubTask/{taskId}")
-    public String showSubtaskDetails(@PathVariable("taskId") int taskId, Model model) {
-        TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId); // Replace with your actual service method to retrieve the TaskAndSubtaskDTO by ID
+    public String showSubtaskDetails(HttpSession session, @PathVariable("taskId") int taskId, Model model) {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        User user = subtaskService.getUserFromId(userId);
+        model.addAttribute("user", user);
+        TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId);
         model.addAttribute("taskAndSubtask", taskAndSubtask);
         return "showSubtask";
     }
