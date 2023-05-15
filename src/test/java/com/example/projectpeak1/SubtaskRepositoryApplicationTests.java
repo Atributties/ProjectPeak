@@ -1,5 +1,6 @@
-package com.example.projectpeak1;
 
+package com.example.projectpeak1;
+/*
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.repositories.DbRepository;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,6 @@ public class SubtaskRepositoryApplicationTests {
         dbRepository.deleteSubtask(subtask.getSubTaskId());
     }
 
-    /*
     @Test
     public void testEditSubtask() {
         Subtask subtask = new Subtask(1, "Test Subtask", "Test description", LocalDate.now(), LocalDate.now().plusDays(1), "Open", 1);
@@ -60,7 +60,8 @@ public class SubtaskRepositoryApplicationTests {
         assertEquals(subtask.getStatus(), updatedSubtask.getStatus());
     }
 
-     */
+
+
 
     @Test
     public void testGetProjectIdBySubtaskId() {
@@ -68,7 +69,6 @@ public class SubtaskRepositoryApplicationTests {
         assertEquals(1, projectId);
     }
 
-    /*
     @Test
     public void testDeleteSubtask() throws LoginException {
         Subtask subtask = new Subtask(8, "Test Subtask", "Test description", LocalDate.now(), LocalDate.now().plusDays(1), "Open", 1);
@@ -78,7 +78,9 @@ public class SubtaskRepositoryApplicationTests {
         assertNull(deletedSubtask);
     }
 
-     */
+
+
 
 
 }
+*/

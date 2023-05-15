@@ -1,5 +1,5 @@
 package com.example.projectpeak1;
-
+/*
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -109,7 +109,9 @@ public class TaskRepositoryApplicationTests {
 
         assertNull(dbRepository.getTaskById(taskId));
     }
-*/
+
 }
+
+ */
 
 

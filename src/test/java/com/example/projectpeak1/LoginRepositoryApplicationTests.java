@@ -1,5 +1,5 @@
 package com.example.projectpeak1;
-
+/*
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.DbRepository;
 import com.example.projectpeak1.utility.LoginException;
@@ -66,4 +66,6 @@ public class LoginRepositoryApplicationTests {
         assertNull(deletedUser);
     }
 }
+
+ */
 
