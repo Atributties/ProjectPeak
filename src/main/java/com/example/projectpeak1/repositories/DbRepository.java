@@ -106,35 +106,16 @@ public class DbRepository implements IRepository {
             throw new LoginException(ex.getMessage());
         }
     }
-    @Override
-    public void deleteUser(int userId) throws LoginException {
-        try (Connection con = DbManager.getConnection()) {
-            // delete all wishes associated with the user
-            String SQL = "DELETE FROM WISH WHERE WISHLIST_ID IN " +
-                    "(SELECT WISHLIST_ID FROM WISHLIST WHERE USER_ID = ?)";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
-
-            // delete all wishlists associated with the user
-            SQL = "DELETE FROM WISHLIST WHERE USER_ID = ?";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
-
-            // delete the user record
-            SQL = "DELETE FROM USER WHERE USER_ID = ?";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
-
+    public void deleteUser(int userId) {
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement ps = con.prepareStatement("DELETE FROM User WHERE user_id = ?")) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
         } catch (SQLException ex) {
-            throw new LoginException(ex.getMessage());
+            ex.printStackTrace();
         }
     }
+
 
 
 
@@ -645,8 +626,22 @@ public class DbRepository implements IRepository {
         }
     }
 
-
-
+    @Override
+    public void updateUser(User user) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE User SET fullname = ?, email = ?, user_password = ?, role = ? WHERE user_id = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getRole());
+            ps.setInt(5, user.getUserId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
 }

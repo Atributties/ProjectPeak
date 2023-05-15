@@ -49,8 +49,11 @@
                         <a th:href="@{/editTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Edit Task</a>
                     </td>
                     <td class="flex flex-row items-center justify-between">
-                        <a th:href="@{/deleteTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Delete Task</a>
+                        <a th:href="@{/deleteTask/{id}(id=${taskAndSubtask.getId()})}"
+                           class="btn-green"
+                           onclick="return confirm('Are you sure you want to delete this task?')">Delete Task</a>
                     </td>
+
                 </tr>
                 </tbody>
             </table>
