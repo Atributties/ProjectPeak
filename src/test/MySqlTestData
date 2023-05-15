@@ -1,0 +1,76 @@
+DROP DATABASE IF EXISTS projectPeak;
+CREATE DATABASE projectPeak;
+USE projectPeak;
+
+CREATE TABLE User (
+  user_id INT AUTO_INCREMENT,
+  fullname VARCHAR(255),
+  email VARCHAR(255),
+  user_password VARCHAR(255),
+  role VARCHAR(255),
+  PRIMARY KEY(user_id)
+);
+
+CREATE TABLE Project (
+  project_id INT AUTO_INCREMENT,
+  name VARCHAR(255),
+  description VARCHAR(255),
+  start_date DATE,
+  end_date DATE,
+  user_id INT,
+  PRIMARY KEY(project_id),
+  FOREIGN KEY(user_id) REFERENCES User(user_id)
+);
+
+CREATE TABLE Task (
+  task_id INT AUTO_INCREMENT,
+  task_number int, 
+  name VARCHAR(255),
+  description VARCHAR(255),
+  start_date DATE,
+  end_date DATE,
+  status VARCHAR(255),
+  project_id INT,
+  PRIMARY KEY(task_id),
+  FOREIGN KEY(project_id) REFERENCES Project(project_id)
+);
+
+CREATE TABLE Subtask (
+  subtask_id INT AUTO_INCREMENT,
+  subtask_number double,
+  name VARCHAR(255),
+  description VARCHAR(255),
+  start_date DATE,
+  end_date DATE,
+  status VARCHAR(255),
+  task_id INT,
+  PRIMARY KEY(subtask_id),
+  FOREIGN KEY(task_id) REFERENCES Task(task_id)
+);
+INSERT INTO User (fullname, email, user_password, role)
+VALUES
+
+    ('John Doe', 'johndoe@example.com', 'password123', 'admin'),
+    ('Jane Doe', 'janedoe@example.com', 'password456', 'user');
+
+INSERT INTO Project (name, description, start_date, end_date, user_id)
+VALUES
+    ('Project 1', 'Description for project 1', '2022-01-01', '2022-06-30', 1),
+    ('Project 2', 'Description for project 2', '2022-02-01', '2022-07-31', 2);
+
+INSERT INTO Task (task_number, name, description, start_date, end_date, status, project_id)
+VALUES
+    (1, 'Task 1', 'Description for task 1', '2022-01-01', '2022-01-31', 'in progress', 1),
+    (2, 'Task 2', 'Description for task 2', '2022-02-01', '2022-02-28', 'not started', 1),
+    (1, 'Task 3', 'Description for task 3', '2022-02-01', '2022-02-28', 'in progress', 2),
+    (1, 'Task 4', 'Description for task 4', '2022-03-01', '2022-03-31', 'not started', 2);
+
+INSERT INTO Subtask (subtask_number, name, description, start_date, end_date, status, task_id)
+VALUES
+    (1.1, 'Subtask 1', 'Description for subtask 1', '2022-01-01', '2022-01-15', 'complete', 1),
+    (1.2, 'Subtask 2', 'Description for subtask 2', '2022-01-16', '2022-01-31', 'in progress', 1),
+    (1.1, 'Subtask 3', 'Description for subtask 3', '2022-02-01', '2022-02-14', 'complete', 2),
+    (1.2, 'Subtask 4', 'Description for subtask 4', '2022-02-15', '2022-02-28', 'not started', 2),
+    (1.1, 'Subtask 5', 'Description for subtask 5', '2022-03-01', '2022-03-15', 'in progress', 3),
+    (1.2, 'Subtask 6', 'Description for subtask 6', '2022-03-16', '2022-03-31', 'not started', 3),
+    (1.1, 'Subtask 7', 'Description for subtask 7', '2022-04-01', '2022-04-15', 'not started', 4);

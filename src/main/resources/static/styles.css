@@ -1,0 +1,202 @@
+.bg-main-blue{
+    background-color: #0E2355;
+}
+
+.bg-green-700{
+    background-color: #09F885;
+}
+
+#img-front{
+    max-width: 40%;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* BODY BACKGROUND */
+body {
+    background-color: #0E2355/* bg-main-blue. Replace this comment with the correct color */;
+    min-height: 100vh; /* min-h-screen */
+}
+
+h1 {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700; /* font-bold */
+    color: #ffffff; /* text-white */
+    text-align: center; /* text-center */
+    margin-bottom: 1.5rem; /* mb-6 */
+}
+
+h2 {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    margin-top: 0.5rem; /* my-2 */
+    margin-bottom: 0.5rem; /* my-2 */
+    color: #ffffff; /* text-white */
+}
+
+
+p {
+    color: white;
+}
+
+/* CONTAINER */
+.container {
+    display: flex; /* flex */
+    flex-direction: column; /* flex-col */
+    min-height: 100vh; /* min-h-screen */
+    width: 100%; /* container */
+    margin-left: auto; /* mx-auto */
+    margin-right: auto; /* mx-auto */
+    padding: 2rem 1rem 1rem; /* px-4 pt-8 pb-4 */
+    box-sizing: border-box; /* To include padding in width calculation */
+}
+
+
+
+/*TABLE */
+th {
+    padding: 1rem 0.5rem; /* px-4 py-2 */
+    color: white; /* text-white */
+}
+td {
+    border: 1px solid #e5e7eb; /* border */
+    padding: 1rem 0.5rem; /* px-4 py-2 */
+}
+
+
+/* BACK BUTTON */
+.back {
+    display: inline-block; /* inline-block */
+    vertical-align: baseline; /* align-baseline */
+    font-weight: bold; /* font-bold */
+    font-size: 0.875rem; /* text-sm */
+    color: white; /* text-white */
+    text-decoration: none; /* to remove the underline */
+}
+
+
+
+/* BUTTONS */
+.btn-green {
+    background-color: #228B22; /* bg-green-500 */
+    color: white; /* text-white */
+    font-weight: bold; /* font-bold */
+    padding: 0.5rem 1rem; /* py-2 px-4 */
+    border-radius: 0.25rem; /* rounded */
+    text-decoration: none; /* to remove the underline */
+    transition: background-color 0.2s ease; /* for the hover effect */
+}
+
+.btn-green:hover {
+    background-color: #48BB78; /* hover:bg-green-700 */
+}
+
+.btn-red {
+    background-color: #ff1210;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-red:hover {
+    background-color: #f8403e;
+}
+
+.back-btn {
+    background-color: #2d2c2c; /* bg-green-500 */
+    color: white; /* text-white */
+    font-weight: bold; /* font-bold */
+    padding: 0.5rem 1rem; /* py-2 px-4 */
+    border-radius: 0.25rem; /* rounded */
+    text-decoration: none; /* to remove the underline */
+    transition: background-color 0.2s ease; /* for the hover effect */
+}
+
+.back-btn:hover {
+    background-color: #6b726e; /* hover:bg-green-700 */
+}
+
+/* LABEL */
+.label {
+    display: block; /* block */
+    color: white; /* text-white */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: bold; /* font-bold */
+    margin-bottom: 0.5rem; /* mb-2 */
+}
+
+
+
+/* INPUT */
+.input {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow */
+    border: 1px solid #E5E7EB; /* appearance-none border */
+    border-radius: 0.25rem; /* rounded */
+    width: 100%; /* w-full */
+    padding: 0.5rem 0.75rem; /* py-2 px-3 */
+    color: #4A5568; /* text-gray-700 */
+    line-height: 1.25; /* leading-tight */
+    transition: box-shadow 0.15s ease-in-out, outline 0.15s ease-in-out; /* for the focus effects */
+    outline: none;
+}
+
+.input:focus {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* focus:shadow-outline */
+    outline: none; /* focus:outline-none */
+}
+
+
+/*ICONS */
+.icon {
+    color: white; /* text-white */
+    font-weight: bold; /* font-bold */
+    padding: 0.25rem 0.25rem 0.25rem 0.5rem; /* py-1 pr-1 pl-2 */
+    border-radius: 0.25rem; /* rounded */
+    display: flex; /* d-flex */
+    transition: background-color 0.2s ease; /* for the hover effect */
+}
+
+.icon:hover {
+    background-color: #48BB78; /* hover:bg-green-500 */
+}
+
+/* SELECT CLASS */
+.select-class {
+    display: block; /* block */
+    appearance: none; /* appearance-none */
+    width: 100%; /* w-full */
+    background-color: #edf2f7; /* bg-gray-200 */
+    border: 1px solid #edf2f7; /* border border-gray-200 */
+    color: #4a5568; /* text-gray-700 */
+    padding: 0.75rem 2rem 0.75rem 1rem; /* py-3 px-4 pr-8 */
+    border-radius: 0.25rem; /* rounded */
+    line-height: 1.5; /* leading-tight */
+}
+
+.select-class:focus {
+    outline: none; /* focus:outline-none */
+    background-color: #ffffff; /* focus:bg-white */
+    border-color: #718096; /* focus:border-gray-500 */
+}
+
+
+/*FOOTER */
+.footer {
+    margin-top: 2rem; /* mt-8 */
+    border-top: 1px solid #D1D5DB; /* border-t border-gray-300 */
+    padding: 1rem 0; /* py-4 */
+    text-align: center; /* text-center */
+    color: white; /* text-white */
+}
+
+

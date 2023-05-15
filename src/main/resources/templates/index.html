@@ -1,17 +1,22 @@
 <!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/styles.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Peak</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
 <body>
 <div>
-    <a th:href="@{/login}" >Login</a>
-    <a th:href="@{/signup}" >Signup</a>
-</div>
-<div>
-    &copy; 2023 project Peak
+    <div class="container">
+        <div th:replace="~{components/headerFront :: site-header}"></div>
+        <main class="flex-grow flex items-center justify-center">
+            <img src="/images/logo-lg.png" alt="Logo" id="img-front" />
+        </main>
+        <div th:replace="~{components/footer :: site-footer}"></div>
+    </div>
 </div>
 </body>
 </html>

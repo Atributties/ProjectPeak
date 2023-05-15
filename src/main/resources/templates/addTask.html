@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Task - Project Peak</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{components/headerUser :: site-header-user}"></div>
+    <main class="flex-grow flex items-center justify-center">
+        <form th:action="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" th:object="${task}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
+            <h1>Create a Task for <span th:text="${project.getProjectName()}"></span></h1>
+            <div class="mb-4">
+                <label class="label" for="taskName">Task Name:</label>
+                <input class="input" type="text" id="taskName" name="taskName" th:field="*{taskName}">
+            </div>
+            <div class="mb-4">
+                <label class="label" for="taskDescription">Description:</label>
+                <textarea class="input" id="taskDescription" name="taskDescription" th:field="*{taskDescription}" rows="2" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="label" for="taskStartDate">Start Date:</label>
+                <input class="input" type="date" id="taskStartDate" name="taskStartDate" th:field="*{taskStartDate}" required>
+            </div>
+            <div class="mb-6">
+                <label class="label" for="taskEndDate">End Date:</label>
+                <input class="input" type="date" id="taskEndDate" name="taskEndDate" th:field="*{taskEndDate}" required>
+            </div>
+            <div class="mb-4">
+                <label class="label" for="status">Status:</label>
+                <select class="select-class" id="status" th:field="*{status}">
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div class="flex items-center ">
+                <button type="submit" class="btn-green mr-2">Add task</button>
+                <a class="back-btn" th:href="@{/showProject/{projectId}(projectId=${project.getProjectId()})}">Back</a>
+            </div>
+        </form>
+    </main>
+    <div th:replace="~{components/footer :: site-footer}"></div>
+</div>
+</body>
+</html>

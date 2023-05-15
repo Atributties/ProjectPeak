@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subtask Details - Project Peak</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<div th:replace="~{components/headerUser :: site-header-user}"></div>
+    <h1>Subtask details for <span th:text="${taskAndSubtask.getName()}"></span></h1>
+    <hr class="mt-8 border-t border-gray-300 py-4 text-center">
+<table>
+    <thead>
+    <tr>
+        <th>Subtask Name</th>
+        <th>Subtask Description</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th>Edit subtask</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="items-center" th:each="subtask : ${taskAndSubtask.subTaskList}">
+        <td class="text-white" th:text="${subtask.subTaskName}"></td>
+        <td class="text-white"  th:text="${subtask.subTaskDescription}"></td>
+        <td class="text-white"  th:text="${subtask.subTaskStartDate}"></td>
+        <td class="text-white"  th:text="${subtask.subTaskEndDate}"></td>
+        <td class="text-white"  th:text="${subtask.status}"></td>
+        <td><a th:href="@{/editSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-green">Edit Subtasks</a></td>
+        <td><a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-red" onclick="return confirm('Are you sure you want to delete this task?')">Delete Subtask</a></td>
+    </tr>
+    </tbody>
+</table>
+    <div class="flex items-center mt-2">
+        <a th:href="@{/createSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green mr-2">Add Subtask</a>
+        <a th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}" class="back-btn">Back</a>
+    </div>
+<div th:replace="~{components/footer :: site-footer}"></div>
+</div>
+</body>
+</html>

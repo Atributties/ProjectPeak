@@ -2,38 +2,54 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Project Peak</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/styles.css}" rel="stylesheet">
-    <title>Sign up Page</title>
 </head>
 <body>
+<div class="container">
+    <div th:replace="~{components/headerFront :: site-header}"></div>
+    <main class="flex-grow flex items-center justify-center">
+        <form class="bg-main-blue p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/signup}" th:object="${user}" method="post" onsubmit="return validatePasswords()">
+            <div class="mb-4">
+                <label class="label" for="email">Email:</label>
+                <input class="input" id="email" type="email" th:field="*{email}" required>
+            </div>
+            <div class="mb-4">
+                <label class="label" for="fullname">Full Name:</label>
+                <input class="input" id="fullname" type="text" th:field="*{fullName}" required>
+            </div>
+            <div class="mb-4">
+                <label class="label" for="password1">Password:</label>
+                <input class="input" id="password1" type="password" th:field="*{password}" required>
+            </div>
+            <div class="mb-6">
+                <label class="label" for="password2">Retype Password:</label>
+                <input class="input" id="password2" type="password" name="passwordConfirm" required>
+            </div>
+            <div class="flex items-center ">
+                <button type="submit" class="btn-green mr-2">Sign up</button>
+                <a class="back-btn" th:href="@{/}">Back</a>
+            </div>
+        </form>
 
-<form th:action="@{/signup}" th:object="${user}" method="post">
-    <h1 class="loginh1">Sign up </h1>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required>
-    </div>
-    <div>
-        <label for="fullname">Full Name:</label>
-        <input type="text" id="fullname" th:field="*{fullName}" required>
-    </div>
-    <div>
-        <label for="password1">Password:</label>
-        <input type="password" id="password1" th:field="*{password}" required>
-    </div>
-    <div>
-        <label for="password2"> Retype Password:</label>
-        <input type="password" id="password2" name="passwordConfirm" required>
-        <div th:if="${errorSignup}" class="error-message" th:text="${errorSignup}"></div>
+        <script>
+            function validatePasswords() {
+                const password1 = document.getElementById("password1").value;
+                const password2 = document.getElementById("password2").value;
 
-    </div>
-    <div>
-        <button type="submit" class="loginbtn" value="Sign up">Login</button>
-        <a th:href="@{/}"><button type="button" class="loginbtn">Back</button></a>
-    </div>
-</form>
-<div class="copyright">
-    &copy; 2023 Project Peak. All rights reserved.
+                if (password1 !== password2) {
+                    alert("Passwords do not match.");
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
+
+    </main>
+    <div th:replace="~{components/footer :: site-footer}"></div>
 </div>
 </body>
 </html>

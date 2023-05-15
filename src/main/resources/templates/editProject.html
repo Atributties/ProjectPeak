@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Project - Project Peak</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{components/headerUser :: site-header-user}"></div>
+    <main class="flex-grow flex items-center justify-center">
+        <form th:action="@{/editProject}" th:object="${project}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
+            <h1>Edit Project</h1>
+            <input type="hidden" th:field="*{projectId}"/>
+            <div class="mb-4">
+                <label class="label" for="projectName">Project Name:</label>
+                <input class="input" type="text" id="projectName" th:field="*{projectName}" required>
+            </div>
+            <div class="mb-4">
+                <label class="label" for="projectDescription">Project Description:</label>
+                <textarea class="input" id="projectDescription" th:field="*{projectDescription}" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="label" for="projectStartDate">Start Date:</label>
+                <input class="input" type="date" id="projectStartDate" th:field="*{projectStartDate}" required>
+            </div>
+            <div class="mb-6">
+                <label class="label" for="projectEndDate">End Date:</label>
+                <input class="input" type="date" id="projectEndDate" th:field="*{projectEndDate}" required>
+            </div>
+
+
+            <div class="flex items-center ">
+                <button type="submit" class="btn-green mr-2">Save Changes</button>
+                <a class="back-btn" th:href="@{/userFrontend}">Back</a>
+            </div>
+        </form>
+    </main>
+    <div th:replace="~{components/footer :: site-footer}"></div>
+</div>
+</body>
+</html>
+
+
