@@ -66,22 +66,30 @@ public class SubtaskController {
     }
 
     @GetMapping("/editSubtask/{id}")
-    public String editSubtask(@PathVariable("id") int subtaskId, Model model) {
-        Subtask subtask1 = subtaskService.getSubtaskById(subtaskId); //get the subtask, so we can show in html edit site.
+    public String editSubtask(HttpSession session, @PathVariable("id") int subtaskId, Model model) {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
 
+        User user = subtaskService.getUserFromId(userId);
+        model.addAttribute("user", user);
+
+
+        Subtask subtask1 = subtaskService.getSubtaskById(subtaskId); //get the subtask, so we can show in html edit site.
         model.addAttribute("subtask", subtask1);
         model.addAttribute("taskId", subtask1.getTaskId());
-        return "editTask";
+        return "editSubtask";
     }
 
-    @PostMapping("/editSubtask/{id}")
-    public String updateTask(@ModelAttribute Subtask subtask) {
+    @PostMapping("/editSubtask")
+    public String updateSubtask(@ModelAttribute Subtask subtask, @RequestParam("taskId") int taskId) {
         subtaskService.editSubtask(subtask);
-        return "redirect:/showProject/" + subtaskService.getProjectIdBtSubtaskId(subtask.getSubTaskId());
+        return "redirect:/showSubtask/" + taskId;
     }
 
     @GetMapping(value = "/deleteSubtask/{id}")
-    public String deleteTask(HttpSession session, @PathVariable("id") int subtaskId) throws LoginException {
+    public String deleteTask(@PathVariable("id") int subtaskId) throws LoginException {
         int taskId = subtaskService.getTaskIdBySubtaskId(subtaskId);
         subtaskService.deleteSubtask(subtaskId);
         return "redirect:/showSubtask/" + taskId;

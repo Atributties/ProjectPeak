@@ -30,6 +30,9 @@
         <td class="text-white"  th:text="${subtask.subTaskEndDate}"></td>
         <td class="text-white"  th:text="${subtask.status}"></td>
         <td class="flex flex-row items-center justify-between">
+            <a th:href="@{/editSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-green">Edit Subtask</a>
+        </td>
+        <td class="flex flex-row items-center justify-between">
             <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-green">Delete Subtask</a>
         </td>
     </tr>
