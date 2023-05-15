@@ -115,18 +115,20 @@ public class StubRepository implements IRepository {
         return null;
     }
 
-    @Override
-    public void editTask(Task task) {
 
-    }
     @Override
-    public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId) {
+    public List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId) {
         return null;
     }
 
     @Override
     public void deleteTask(int taskId) throws LoginException {
 
+    }
+
+    @Override
+    public User getUserFromTaskId(int taskId) {
+        return null;
     }
 
     @Override
@@ -151,6 +153,36 @@ public class StubRepository implements IRepository {
 
     @Override
     public void deleteSubtask(int subtaskId) throws LoginException {
+
+    }
+
+    @Override
+    public TaskAndSubtaskDTO getTaskAndSubTask(int id) {
+        return null;
+    }
+
+    @Override
+    public int getProjectIdByTaskId(int taskId) {
+        return 0;
+    }
+
+    @Override
+    public void editTask(Task task) {
+
+    }
+
+    @Override
+    public Project getProjectByTaskId(int taskId) {
+        return null;
+    }
+
+    @Override
+    public int getTaskIdBySubtaskId(int subtaskId) {
+        return 0;
+    }
+
+    @Override
+    public void updateUser(User user) {
 
     }
 }

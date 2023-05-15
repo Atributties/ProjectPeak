@@ -9,25 +9,13 @@
     <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
 <body>
-<div class="bg-main-blue min-h-screen">
-    <div class="flex flex-col min-h-screen container mx-auto px-4 pt-8 pb-4">
-        <header class="flex justify-between items-center">
-            <div class="flex items-center">
-                <a href="/">
-                    <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10" />
-                </a>
-            </div>
-            <nav class="flex">
-                <a th:href="@{/login}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Login</a>
-                <a th:href="@{/signup}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Signup</a>
-            </nav>
-        </header>
+<div>
+    <div class="container">
+        <div th:replace="~{components/headerFront :: site-header}"></div>
         <main class="flex-grow flex items-center justify-center">
             <img src="/images/logo-lg.png" alt="Logo" id="img-front" />
         </main>
-        <footer class="mt-8 border-t border-gray-300 py-4 text-center text-white">
-            &copy; 2023 Project Peak
-        </footer>
+        <div th:replace="~{components/footer :: site-footer}"></div>
     </div>
 </div>
 </body>

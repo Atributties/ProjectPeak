@@ -84,7 +84,7 @@ public class TaskRepositoryApplicationTests {
         int expectedSubTaskCount = 4;
 
         // When
-        List<TaskAndSubtaskDTO> taskAndSubtaskDTOs = dbRepository.getTaskAndSubTask(projectId);
+        List<TaskAndSubtaskDTO> taskAndSubtaskDTOs = (List<TaskAndSubtaskDTO>) dbRepository.getTaskAndSubTask(projectId);
 
         // Then
         assertEquals(expectedTaskCount, taskAndSubtaskDTOs.size());

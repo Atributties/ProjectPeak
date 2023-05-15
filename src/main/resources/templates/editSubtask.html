@@ -11,25 +11,24 @@
 <div class="container">
   <div th:replace="~{components/headerUser :: site-header-user}"></div>
   <main class="flex-grow flex items-center justify-center">
-    <form th:action="@{/editTask}" th:object="${task}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
+    <form th:action="@{/editSubtask}" th:object="${subtask}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
       <h1>Edit Task</h1>
       <input type="hidden" th:field="*{taskId}"/>
-      <input type="hidden" th:field="*{projectId}" />
       <div class="mb-4">
-        <label class="label" for="taskName">Task Name:</label>
-        <input class="input" type="text" id="taskName" th:field="*{taskName}" required>
+        <label class="label" for="subTaskName">Task Name:</label>
+        <input class="input" type="text" id="subTaskName" th:field="*{subTaskName}" required>
       </div>
       <div class="mb-4">
-        <label class="label" for="taskDescription">Task Description:</label>
-        <textarea class="input" id="taskDescription" th:field="*{taskDescription}" required></textarea>
+        <label class="label" for="subTaskDescription">Task Description:</label>
+        <textarea class="input" id="subTaskDescription" th:field="*{subTaskDescription}" required></textarea>
       </div>
       <div class="mb-4">
-        <label class="label" for="taskStartDate">Start Date:</label>
-        <input class="input" type="date" id="taskStartDate" th:field="*{taskStartDate}" required>
+        <label class="label" for="subTaskStartDate">Start Date:</label>
+        <input class="input" type="date" id="subTaskStartDate" th:field="*{subTaskStartDate}" required>
       </div>
       <div class="mb-6">
-        <label class="label" for="taskEndDate">End Date:</label>
-        <input class="input" type="date" id="taskEndDate" th:field="*{taskEndDate}" required>
+        <label class="label" for="subTaskEndDate">End Date:</label>
+        <input class="input" type="date" id="subTaskEndDate" th:field="*{subTaskEndDate}" required>
       </div>
 
       <div class="mb-4">
@@ -45,7 +44,7 @@
 
       <div class="flex items-center ">
         <button type="submit" class="btn-green mr-2">Save Changes</button>
-        <a class="back-btn" th:href="@{/showProject/{projectId}(projectId=${task.getProjectId()})}">Back</a>
+        <a class="back-btn" th:href="@{/showSubtask/{id}(id=${subtask.getSubTaskId()})}">Back</a>
       </div>
     </form>
   </main>

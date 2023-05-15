@@ -8,91 +8,70 @@ import java.util.List;
 
 public class TaskAndSubtaskDTO {
 
-    private int taskId;
-    private int taskNumber;
-    private String taskName;
-    private String taskDescription;
+    private int id;
+    private String name;
+    private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate taskStartDate;
+    private LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate taskEndDate;
+    private LocalDate endDate;
     private String status;
     private int projectId;
     private List<Subtask> subTaskList;
 
 
+    public TaskAndSubtaskDTO(int id, String name, String description, LocalDate startDate, LocalDate endDate, String status, int projectId, List<Subtask> subTaskList) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.projectId = projectId;
+        this.subTaskList = subTaskList;
+    }
+
     public TaskAndSubtaskDTO() {
     }
 
-    public TaskAndSubtaskDTO(int taskId, int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId, List<Subtask> subTaskList) {
-        this.taskId = taskId;
-        this.taskNumber = taskNumber;
-        this.taskName = taskName;
-        this.taskDescription = taskDescription;
-        this.taskStartDate = taskStartDate;
-        this.taskEndDate = taskEndDate;
-        this.status = status;
-        this.projectId = projectId;
-        this.subTaskList = subTaskList;
+    public int getId() {
+        return id;
     }
 
-    public TaskAndSubtaskDTO(int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId,List<Subtask> subTaskList) {
-        this.taskNumber = taskNumber;
-        this.taskName = taskName;
-        this.taskDescription = taskDescription;
-        this.taskStartDate = taskStartDate;
-        this.taskEndDate = taskEndDate;
-        this.status = status;
-        this.projectId = projectId;
-        this.subTaskList = subTaskList;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getTaskNumber() {
-        return taskNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setTaskNumber(int taskNumber) {
-        this.taskNumber = taskNumber;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public String getTaskDescription() {
-        return taskDescription;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
-    }
-
-    public LocalDate getTaskStartDate() {
-        return taskStartDate;
-    }
-
-    public void setTaskStartDate(LocalDate taskStartDate) {
-        this.taskStartDate = taskStartDate;
-    }
-
-    public LocalDate getTaskEndDate() {
-        return taskEndDate;
-    }
-
-    public void setTaskEndDate(LocalDate taskEndDate) {
-        this.taskEndDate = taskEndDate;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public String getStatus() {
@@ -110,7 +89,6 @@ public class TaskAndSubtaskDTO {
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
-
 
     public List<Subtask> getSubTaskList() {
         return subTaskList;

@@ -32,7 +32,7 @@ public class ProjectService {
     }
 
     public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId){
-        return repository.getTaskAndSubTask(projectId);
+        return repository.getTaskAndSubTaskList(projectId);
     }
 
     public Project getProjectById(int id){

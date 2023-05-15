@@ -20,7 +20,7 @@ public class SubtaskRepositoryApplicationTests {
 
     @Test
     public void testCreateSubtask() throws LoginException {
-        Subtask subtask = new Subtask(8,1, "Test Subtask create", "Test description", LocalDate.now(), LocalDate.now().plusDays(1), "Open", 1);
+        Subtask subtask = new Subtask("Test Subtask create", "Test description", LocalDate.now(), LocalDate.now().plusDays(1), "Open", 1);
         dbRepository.createSubtask(subtask, 1);
         Subtask createdSubtask = dbRepository.getSubtaskById(subtask.getSubTaskId());
         assertEquals(subtask.getSubTaskName(), createdSubtask.getSubTaskName());
@@ -35,7 +35,7 @@ public class SubtaskRepositoryApplicationTests {
 
     @Test
     public void testGetSubtaskById() throws LoginException {
-        Subtask subtask = new Subtask(9,1, "Test Subtask", "Test description", LocalDate.now(), LocalDate.now().plusDays(1), "Open", 1);
+        Subtask subtask = new Subtask("Test Subtask", "Test description", LocalDate.now(), LocalDate.now().plusDays(1), "Open", 1);
         dbRepository.createSubtask(subtask, 1);
         Subtask createdSubtask = dbRepository.getSubtaskById(subtask.getSubTaskId());
         assertNotNull(createdSubtask);

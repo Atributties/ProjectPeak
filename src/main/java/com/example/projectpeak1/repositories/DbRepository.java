@@ -106,45 +106,16 @@ public class DbRepository implements IRepository {
             throw new LoginException(ex.getMessage());
         }
     }
-    @Override
-    public void deleteUser(int userId) throws LoginException {
-        try (Connection con = DbManager.getConnection()) {
-            // delete all subtasks associated with the user's tasks
-            String SQL = "DELETE FROM subtask WHERE task_id IN " +
-                    "(SELECT task_id FROM task WHERE project_id IN " +
-                    "(SELECT project_id FROM project WHERE user_id = ?))";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
-
-            // delete all tasks associated with the user's projects
-            SQL = "DELETE FROM task WHERE project_id IN " +
-                    "(SELECT project_id FROM project WHERE user_id = ?)";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
-
-            // delete all projects associated with the user
-            SQL = "DELETE FROM project WHERE user_id = ?";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
-
-            // delete the user record
-            SQL = "DELETE FROM user WHERE user_id = ?";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
-
-
+    public void deleteUser(int userId) {
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement ps = con.prepareStatement("DELETE FROM User WHERE user_id = ?")) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
         } catch (SQLException ex) {
-            throw new LoginException(ex.getMessage());
+            ex.printStackTrace();
         }
     }
+
 
 
 
@@ -173,7 +144,6 @@ public class DbRepository implements IRepository {
             e.printStackTrace();
         }
     }
-
     @Override
     public List<Project> getAllProjectById(int userId) {
         try {
@@ -198,6 +168,35 @@ public class DbRepository implements IRepository {
             return null;
         }
     }
+
+    @Override
+    public void deleteProject(int projectId) throws LoginException {
+        try (Connection con = DbManager.getConnection()) {
+            // delete subtasks
+            String deleteSubtasksSQL = "DELETE FROM Subtask WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+            try (PreparedStatement deleteSubtasksStmt = con.prepareStatement(deleteSubtasksSQL)) {
+                deleteSubtasksStmt.setInt(1, projectId);
+                deleteSubtasksStmt.executeUpdate();
+            }
+
+            // delete tasks
+            String deleteTasksSQL = "DELETE FROM Task WHERE project_id = ?";
+            try (PreparedStatement deleteTasksStmt = con.prepareStatement(deleteTasksSQL)) {
+                deleteTasksStmt.setInt(1, projectId);
+                deleteTasksStmt.executeUpdate();
+            }
+
+            // delete the project record
+            String deleteProjectSQL = "DELETE FROM Project WHERE project_id = ?";
+            try (PreparedStatement deleteProjectStmt = con.prepareStatement(deleteProjectSQL)) {
+                deleteProjectStmt.setInt(1, projectId);
+                deleteProjectStmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
+        }
+    }
+
 
     @Override
     public Project getProjectById(int id) {
@@ -237,20 +236,6 @@ public class DbRepository implements IRepository {
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-    }
-
-    @Override
-    public void deleteProject(int projectId) throws LoginException {
-        try (Connection con = DbManager.getConnection()) {
-            // delete the project record
-            String SQL = "DELETE FROM project WHERE project_id = ?";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, projectId);
-                stmt.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            throw new LoginException(ex.getMessage());
         }
     }
 
@@ -340,26 +325,10 @@ public class DbRepository implements IRepository {
         }
     }
 
-    @Override
-    public void editTask(Task task) {
-        try {
-            Connection con = DbManager.getConnection();
-            String SQL = "UPDATE task SET name = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE task_id = ?";
-            PreparedStatement ps = con.prepareStatement(SQL);
-            ps.setString(1, task.getTaskName());
-            ps.setString(2, task.getTaskDescription());
-            ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
-            ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
-            ps.setString(5, task.getStatus());
-            ps.setInt(6, task.getTaskId());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+
 
     @Override
-    public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId) {
+    public List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId) {
         try {
             List<TaskAndSubtaskDTO> taskAndSubtaskDTOs = new ArrayList<>();
             Connection con = DbManager.getConnection();
@@ -389,10 +358,13 @@ public class DbRepository implements IRepository {
                     LocalDate subtaskStartDate = subtaskRs.getDate("start_date").toLocalDate();
                     LocalDate subtaskEndDate = subtaskRs.getDate("end_date").toLocalDate();
                     String subtaskStatus = subtaskRs.getString("status");
-                    subtasks.add(new Subtask(subtaskId, subtaskName, subtaskDescription, subtaskStartDate, subtaskEndDate, subtaskStatus, taskId));
-                }
+                    Subtask sub1 = new Subtask(subtaskId, subtaskName, subtaskDescription, subtaskStartDate, subtaskEndDate, subtaskStatus, taskId);
+                    subtasks.add(sub1);
 
-                taskAndSubtaskDTOs.add(new TaskAndSubtaskDTO(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, projectId, subtasks));
+                }
+                TaskAndSubtaskDTO taskAndSubtaskDTO = new TaskAndSubtaskDTO(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, projectId, subtasks);
+
+                taskAndSubtaskDTOs.add(taskAndSubtaskDTO);
             }
             return taskAndSubtaskDTOs;
         } catch (SQLException ex) {
@@ -422,7 +394,10 @@ public class DbRepository implements IRepository {
         }
     }
 
-
+    @Override
+    public User getUserFromTaskId(int taskId) {
+        return null;
+    }
 
 
     //_____________SUBTASK CONTROLLER______________
@@ -431,22 +406,21 @@ public class DbRepository implements IRepository {
     public void createSubtask(Subtask subtask, int taskId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "INSERT INTO subtask (subtask_number, name, description, start_date, end_date, status, task_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO subtask (name, description, start_date, end_date, status, task_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setDouble(1, subtask.getSubtaskNumber());
-            ps.setString(2, subtask.getSubTaskName());
-            ps.setString(3, subtask.getSubTaskDescription());
-            ps.setDate(4, Date.valueOf(subtask.getSubTaskStartDate()));
-            ps.setDate(5, Date.valueOf(subtask.getSubTaskEndDate()));
-            ps.setString(6, subtask.getStatus());
-            ps.setInt(7, taskId);
+            ps.setString(1, subtask.getSubTaskName());
+            ps.setString(2, subtask.getSubTaskDescription());
+            ps.setDate(3, Date.valueOf(subtask.getSubTaskStartDate()));
+            ps.setDate(4, Date.valueOf(subtask.getSubTaskEndDate()));
+            ps.setString(5, subtask.getStatus());
+            ps.setInt(6, taskId);
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
             ids.next();
             int id = ids.getInt(1);
 
 
-            Subtask subtask1 = new Subtask( subtask.getSubtaskNumber(), subtask.getSubTaskName(), subtask.getSubTaskDescription(), subtask.getSubTaskStartDate(), subtask.getSubTaskEndDate(), subtask.getStatus(), taskId);
+            Subtask subtask1 = new Subtask(subtask.getSubTaskName(), subtask.getSubTaskDescription(), subtask.getSubTaskStartDate(), subtask.getSubTaskEndDate(), subtask.getStatus(), taskId);
             subtask1.setTaskId(id);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -465,14 +439,13 @@ public class DbRepository implements IRepository {
 
             if (rs.next()) {
                 int subTaskId = rs.getInt("subtask_id");
-                int subTaskNumber = rs.getInt("subtask_number");
                 String subTaskName = rs.getString("name");
                 String subTaskDescription = rs.getString("description");
                 LocalDate subTaskStartDate = rs.getDate("start_date").toLocalDate();
                 LocalDate subTaskEndDate = rs.getDate("end_date").toLocalDate();
                 String subTaskStatus = rs.getString("status");
                 int taskId = rs.getInt("task_id");
-                task = new Subtask(subTaskId, subTaskNumber, subTaskName, subTaskDescription, subTaskStartDate, subTaskEndDate, subTaskStatus, taskId);
+                task = new Subtask(subTaskId, subTaskName, subTaskDescription, subTaskStartDate, subTaskEndDate, subTaskStatus, taskId);
 
             }
             return task;
@@ -528,7 +501,7 @@ public class DbRepository implements IRepository {
     public void deleteSubtask(int subtaskId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
             // delete the project record
-            String SQL = "DELETE FROM subtask WHERE subtask_id = ?";
+            String SQL = "DELETE FROM Subtask WHERE subtask_id = ?";
             try (PreparedStatement stmt = con.prepareStatement(SQL)) {
                 stmt.setInt(1, subtaskId);
                 stmt.executeUpdate();
@@ -538,6 +511,152 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public TaskAndSubtaskDTO getTaskAndSubTask(int taskId) {
+        try {
+            Connection con = DbManager.getConnection();
+
+            // Retrieve the task
+            String taskSql = "SELECT * FROM Task WHERE task_id = ?;";
+            PreparedStatement taskPs = con.prepareStatement(taskSql);
+            taskPs.setInt(1, taskId);
+            ResultSet taskRs = taskPs.executeQuery();
+
+            if (taskRs.next()) {
+                int projectId = taskRs.getInt("project_id");
+                String taskName = taskRs.getString("name");
+                String taskDescription = taskRs.getString("description");
+                LocalDate taskStartDate = taskRs.getDate("start_date").toLocalDate();
+                LocalDate taskEndDate = taskRs.getDate("end_date").toLocalDate();
+                String taskStatus = taskRs.getString("status");
+
+                // Retrieve the subtasks for the task
+                String subtaskSql = "SELECT * FROM Subtask WHERE task_id = ?;";
+                PreparedStatement subtaskPs = con.prepareStatement(subtaskSql);
+                subtaskPs.setInt(1, taskId);
+                ResultSet subtaskRs = subtaskPs.executeQuery();
+
+                List<Subtask> subtasks = new ArrayList<>();
+                while (subtaskRs.next()) {
+                    int subtaskId = subtaskRs.getInt("subtask_id");
+                    String subtaskName = subtaskRs.getString("name");
+                    String subtaskDescription = subtaskRs.getString("description");
+                    LocalDate subtaskStartDate = subtaskRs.getDate("start_date").toLocalDate();
+                    LocalDate subtaskEndDate = subtaskRs.getDate("end_date").toLocalDate();
+                    String subtaskStatus = subtaskRs.getString("status");
+                    subtasks.add(new Subtask(subtaskId, subtaskName, subtaskDescription, subtaskStartDate, subtaskEndDate, subtaskStatus, taskId));
+                }
+
+                return new TaskAndSubtaskDTO(taskId, taskName, taskDescription, taskStartDate, taskEndDate, taskStatus, projectId, subtasks);
+            }
+
+            // No task found for the provided task ID
+            return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public int getProjectIdByTaskId(int taskId) {
+        int projectId = 0;
+
+        try {
+            Connection con = DbManager.getConnection();
+            String sql = "SELECT project_id FROM Task WHERE task_id = ?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, taskId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                projectId = resultSet.getInt("project_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projectId;
+    }
+
+    @Override
+    public void editTask(Task task) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE Task SET name = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE task_id = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, task.getTaskName());
+            ps.setString(2, task.getTaskDescription());
+            ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
+            ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
+            ps.setString(5, task.getStatus());
+            ps.setInt(6, task.getProjectId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public Project getProjectByTaskId(int taskId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM project WHERE project_id = (SELECT project_id FROM task WHERE task_id = ?);";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ResultSet rs = ps.executeQuery();
+            Project project = null;
+            if (rs.next()) {
+                int projectId = rs.getInt("project_id");
+                int userId = rs.getInt("user_id");
+                String projectName = rs.getString("name");
+                String projectDescription = rs.getString("description");
+                LocalDate projectStartDate = rs.getDate("start_date").toLocalDate();
+                LocalDate projectEndDate = rs.getDate("end_date").toLocalDate();
+                project = new Project(projectId, projectName, projectDescription, projectStartDate, projectEndDate, userId);
+            }
+            return project;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public int getTaskIdBySubtaskId(int subtaskId) throws LoginException {
+        try (Connection con = DbManager.getConnection()) {
+            String SQL = "SELECT task_id FROM Subtask WHERE subtask_id = ?";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, subtaskId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("task_id");
+                } else {
+                    System.out.println("Subtask not found in the database for the provided subtaskId: " + subtaskId);
+                    throw new LoginException("Subtask not found");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE User SET fullname = ?, email = ?, user_password = ?, role = ? WHERE user_id = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getRole());
+            ps.setInt(5, user.getUserId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
 }

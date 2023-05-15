@@ -2,27 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Project Peak - User Frontend</title>
+    <title>Front Page - Project Peak</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
-<body class="bg-main-blue min-h-screen">
-<div class="flex flex-col min-h-screen container mx-auto px-4 pt-8 pb-4">
-    <header class="flex justify-between items-center mb-8">
-        <div class="flex items-center">
-            <a th:href="@{/userFrontend}">
-                <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10"/>
-            </a>
-        </div>
-        <nav class="flex items-center">
-            <i class="fa fa-user text-white mr-2"></i>
-            <span class="text-white font-bold mr-4" th:text="${user.getFullName}"></span>
-            <a th:href="@{/logout}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Logout</a>
-        </nav>
-    </header>
+<body>
+<div class="container">
+    <div th:replace="~{components/headerUser :: site-header-user}"></div>
     <main class="flex-grow">
-        <h1 class="text-4xl font-bold text-white text-center mb-6">Welcome to Project Peak!</h1>
+        <h1>Welcome to Project Peak!</h1>
+        <hr class="mt-8 border-t border-gray-300 py-4 text-center">
         <table class="table-auto w-full mb-6">
             <thead>
             <tr>
@@ -31,7 +21,7 @@
             </thead>
             <tbody>
             <tr th:each="project : ${projects}" class="hover:bg-blue-900">
-                <td class="border px-4 py-2 text-white flex justify-between items-center">
+                <td class="text-white flex justify-between items-center">
                     <span>
                         <i class="fa fa-circle fa-lg text-yellow-500"></i>
                         <span th:text="${project.getProjectName()}"></span>
@@ -48,9 +38,11 @@
                             <i class="fa fa-pencil-square-o fa-lg"></i>
                         </a>
                         <a th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}" type="submit"
-                           class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                           class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                           onclick="return confirm('Are you sure you want to delete this project? All you task and subtask will also be deleted.')">
                             <i class="fa fa-trash fa-lg"></i>
                         </a>
+
                     </form>
                 </td>
             </tr>
@@ -58,20 +50,18 @@
         </table>
         <div class="flex justify-center space-x-4">
             <a th:href="@{/createProject}">
-                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                <button type="button" class="btn-green">
                     Create Project
                 </button>
             </a>
             <a th:href="@{/showProject}">
-                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                <button type="button" class="btn-green">
                     Show All Projects
                 </button>
             </a>
         </div>
     </main>
-    <footer class="mt-8 border-t border-gray-300 py-4 text-center text-white">
-        &copy; 2023 Project Peak
-    </footer>
+    <div th:replace="~{components/footer :: site-footer}"></div>
 </div>
 </body>
 </html>

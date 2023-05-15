@@ -7,39 +7,27 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
-<body class="bg-main-blue min-h-screen">
-<div class="flex flex-col min-h-screen container mx-auto px-4 pt-8 pb-4">
-    <header class="flex justify-between items-center">
-        <div class="flex items-center">
-            <a href="/">
-                <img src="/images/logo-md.png" alt="Logo" class="w-[120vw] h-10 pr-10" />
-            </a>
-        </div>
-        <nav class="flex">
-            <a th:href="@{/login}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Login</a>
-            <a th:href="@{/signup}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Signup</a>
-        </nav>
-    </header>
+<body>
+<div class="container">
+    <div th:replace="~{components/headerFront :: site-header}"></div>
     <main class="mb-44 flex-grow flex items-center justify-center">
         <form class="bg-main-blue p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/login}" th:object="${user}" method="post">
 
             <div class="mb-4">
-                <label class="block text-white text-sm font-bold mb-2" for="email">Email:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" th:field="*{email}" required>
+                <label class="label" for="email">Email:</label>
+                <input class="input" id="email" type="email" th:field="*{email}" required>
             </div>
             <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="password">Password:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" th:field="*{password}" required>
+                <label class="label" for="password">Password:</label>
+                <input class="input" id="password" type="password" th:field="*{password}" required>
             </div>
-            <div class="flex items-center justify-between">
-                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
-                <a class="inline-block align-baseline font-bold text-sm text-white" th:href="@{/}">Back</a>
+            <div class="flex items-center ">
+                <button type="submit" class="btn-green mr-2">Login</button>
+                <a class="back-btn" th:href="@{/}">Back</a>
             </div>
         </form>
     </main>
-    <footer class="mt-8 border-t border-gray-300 py-4 text-center text-white">
-        &copy; 2023 Project Peak
-    </footer>
+    <div th:replace="~{components/footer :: site-footer}"></div>
 </div>
 </body>
 </html>
