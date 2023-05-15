@@ -77,5 +77,5 @@ public interface IRepository {
 
     Project getProjectByTaskId(int taskId);
 
-    int getTaskIdBySubtaskId(int subtaskId);
+    int getTaskIdBySubtaskId(int subtaskId) throws LoginException;
 }

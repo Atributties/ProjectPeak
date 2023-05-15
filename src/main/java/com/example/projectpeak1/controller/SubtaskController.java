@@ -82,11 +82,11 @@ public class SubtaskController {
 
     @GetMapping(value = "/deleteSubtask/{id}")
     public String deleteTask(HttpSession session, @PathVariable("id") int subtaskId) throws LoginException {
-
         int taskId = subtaskService.getTaskIdBySubtaskId(subtaskId);
         subtaskService.deleteSubtask(subtaskId);
         return "redirect:/showSubtask/" + taskId;
     }
+
 
 
 

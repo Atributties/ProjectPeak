@@ -49,7 +49,7 @@ public class SubtaskService {
         return repository.getUserFromId(id);
     }
 
-    public int getTaskIdBySubtaskId(int subtaskId) {
+    public int getTaskIdBySubtaskId(int subtaskId) throws LoginException {
         return repository.getTaskIdBySubtaskId(subtaskId);
     }
 }
