@@ -36,9 +36,9 @@
                     <option value="Completed">Completed</option>
                 </select>
             </div>
-            <div class="flex items-center justify-between">
-                <button type="submit" class="btn-green">Add task</button>
-                <a class="back" th:href="@{/showSubtask/{id}(id=${taskId})}">Back</a>
+            <div class="flex items-center ">
+                <button type="submit" class="btn-green mr-2">Add task</button>
+                <a class="back-btn" th:href="@{/showSubtask/{id}(id=${taskId})}">Back</a>
             </div>
         </form>
     </main>

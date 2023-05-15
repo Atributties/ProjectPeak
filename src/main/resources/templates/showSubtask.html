@@ -19,28 +19,25 @@
         <th>Start Date</th>
         <th>End Date</th>
         <th>Status</th>
+        <th>Edit subtask</th>
         <th>Delete</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="subtask : ${taskAndSubtask.subTaskList}">
+    <tr class="items-center" th:each="subtask : ${taskAndSubtask.subTaskList}">
         <td class="text-white" th:text="${subtask.subTaskName}"></td>
         <td class="text-white"  th:text="${subtask.subTaskDescription}"></td>
         <td class="text-white"  th:text="${subtask.subTaskStartDate}"></td>
         <td class="text-white"  th:text="${subtask.subTaskEndDate}"></td>
         <td class="text-white"  th:text="${subtask.status}"></td>
-        <td class="flex flex-row items-center justify-between">
-            <a th:href="@{/editSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-green">Edit Subtask</a>
-        </td>
-        <td class="flex flex-row items-center justify-between">
-            <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-green">Delete Subtask</a>
-        </td>
+        <td><a th:href="@{/editSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-green">Edit Subtasks</a></td>
+        <td><a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-red" onclick="return confirm('Are you sure you want to delete this task?')">Delete Subtask</a></td>
     </tr>
     </tbody>
 </table>
-    <div class="flex items-center justify-between mt-2">
-        <a th:href="@{/createSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Add Subtask</a>
-        <a class="back" th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}">Back</a>
+    <div class="flex items-center mt-2">
+        <a th:href="@{/createSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green mr-2">Add Subtask</a>
+        <a th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}" class="back-btn">Back</a>
     </div>
 <div th:replace="~{components/footer :: site-footer}"></div>
 </div>

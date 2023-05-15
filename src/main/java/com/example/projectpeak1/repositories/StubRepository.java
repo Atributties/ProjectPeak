@@ -180,4 +180,9 @@ public class StubRepository implements IRepository {
     public int getTaskIdBySubtaskId(int subtaskId) {
         return 0;
     }
+
+    @Override
+    public void updateUser(User user) {
+
+    }
 }
