@@ -48,4 +48,8 @@ public class SubtaskService {
     public User getUserFromId(int id){
         return repository.getUserFromId(id);
     }
+
+    public int getTaskIdBySubtaskId(int subtaskId) throws LoginException {
+        return repository.getTaskIdBySubtaskId(subtaskId);
+    }
 }
