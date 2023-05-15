@@ -172,16 +172,31 @@ public class DbRepository implements IRepository {
     @Override
     public void deleteProject(int projectId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
+            // delete subtasks
+            String deleteSubtasksSQL = "DELETE FROM Subtask WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+            try (PreparedStatement deleteSubtasksStmt = con.prepareStatement(deleteSubtasksSQL)) {
+                deleteSubtasksStmt.setInt(1, projectId);
+                deleteSubtasksStmt.executeUpdate();
+            }
+
+            // delete tasks
+            String deleteTasksSQL = "DELETE FROM Task WHERE project_id = ?";
+            try (PreparedStatement deleteTasksStmt = con.prepareStatement(deleteTasksSQL)) {
+                deleteTasksStmt.setInt(1, projectId);
+                deleteTasksStmt.executeUpdate();
+            }
+
             // delete the project record
-            String SQL = "DELETE FROM project WHERE project_id = ?";
-            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
-                stmt.setInt(1, projectId);
-                stmt.executeUpdate();
+            String deleteProjectSQL = "DELETE FROM Project WHERE project_id = ?";
+            try (PreparedStatement deleteProjectStmt = con.prepareStatement(deleteProjectSQL)) {
+                deleteProjectStmt.setInt(1, projectId);
+                deleteProjectStmt.executeUpdate();
             }
         } catch (SQLException ex) {
             throw new LoginException(ex.getMessage());
         }
     }
+
 
     @Override
     public Project getProjectById(int id) {
