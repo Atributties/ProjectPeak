@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Task - Project Peak</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <link th:href="@{/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <div th:replace="~{components/headerUser :: site-header-user}"></div>
+  <main class="flex-grow flex items-center justify-center">
+    <form th:action="@{/editSubtask}" th:object="${subtask}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
+      <h1>Edit Task</h1>
+      <input type="hidden" th:field="*{taskId}"/>
+      <div class="mb-4">
+        <label class="label" for="subTaskName">Task Name:</label>
+        <input class="input" type="text" id="subTaskName" th:field="*{subTaskName}" required>
+      </div>
+      <div class="mb-4">
+        <label class="label" for="subTaskDescription">Task Description:</label>
+        <textarea class="input" id="subTaskDescription" th:field="*{subTaskDescription}" required></textarea>
+      </div>
+      <div class="mb-4">
+        <label class="label" for="subTaskStartDate">Start Date:</label>
+        <input class="input" type="date" id="subTaskStartDate" th:field="*{subTaskStartDate}" required>
+      </div>
+      <div class="mb-6">
+        <label class="label" for="subTaskEndDate">End Date:</label>
+        <input class="input" type="date" id="subTaskEndDate" th:field="*{subTaskEndDate}" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="label" for="status">Task Status:</label>
+        <select class="select-class" id="status" name="status" th:field="*{status}" required>
+          <option value="">Choose a status</option>
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Complete">Complete</option>
+        </select>
+      </div>
+
+
+      <div class="flex items-center justify-between">
+        <button type="submit" class="btn-green">Save Changes</button>
+        <a class="back" th:href="@{/showSubtask/{id}(id=${subtask.getSubTaskId()})}">Back</a>
+      </div>
+    </form>
+  </main>
+  <div th:replace="~{components/footer :: site-footer}"></div>
+</div>
+</body>
+</html>
