@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
 
 @Controller
 @RequestMapping({""})
@@ -35,12 +36,23 @@ public class SubtaskController {
             return "login";
         }
 
+        User user = subtaskService.getUserFromId(userId);
+        model.addAttribute("user", user);
         model.addAttribute("taskId", taskId);
-        model.addAttribute("task", new Task());
-        return "createTask";
+        model.addAttribute("subtask", new Subtask());
+        return "addSubtask";
     }
 
-    @GetMapping("/showSubTask/{taskId}")
+    @PostMapping(value = {"/createSubtask/{id}"})
+    public String createTask(@PathVariable("id") int taskId, @ModelAttribute Subtask subtask) {
+
+        subtaskService.createTask(subtask, taskId);
+        return "redirect:/showSubtask/" + taskId;
+
+        //TODO: Redirect to projectId instead of taskId
+    }
+
+    @GetMapping("/showSubtask/{taskId}")
     public String showSubtaskDetails(HttpSession session, @PathVariable("taskId") int taskId, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
@@ -52,20 +64,6 @@ public class SubtaskController {
         model.addAttribute("taskAndSubtask", taskAndSubtask);
         return "showSubtask";
     }
-
-
-
-
-    @PostMapping(value = {"/createSubtask/{id}"})
-    public String createTask(@PathVariable("id") int taskId, @ModelAttribute Subtask subtask) {
-
-        subtaskService.createTask(subtask, taskId);
-        return "redirect:/showProject/" + taskId;
-
-        //TODO: Redirect to projectId instead of taskId
-    }
-
-
 
     @GetMapping("/editSubtask/{id}")
     public String editSubtask(@PathVariable("id") int subtaskId, Model model) {
@@ -82,17 +80,14 @@ public class SubtaskController {
         return "redirect:/showProject/" + subtaskService.getProjectIdBtSubtaskId(subtask.getSubTaskId());
     }
 
-    @GetMapping(value = {"/deleteSubtask/{id}"})
+    @GetMapping(value = "/deleteSubtask/{id}")
     public String deleteTask(HttpSession session, @PathVariable("id") int subtaskId) throws LoginException {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login";
-        }
-        subtaskService.deleteSubtask(subtaskId);
-        return "redirect:/userFrontend";
 
-        //TODO add access denied like the one from wishlist
+        int taskId = subtaskService.getTaskIdBySubtaskId(subtaskId);
+        subtaskService.deleteSubtask(subtaskId);
+        return "redirect:/showSubtask/" + taskId;
     }
+
 
 
 

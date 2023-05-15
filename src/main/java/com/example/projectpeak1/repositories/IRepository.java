@@ -76,4 +76,6 @@ public interface IRepository {
     void editTask(Task task);
 
     Project getProjectByTaskId(int taskId);
+
+    int getTaskIdBySubtaskId(int subtaskId);
 }

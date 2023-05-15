@@ -27,25 +27,33 @@ public class TaskController {
         return (int) session.getAttribute("userId");
     }
 
-    @GetMapping("/createTask/{id}")
-    public String createTask(@PathVariable("id") int id, HttpSession session, Model model) {
+
+    @GetMapping("/addTask/{id}")
+    public String createTask(HttpSession session, @PathVariable("id") int projectId, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login";
         }
-
-        model.addAttribute("projectId", id);
-        model.addAttribute("Task", new Task());
-        return "createTask";
+        User user = taskService.getUserFromId(userId);
+        Project project = taskService.getProjectFromId(projectId);
+        model.addAttribute("user", user);
+        model.addAttribute("task", new Task());
+        model.addAttribute("project", project);
+        return "addTask";
     }
 
 
-    @PostMapping(value = {"/createTask/{id}"})
-    public String createTask(@PathVariable("id") int id, @ModelAttribute Task task) {
-
-        taskService.createTask(task, id);
-        return "redirect:/showProject/" + id;
+    @PostMapping("/addTask/{projectId}")
+    public String processCreateTask(HttpSession session, @ModelAttribute Task task, @PathVariable("projectId") int projectId) {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        taskService.createTask(task, projectId);
+        return "redirect:/showProject/" + projectId;
     }
+
+
 
 
     @GetMapping("/editTask/{id}")
@@ -83,29 +91,6 @@ public class TaskController {
         return "redirect:/showProject/" + projectId;
     }
 
-    @GetMapping("/addTask/{id}")
-    public String createTask(HttpSession session, @PathVariable("id") int projectId, Model model) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login";
-        }
-        User user = taskService.getUserFromId(userId);
-        Project project = taskService.getProjectFromId(projectId);
-        model.addAttribute("user", user);
-        model.addAttribute("task", new Task());
-        model.addAttribute("project", project);
-        return "addTask";
-    }
 
-
-    @PostMapping("/addTask/{projectId}")
-    public String processCreateTask(HttpSession session, @ModelAttribute Task task, @PathVariable("projectId") int projectId) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login";
-        }
-        taskService.createTask(task, projectId);
-        return "redirect:/showProject/" + projectId;
-    }
 
 }

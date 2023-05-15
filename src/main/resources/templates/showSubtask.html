@@ -28,11 +28,14 @@
         <td class="text-white"  th:text="${subtask.subTaskStartDate}"></td>
         <td class="text-white"  th:text="${subtask.subTaskEndDate}"></td>
         <td class="text-white"  th:text="${subtask.status}"></td>
+        <td class="flex flex-row items-center justify-between">
+            <a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubTaskId()})}" class="btn-green">Delete Subtask</a>
+        </td>
     </tr>
     </tbody>
 </table>
     <div class="flex items-center justify-between mt-2">
-        <a th:href="@{/addSubtask}" class="btn-green">Add Subtask</a>
+        <a th:href="@{/createSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Add Subtask</a>
         <a class="back" th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}">Back</a>
     </div>
 <div th:replace="~{components/footer :: site-footer}"></div>

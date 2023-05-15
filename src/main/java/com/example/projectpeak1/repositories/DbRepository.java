@@ -653,6 +653,24 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public int getTaskIdBySubtaskId(int subtaskId) {
+        try (Connection con = DbManager.getConnection()) {
+            String SQL = "SELECT task_id FROM Subtask WHERE subtask_id = ?";
+            try (PreparedStatement stmt = con.prepareStatement(SQL)) {
+                stmt.setInt(1, subtaskId);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt("task_id");
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0; // Return a default value if no task ID is found
+    }
+
 
 
 }

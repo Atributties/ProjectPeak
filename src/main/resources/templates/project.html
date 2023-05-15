@@ -43,7 +43,7 @@
                     <td class="text-white" th:text="${taskAndSubtask.endDate}"></td>
                     <td class="text-white" th:text="${taskAndSubtask.status}"></td>
                     <td class="flex flex-row items-center justify-between">
-                        <a th:href="@{/showSubTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Show Subtasks</a>
+                        <a th:href="@{/showSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Show Subtasks</a>
                     </td>
                     <td class="flex flex-row items-center justify-between">
                         <a th:href="@{/editTask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green">Edit Task</a>
