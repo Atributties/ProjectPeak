@@ -13,6 +13,7 @@
   <main class="flex-grow flex items-center justify-center">
     <form th:action="@{/editSubtask}" th:object="${subtask}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
       <h1>Edit Subtask</h1>
+      <input type="hidden" th:field="*{subTaskId}"/>
       <input type="hidden" th:field="*{taskId}"/>
       <div class="mb-4">
         <label class="label" for="subTaskName">Task Name:</label>
@@ -44,7 +45,7 @@
 
       <div class="flex items-center ">
         <button type="submit" class="btn-green mr-2">Save Changes</button>
-        <a class="back-btn" th:href="@{/showSubtask/{id}(id=${subtask.getSubTaskId()})}">Back</a>
+        <a class="back-btn" th:href="@{/showSubtask/{id}(id=${subtask.getTaskId()})}">Back</a>
       </div>
     </form>
   </main>

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 public class Task {
     private int taskId;
-    private int taskNumber;
     private String taskName;
     private String taskDescription;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -20,9 +19,8 @@ public class Task {
     public Task() {
     }
 
-    public Task(int taskId, int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId) {
+    public Task(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId) {
         this.taskId = taskId;
-        this.taskNumber = taskNumber;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStartDate = taskStartDate;
@@ -31,8 +29,7 @@ public class Task {
         this.projectId = projectId;
     }
 
-    public Task(int taskNumber, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId) {
-        this.taskNumber = taskNumber;
+    public Task(String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStartDate = taskStartDate;
@@ -41,13 +38,6 @@ public class Task {
         this.projectId = projectId;
     }
 
-    public int getTaskNumber() {
-        return taskNumber;
-    }
-
-    public void setTaskNumber(int taskNumber) {
-        this.taskNumber = taskNumber;
-    }
 
     public int getTaskId() {
         return taskId;
