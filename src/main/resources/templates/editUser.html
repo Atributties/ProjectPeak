@@ -9,9 +9,7 @@
 </head>
 <body>
 <div class="container">
-  <div class="site-header-user">
-    <!-- Header content here -->
-  </div>
+  <div th:replace="~{components/headerUser :: site-header-user}"></div>
   <main class="flex-grow flex items-center justify-center">
     <form th:action="@{/editUser}" th:object="${user}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5" onsubmit="return validatePasswords()">
       <h1>Edit User</h1>
@@ -35,8 +33,8 @@
 
       <div class="flex items-center ">
         <button type="submit" class="btn-green mr-2">Save Changes</button>
-        <a class="delete" th:href="@{/deleteUser/{id}(id=${user.getUserId()})}"
-           onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+        <a class="btn-red mr-2" th:href="@{/deleteUser/{id}(id=${user.getUserId()})}"
+           onclick="return confirm('Are you sure you want to delete this user?')">Delete User</a>
 
 
         <a class="back-btn" th:href="@{/userFrontend}">Back</a>
