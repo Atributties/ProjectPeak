@@ -25,11 +25,11 @@
       </div>
       <div class="mb-4">
         <label class="label" for="taskStartDate">Start Date:</label>
-        <input class="input" type="date" id="taskStartDate" th:field="*{taskStartDate}" required>
+        <input class="input" type="date" id="taskStartDate" th:field="*{taskStartDate}" th:min="${project.projectStartDate}" th:max="${project.projectEndDate}" required>
       </div>
       <div class="mb-6">
         <label class="label" for="taskEndDate">End Date:</label>
-        <input class="input" type="date" id="taskEndDate" th:field="*{taskEndDate}" required>
+        <input class="input" type="date" id="taskEndDate" th:field="*{taskEndDate}" th:min="${project.projectStartDate}" th:max="${project.projectEndDate}" required>
       </div>
 
       <div class="mb-4">

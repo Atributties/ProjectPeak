@@ -65,8 +65,12 @@ public class TaskController {
         User user = taskService.getUserFromId(userId);
         model.addAttribute("user", user);
 
+
         Task task = taskService.getTaskById(taskId);
         model.addAttribute("task", task);
+
+        Project project = taskService.getProjectFromId(task.getProjectId());
+        model.addAttribute("project", project);
 
         return "editTask";
     }

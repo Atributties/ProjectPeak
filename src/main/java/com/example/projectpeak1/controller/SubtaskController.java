@@ -36,6 +36,10 @@ public class SubtaskController {
             return "login";
         }
 
+        TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId);
+        model.addAttribute("task", taskAndSubtask);
+
+
         User user = subtaskService.getUserFromId(userId);
         model.addAttribute("user", user);
         model.addAttribute("taskId", taskId);
@@ -87,8 +91,11 @@ public class SubtaskController {
         model.addAttribute("user", user);
 
 
+
         Subtask subtask1 = subtaskService.getSubtaskById(subtaskId); //get the subtask, so we can show in html edit site.
         model.addAttribute("subtask", subtask1);
+        TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(subtask1.getTaskId());
+        model.addAttribute("task", taskAndSubtask);
         model.addAttribute("taskId", subtask1.getTaskId());
         return "editSubtask";
     }

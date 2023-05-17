@@ -26,11 +26,11 @@
       </div>
       <div class="mb-4">
         <label class="label" for="subTaskStartDate">Start Date:</label>
-        <input class="input" type="date" id="subTaskStartDate" th:field="*{subTaskStartDate}" required>
+        <input class="input" type="date" id="subTaskStartDate" th:field="*{subTaskStartDate}" th:min="${task.startDate}" th:max="${task.endDate}" required>
       </div>
       <div class="mb-6">
         <label class="label" for="subTaskEndDate">End Date:</label>
-        <input class="input" type="date" id="subTaskEndDate" th:field="*{subTaskEndDate}" required>
+        <input class="input" type="date" id="subTaskEndDate" th:field="*{subTaskEndDate}" th:min="${task.startDate}" th:max="${task.endDate}" required>
       </div>
 
       <div class="mb-4">
