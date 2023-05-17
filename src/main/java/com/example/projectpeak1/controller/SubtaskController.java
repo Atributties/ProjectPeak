@@ -61,6 +61,12 @@ public class SubtaskController {
         User user = subtaskService.getUserFromId(userId);
         model.addAttribute("user", user);
         TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId);
+
+        for (Subtask subtask : taskAndSubtask.getSubTaskList()) {
+            int daysToStartSubtask = subtaskService.getDaysToStartSubtask(subtask.getSubTaskId());
+            subtask.setDaysToStart(daysToStartSubtask);
+        }
+
         model.addAttribute("taskAndSubtask", taskAndSubtask);
         return "showSubtask";
     }

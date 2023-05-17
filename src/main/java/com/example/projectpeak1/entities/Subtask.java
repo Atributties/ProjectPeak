@@ -14,6 +14,9 @@ public class Subtask {
     private LocalDate subTaskEndDate;
     private String status;
     private int taskId;
+    private int daysToStart;
+
+
 
     public Subtask(int subTaskId, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate, String status, int taskId) {
         this.subTaskId = subTaskId;
@@ -91,5 +94,13 @@ public class Subtask {
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;
+    }
+
+    public int getDaysToStart() {
+        return daysToStart;
+    }
+
+    public void setDaysToStart(int daysToStart) {
+        this.daysToStart = daysToStart;
     }
 }

@@ -24,6 +24,7 @@
             <table class="table-auto">
                 <thead>
                 <tr>
+                    <th>Days to start</th>
                     <th>Task Name</th>
                     <th>Task Description</th>
                     <th>Start Date</th>
@@ -36,6 +37,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="taskAndSubtask : ${listOfTaskAndSub}" class="hover:bg-blue-900">
+                    <td class="text-white" th:text="${taskAndSubtask.getDaysToStart()}"></td>
                     <td class="text-white" th:text="${taskAndSubtask.name}"></td>
                     <td class="text-white" th:text="${taskAndSubtask.description}"></td>
                     <td class="text-white" th:text="${taskAndSubtask.startDate}"></td>

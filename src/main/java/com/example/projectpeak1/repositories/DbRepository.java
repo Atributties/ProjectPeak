@@ -678,5 +678,45 @@ public class DbRepository implements IRepository {
         return startDate;
     }
 
+    @Override
+    public LocalDate getStartDateTask(int taskId) {
+        LocalDate startDate = null;
+
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement statement = con.prepareStatement("SELECT start_date FROM Task WHERE task_id = ?")) {
+
+            statement.setInt(1, taskId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                startDate = resultSet.getDate("start_date").toLocalDate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return startDate;
+    }
+
+    @Override
+    public LocalDate getStartDateSubtask(int subtaskId) {
+        LocalDate startDate = null;
+
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement statement = con.prepareStatement("SELECT start_date FROM Subtask WHERE subtask_id = ?")) {
+
+            statement.setInt(1, subtaskId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                startDate = resultSet.getDate("start_date").toLocalDate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return startDate;
+    }
+
 
 }

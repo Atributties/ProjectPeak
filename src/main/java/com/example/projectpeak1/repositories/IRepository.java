@@ -83,4 +83,8 @@ public interface IRepository {
     void updateUser(User user);
 
     LocalDate getStartDate(int projectId);
+
+    LocalDate getStartDateTask(int taskId);
+
+    LocalDate getStartDateSubtask(int subTaskId);
 }

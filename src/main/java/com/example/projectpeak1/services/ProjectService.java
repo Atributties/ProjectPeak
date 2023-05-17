@@ -54,11 +54,20 @@ public class ProjectService {
     }
 
 
-    public int getDaysToStart(int projectId) {
+    public int getDaysToStartProject(int projectId) {
 
         LocalDate startDate = repository.getStartDate(projectId);
         LocalDate currentDate = LocalDate.now();
         return (int) ChronoUnit.DAYS.between(currentDate, startDate);
 
     }
+
+    public int getDaysToStartTask(int taskId) {
+        LocalDate startDate = repository.getStartDateTask(taskId);
+        LocalDate currentDate = LocalDate.now();
+        return (int) ChronoUnit.DAYS.between(currentDate, startDate);
+
+    }
+
+
 }

@@ -3,6 +3,7 @@ package com.example.projectpeak1.controller;
 
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.services.ProjectService;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.security.auth.login.LoginException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -39,11 +41,9 @@ public class ProjectController {
         List<Project> list = projectService.getAllProjectById(userId);
 
         for (Project project : list ) {
-            int days = projectService.getDaysToStart(project.getProjectId());
+            int days = projectService.getDaysToStartProject(project.getProjectId());
             project.setDaysToStart(days);
         }
-
-
         model.addAttribute("projects", list);
         return "userFrontend";
     }
@@ -61,10 +61,21 @@ public class ProjectController {
         model.addAttribute("project", project);
 
         List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
+        for (TaskAndSubtaskDTO taskAndSubtaskDTO : listOfTaskAndSub) {
+            int daysToStartTask = projectService.getDaysToStartTask(taskAndSubtaskDTO.getId());
+            taskAndSubtaskDTO.setDaysToStart(daysToStartTask);
+
+
+
+
+        }
+
         model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
 
         return "project";
     }
+
+
 
 
 

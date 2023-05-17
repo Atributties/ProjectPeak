@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class SubtaskService {
@@ -51,5 +53,10 @@ public class SubtaskService {
 
     public int getTaskIdBySubtaskId(int subtaskId) throws LoginException {
         return repository.getTaskIdBySubtaskId(subtaskId);
+    }
+    public int getDaysToStartSubtask(int subTaskId) {
+        LocalDate startDate = repository.getStartDateSubtask(subTaskId);
+        LocalDate currentDate = LocalDate.now();
+        return (int) ChronoUnit.DAYS.between(currentDate, startDate);
     }
 }

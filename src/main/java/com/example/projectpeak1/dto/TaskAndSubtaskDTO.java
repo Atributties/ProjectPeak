@@ -17,6 +17,7 @@ public class TaskAndSubtaskDTO {
     private LocalDate endDate;
     private String status;
     private int projectId;
+    private int daysToStart;
     private List<Subtask> subTaskList;
 
 
@@ -96,5 +97,13 @@ public class TaskAndSubtaskDTO {
 
     public void setSubTaskList(List<Subtask> subTaskList) {
         this.subTaskList = subTaskList;
+    }
+
+    public int getDaysToStart() {
+        return daysToStart;
+    }
+
+    public void setDaysToStart(int daysToStart) {
+        this.daysToStart = daysToStart;
     }
 }

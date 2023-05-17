@@ -15,6 +15,7 @@
 <table>
     <thead>
     <tr>
+        <th>Days to start</th>
         <th>Subtask Name</th>
         <th>Subtask Description</th>
         <th>Start Date</th>
@@ -26,6 +27,7 @@
     </thead>
     <tbody>
     <tr class="items-center" th:each="subtask : ${taskAndSubtask.subTaskList}">
+        <td class="text-white" th:text="${subtask.getDaysToStart()}"></td>
         <td class="text-white" th:text="${subtask.subTaskName}"></td>
         <td class="text-white"  th:text="${subtask.subTaskDescription}"></td>
         <td class="text-white"  th:text="${subtask.subTaskStartDate}"></td>
