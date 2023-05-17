@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -52,8 +54,11 @@ public class ProjectService {
     }
 
 
+    public int getDaysToStart(int projectId) {
 
+        LocalDate startDate = repository.getStartDate(projectId);
+        LocalDate currentDate = LocalDate.now();
+        return (int) ChronoUnit.DAYS.between(currentDate, startDate);
 
-
-
+    }
 }

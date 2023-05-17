@@ -37,6 +37,13 @@ public class ProjectController {
         model.addAttribute("user", user);
 
         List<Project> list = projectService.getAllProjectById(userId);
+
+        for (Project project : list ) {
+            int days = projectService.getDaysToStart(project.getProjectId());
+            project.setDaysToStart(days);
+        }
+
+
         model.addAttribute("projects", list);
         return "userFrontend";
     }
@@ -49,11 +56,12 @@ public class ProjectController {
         }
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
-        List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
-        model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
+
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("project", project);
 
+        List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
+        model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
 
         return "project";
     }

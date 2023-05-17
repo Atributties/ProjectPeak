@@ -9,6 +9,7 @@ import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -80,4 +81,6 @@ public interface IRepository {
     int getTaskIdBySubtaskId(int subtaskId) throws LoginException;
 
     void updateUser(User user);
+
+    LocalDate getStartDate(int projectId);
 }

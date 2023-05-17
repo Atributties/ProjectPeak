@@ -13,7 +13,8 @@ public class Project {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectEndDate;
     private int userId;
-    private int taskNumber;
+    private int daysToStart;
+
 
 
     public Project() {
@@ -83,5 +84,13 @@ public class Project {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getDaysToStart() {
+        return daysToStart;
+    }
+
+    public void setDaysToStart(int daysToStart) {
+        this.daysToStart = daysToStart;
     }
 }

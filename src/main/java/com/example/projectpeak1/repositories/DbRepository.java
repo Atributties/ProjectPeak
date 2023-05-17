@@ -658,5 +658,25 @@ public class DbRepository implements IRepository {
         }
     }
 
+    @Override
+    public LocalDate getStartDate(int projectId) {
+        LocalDate startDate = null;
+
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement statement = con.prepareStatement("SELECT start_date FROM Project WHERE project_id = ?")) {
+
+            statement.setInt(1, projectId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                startDate = resultSet.getDate("start_date").toLocalDate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return startDate;
+    }
+
 
 }

@@ -20,6 +20,7 @@
             </tr>
             </thead>
             <tbody>
+
             <tr th:each="project : ${projects}" class="hover:bg-blue-900">
                 <td class="text-white flex justify-between items-center">
                     <span>
@@ -27,6 +28,10 @@
                         <span th:text="${project.getProjectName()}"></span>
                       </span>
                     <form class="inline-block">
+
+                        <span>Days to start:</span>
+                        <span th:text="${project.getDaysToStart()}"></span>
+
                         <span>Deadline:</span>
                         <span th:text="${project.getProjectEndDate()}"></span>
                         <a th:href="@{/showProject/{id}(id=${project.getProjectId()})}"

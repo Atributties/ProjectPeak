@@ -9,6 +9,7 @@ import com.example.projectpeak1.entities.User;
 import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -184,5 +185,10 @@ public class StubRepository implements IRepository {
     @Override
     public void updateUser(User user) {
 
+    }
+
+    @Override
+    public LocalDate getStartDate(int projectId) {
+        return null;
     }
 }
