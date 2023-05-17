@@ -23,12 +23,17 @@
             </div>
             <div class="mb-4">
                 <label class="label" for="taskStartDate">Start Date:</label>
-                <input class="input" type="date" id="taskStartDate" name="taskStartDate" th:field="*{taskStartDate}" required>
+                <input class="input" type="date" id="taskStartDate" th:field="*{taskStartDate}" th:min="${project.projectStartDate}" th:max="${project.projectEndDate}"required>
             </div>
+
+
+
+
             <div class="mb-6">
                 <label class="label" for="taskEndDate">End Date:</label>
-                <input class="input" type="date" id="taskEndDate" name="taskEndDate" th:field="*{taskEndDate}" required>
+                <input class="input" type="date" id="taskEndDate" th:field="*{taskEndDate}" th:min="${project.projectStartDate}" th:max="${project.projectEndDate}" required>
             </div>
+
             <div class="mb-4">
                 <label class="label" for="status">Status:</label>
                 <select class="select-class" id="status" th:field="*{status}">
@@ -42,6 +47,9 @@
                 <a class="back-btn" th:href="@{/showProject/{projectId}(projectId=${project.getProjectId()})}">Back</a>
             </div>
         </form>
+
+
+
     </main>
     <div th:replace="~{components/footer :: site-footer}"></div>
 </div>
