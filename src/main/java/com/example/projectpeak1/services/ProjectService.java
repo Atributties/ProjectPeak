@@ -56,7 +56,7 @@ public class ProjectService {
 
     public int getDaysToStartProject(int projectId) {
 
-        LocalDate startDate = repository.getStartDate(projectId);
+        LocalDate startDate = repository.getStartDateProject(projectId);
         LocalDate currentDate = LocalDate.now();
         return (int) ChronoUnit.DAYS.between(currentDate, startDate);
 
@@ -70,4 +70,43 @@ public class ProjectService {
     }
 
 
+    public int getDaysForTask(int taskId) {
+        LocalDate startDate = repository.getStartDateTask(taskId);
+        LocalDate endDate = repository.getEndDateTask(taskId);
+
+        return (int) ChronoUnit.DAYS.between(startDate, endDate);
+
+    }
+
+    public int getDaysForProject(int projectId) {
+        LocalDate startDate = repository.getStartDateProject(projectId);
+        LocalDate endDate = repository.getEndDateProject(projectId);
+        return (int) ChronoUnit.DAYS.between(startDate, endDate);
+    }
+
+    public int getDaysLeftProject(int projectId) {
+        LocalDate endDate = repository.getEndDateProject(projectId);
+        LocalDate startDate = repository.getStartDateProject(projectId);
+        LocalDate currentDate = LocalDate.now();
+
+        if(currentDate.isBefore(startDate)){
+            return 0;
+        }else {
+            return (int) ChronoUnit.DAYS.between(currentDate, endDate);
+        }
+
+    }
+
+    public int getDaysLeftTask(int taskId) {
+
+        LocalDate endDate = repository.getEndDateTask(taskId);
+        LocalDate startDate = repository.getStartDateTask(taskId);
+        LocalDate currentDate = LocalDate.now();
+
+        if(currentDate.isBefore(startDate)){
+            return 0;
+        }else {
+            return (int) ChronoUnit.DAYS.between(currentDate, endDate);
+        }
+    }
 }

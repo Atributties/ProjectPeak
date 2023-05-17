@@ -18,6 +18,8 @@ public class TaskAndSubtaskDTO {
     private String status;
     private int projectId;
     private int daysToStart;
+    private int daysTask;
+    private int daysLeft;
     private List<Subtask> subTaskList;
 
 
@@ -105,5 +107,21 @@ public class TaskAndSubtaskDTO {
 
     public void setDaysToStart(int daysToStart) {
         this.daysToStart = daysToStart;
+    }
+
+    public int getDaysTask() {
+        return daysTask;
+    }
+
+    public void setDaysTask(int daysTask) {
+        this.daysTask = daysTask;
+    }
+
+    public int getDaysLeft() {
+        return daysLeft;
+    }
+
+    public void setDaysLeft(int daysLeft) {
+        this.daysLeft = daysLeft;
     }
 }

@@ -59,4 +59,25 @@ public class SubtaskService {
         LocalDate currentDate = LocalDate.now();
         return (int) ChronoUnit.DAYS.between(currentDate, startDate);
     }
+
+
+    public int getDaysForSubtask(int subTaskId) {
+        LocalDate startDate = repository.getStartDateSubtask(subTaskId);
+        LocalDate endDate = repository.getEndDateSubtask(subTaskId);
+        return (int) ChronoUnit.DAYS.between(startDate, endDate);
+    }
+
+    public int getDaysLeftSubtask(int subTaskId) {
+
+        LocalDate endDate = repository.getEndDateSubtask(subTaskId);
+        LocalDate startDate = repository.getStartDateSubtask(subTaskId);
+        LocalDate currentDate = LocalDate.now();
+
+        if(currentDate.isBefore(startDate)){
+            return 0;
+        }else {
+            return (int) ChronoUnit.DAYS.between(currentDate, endDate);
+        }
+
+    }
 }

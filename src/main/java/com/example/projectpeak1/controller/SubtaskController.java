@@ -65,7 +65,12 @@ public class SubtaskController {
         for (Subtask subtask : taskAndSubtask.getSubTaskList()) {
             int daysToStartSubtask = subtaskService.getDaysToStartSubtask(subtask.getSubTaskId());
             subtask.setDaysToStart(daysToStartSubtask);
+            int daysForSubtask = subtaskService.getDaysForSubtask(subtask.getSubTaskId());
+            subtask.setDaysSubtask(daysForSubtask);
+            int daysLeft = subtaskService.getDaysLeftSubtask(subtask.getSubTaskId());
+            subtask.setDaysLeft(daysLeft);
         }
+
 
         model.addAttribute("taskAndSubtask", taskAndSubtask);
         return "showSubtask";

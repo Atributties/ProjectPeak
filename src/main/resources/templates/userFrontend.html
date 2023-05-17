@@ -30,7 +30,15 @@
                     <form class="inline-block">
 
                         <span>Days to start:</span>
-                        <span th:text="${project.getDaysToStart()}"></span>
+                        <span th:text="${project.getDaysToStart() == 0 ? 'Started' : project.getDaysToStart()}"></span>
+
+                        <span>Days for the project:</span>
+                        <span th:text="${project.getDaysForProject()}"></span>
+
+                        <span>Days left for the project:</span>
+                        <span th:text="${project.getDaysLeft() == 0 ? 'Not Started' : project.getDaysLeft()}"></span>
+
+
 
                         <span>Deadline:</span>
                         <span th:text="${project.getProjectEndDate()}"></span>

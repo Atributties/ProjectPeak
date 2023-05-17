@@ -188,7 +188,7 @@ public class StubRepository implements IRepository {
     }
 
     @Override
-    public LocalDate getStartDate(int projectId) {
+    public LocalDate getStartDateProject(int projectId) {
         return null;
     }
 
@@ -199,6 +199,21 @@ public class StubRepository implements IRepository {
 
     @Override
     public LocalDate getStartDateSubtask(int subTaskId) {
+        return null;
+    }
+
+    @Override
+    public LocalDate getEndDateTask(int taskId) {
+        return null;
+    }
+
+    @Override
+    public LocalDate getEndDateProject(int projectId) {
+        return null;
+    }
+
+    @Override
+    public LocalDate getEndDateSubtask(int subTaskId) {
         return null;
     }
 }

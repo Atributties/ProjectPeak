@@ -20,6 +20,8 @@
         <th>Subtask Description</th>
         <th>Start Date</th>
         <th>End Date</th>
+        <th>Days for subtask</th>
+        <th>Days left</th>
         <th>Status</th>
         <th>Edit subtask</th>
         <th>Delete</th>
@@ -27,17 +29,19 @@
     </thead>
     <tbody>
     <tr class="items-center" th:each="subtask : ${taskAndSubtask.subTaskList}">
-        <td class="text-white" th:text="${subtask.getDaysToStart()}"></td>
+        <td class="text-white" th:text="${subtask.getDaysToStart() == 0 ? 'Started' : subtask.getDaysToStart()}"></td>
         <td class="text-white" th:text="${subtask.subTaskName}"></td>
         <td class="text-white"  th:text="${subtask.subTaskDescription}"></td>
         <td class="text-white"  th:text="${subtask.subTaskStartDate}"></td>
         <td class="text-white"  th:text="${subtask.subTaskEndDate}"></td>
+        <td class="text-white"  th:text="${subtask.daysSubtask}"></td>
+        <td class="text-white"  th:text="${subtask.getDaysLeft() == 0 ? 'Not Started' : subtask.getDaysLeft()}"></td>
         <td class="text-white"  th:text="${subtask.status}"></td>
-        <td> <a th:href="@{/editSubtask/{id}(id=${subtask.subTaskId})}"
+        <td> <a th:href="@{/editSubtask/{id}(id=${subtask.getSubTaskId()})}"
                 class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center">
             <i class="fa fa-pencil-square-o fa-lg"></i>
         </a></td>
-        <td><a th:href="@{/deleteSubtask/{id}(id=${subtask.subTaskId})}" type="submit"
+        <td><a th:href="@{/deleteSubtask/{id}(id=${subtask.getSubTaskId()})}" type="submit"
                class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
                onclick="return confirm('Are you sure you want to delete this project? All you task and subtask will also be deleted.')">
             <i class="fa fa-trash fa-lg"></i>

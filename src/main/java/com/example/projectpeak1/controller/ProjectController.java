@@ -41,8 +41,12 @@ public class ProjectController {
         List<Project> list = projectService.getAllProjectById(userId);
 
         for (Project project : list ) {
-            int days = projectService.getDaysToStartProject(project.getProjectId());
-            project.setDaysToStart(days);
+            int daysToStart = projectService.getDaysToStartProject(project.getProjectId());
+            project.setDaysToStart(daysToStart);
+            int daysForProject = projectService.getDaysForProject(project.getProjectId());
+            project.setDaysForProject(daysForProject);
+            int daysLeft = projectService.getDaysLeftProject(project.getProjectId());
+            project.setDaysLeft(daysLeft);
         }
         model.addAttribute("projects", list);
         return "userFrontend";
@@ -54,6 +58,8 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
+
+
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
@@ -64,10 +70,10 @@ public class ProjectController {
         for (TaskAndSubtaskDTO taskAndSubtaskDTO : listOfTaskAndSub) {
             int daysToStartTask = projectService.getDaysToStartTask(taskAndSubtaskDTO.getId());
             taskAndSubtaskDTO.setDaysToStart(daysToStartTask);
-
-
-
-
+            int daysForTask = projectService.getDaysForTask(taskAndSubtaskDTO.getId());
+            taskAndSubtaskDTO.setDaysTask(daysForTask);
+            int daysLeft = projectService.getDaysLeftTask(taskAndSubtaskDTO.getId());
+            taskAndSubtaskDTO.setDaysLeft(daysLeft);
         }
 
         model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);

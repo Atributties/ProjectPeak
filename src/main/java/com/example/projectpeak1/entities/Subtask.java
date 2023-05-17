@@ -15,6 +15,9 @@ public class Subtask {
     private String status;
     private int taskId;
     private int daysToStart;
+    private int daysSubtask;
+    private int daysLeft;
+
 
 
 
@@ -102,5 +105,21 @@ public class Subtask {
 
     public void setDaysToStart(int daysToStart) {
         this.daysToStart = daysToStart;
+    }
+
+    public int getDaysSubtask() {
+        return daysSubtask;
+    }
+
+    public void setDaysSubtask(int daysSubtask) {
+        this.daysSubtask = daysSubtask;
+    }
+
+    public int getDaysLeft() {
+        return daysLeft;
+    }
+
+    public void setDaysLeft(int daysLeft) {
+        this.daysLeft = daysLeft;
     }
 }

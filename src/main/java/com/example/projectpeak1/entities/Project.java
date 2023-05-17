@@ -14,6 +14,8 @@ public class Project {
     private LocalDate projectEndDate;
     private int userId;
     private int daysToStart;
+    private int daysForProject;
+    private int daysLeft;
 
 
 
@@ -92,5 +94,21 @@ public class Project {
 
     public void setDaysToStart(int daysToStart) {
         this.daysToStart = daysToStart;
+    }
+
+    public int getDaysForProject() {
+        return daysForProject;
+    }
+
+    public void setDaysForProject(int daysForProject) {
+        this.daysForProject = daysForProject;
+    }
+
+    public int getDaysLeft() {
+        return daysLeft;
+    }
+
+    public void setDaysLeft(int daysLeft) {
+        this.daysLeft = daysLeft;
     }
 }

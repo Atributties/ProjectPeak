@@ -248,22 +248,21 @@ public class DbRepository implements IRepository {
     public void createTask(Task task, int projectId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "INSERT INTO Task (task_number, name, description, start_date, end_date, status, project_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO Task (name, description, start_date, end_date, status, project_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, task.getTaskNumber());
-            ps.setString(2, task.getTaskName());
-            ps.setString(3, task.getTaskDescription());
-            ps.setDate(4, Date.valueOf(task.getTaskStartDate()));
-            ps.setDate(5, Date.valueOf(task.getTaskEndDate()));
-            ps.setString(6, task.getStatus());
-            ps.setInt(7, projectId);
+            ps.setString(1, task.getTaskName());
+            ps.setString(2, task.getTaskDescription());
+            ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
+            ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
+            ps.setString(5, task.getStatus());
+            ps.setInt(6, projectId);
             ps.executeUpdate();
             ResultSet ids = ps.getGeneratedKeys();
             ids.next();
             int id = ids.getInt(1);
 
 
-            Task createdTask = new Task(task.getTaskNumber(), task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.getStatus(), projectId);
+            Task createdTask = new Task(task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.getStatus(), projectId);
             createdTask.setTaskId(id);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -438,14 +437,13 @@ public class DbRepository implements IRepository {
             Subtask task = new Subtask();
 
             if (rs.next()) {
-                int subTaskId = rs.getInt("subtask_id");
                 String subTaskName = rs.getString("name");
                 String subTaskDescription = rs.getString("description");
                 LocalDate subTaskStartDate = rs.getDate("start_date").toLocalDate();
                 LocalDate subTaskEndDate = rs.getDate("end_date").toLocalDate();
                 String subTaskStatus = rs.getString("status");
                 int taskId = rs.getInt("task_id");
-                task = new Subtask(subTaskId, subTaskName, subTaskDescription, subTaskStartDate, subTaskEndDate, subTaskStatus, taskId);
+                task = new Subtask(id, subTaskName, subTaskDescription, subTaskStartDate, subTaskEndDate, subTaskStatus, taskId);
 
             }
             return task;
@@ -466,7 +464,7 @@ public class DbRepository implements IRepository {
             ps.setDate(3, Date.valueOf(subtask.getSubTaskStartDate()));
             ps.setDate(4, Date.valueOf(subtask.getSubTaskEndDate()));
             ps.setString(5, subtask.getStatus());
-            ps.setInt(6, subtask.getTaskId());
+            ps.setInt(6, subtask.getSubTaskId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -590,7 +588,7 @@ public class DbRepository implements IRepository {
             ps.setDate(3, Date.valueOf(task.getTaskStartDate()));
             ps.setDate(4, Date.valueOf(task.getTaskEndDate()));
             ps.setString(5, task.getStatus());
-            ps.setInt(6, task.getProjectId());
+            ps.setInt(6, task.getTaskId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -659,7 +657,7 @@ public class DbRepository implements IRepository {
     }
 
     @Override
-    public LocalDate getStartDate(int projectId) {
+    public LocalDate getStartDateProject(int projectId) {
         LocalDate startDate = null;
 
         try (Connection con = DbManager.getConnection();
@@ -716,6 +714,66 @@ public class DbRepository implements IRepository {
         }
 
         return startDate;
+    }
+
+    @Override
+    public LocalDate getEndDateTask(int taskId) {
+        LocalDate endDate = null;
+
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM Task WHERE task_id = ?")) {
+
+            statement.setInt(1, taskId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                endDate = resultSet.getDate("end_date").toLocalDate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return endDate;
+    }
+
+    @Override
+    public LocalDate getEndDateProject(int projectId) {
+        LocalDate endDate = null;
+
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM Project WHERE project_id = ?")) {
+
+            statement.setInt(1, projectId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                endDate = resultSet.getDate("end_date").toLocalDate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return endDate;
+    }
+
+    @Override
+    public LocalDate getEndDateSubtask(int subTaskId) {
+        LocalDate endDate = null;
+
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM Subtask WHERE subtask_id = ?")) {
+
+            statement.setInt(1, subTaskId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                endDate = resultSet.getDate("end_date").toLocalDate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return endDate;
     }
 
 
