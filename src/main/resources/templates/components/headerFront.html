@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link id="theme-style" rel="stylesheet" href="/css/darkTheme.css">
+    <script src="/js/script.js"></script>
+</head>
 <body>
 <header class="flex justify-between items-center mb-8" th:fragment="site-header">
     <div class="flex items-center">
@@ -11,6 +15,7 @@
         <i class="fa fa-user text-white mr-2"></i>
         <a th:href="@{/login}" class="btn-green">Login</a>
         <a th:href="@{/signup}" class="btn-green ml-4">Sign Up</a>
+        <button class="btn-green ml-4" onclick="toggleTheme()">Switch Theme</button> <!-- Add the theme switcher button -->
     </nav>
 </header>
 </body>

@@ -1,0 +1,198 @@
+/* BACKGROUND COLORS */
+.bg-main-blue {
+    background-color: #ffffff; /* White */
+}
+
+.bg-green-700 {
+    background-color: #1DB954; /* Green */
+}
+
+/* IMAGE */
+#img-front {
+    max-width: 40%;
+}
+
+/* DROPDOWN MENU */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* BODY BACKGROUND */
+body {
+    background-color: #f5f5f5; /* Light grey */
+    min-height: 100vh;
+}
+
+/* HEADINGS */
+h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #000000; /* Black */
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #000000; /* Black */
+}
+
+p {
+    color: #000000; /* Black */
+}
+
+/* CONTAINER */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 1rem 1rem;
+    box-sizing: border-box;
+}
+
+/* TABLE */
+th {
+    padding: 1rem 0.5rem;
+    color: #000000; /* Black */
+}
+
+td {
+    border: 1px solid #e5e7eb;
+    padding: 1rem 0.5rem;
+}
+
+/* BACK BUTTON */
+.back {
+    display: inline-block;
+    vertical-align: baseline;
+    font-weight: bold;
+    font-size: 0.875rem;
+    color: #000000; /* Black */
+    text-decoration: none;
+}
+
+/* BUTTONS */
+.btn-green {
+    background-color: #1DB954; /* Green */
+    color: #ffffff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-green:hover {
+    background-color: #1ed760; /* Lighter green */
+}
+
+.btn-red {
+    background-color: #ff1210; /* Red */
+    color: #ffffff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-red:hover {
+    background-color: #f8403e; /* Lighter red */
+}
+
+.back-btn {
+    background-color: #2d2c2c; /* Dark grey */
+    color: #ffffff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.back-btn:hover {
+    background-color: #6b726e; /* Lighter dark grey */
+}
+
+/* LABEL */
+.label {
+    display: block;
+    color: #000000; /* Black */
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* INPUT */
+.input {
+    /* ... */
+    border-radius: 0.25rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    color: #000000; /* Black */
+    line-height: 1.25;
+    transition: box-shadow 0.15s ease-in-out, outline 0.15s ease-in-out;
+    outline: none;
+    background-color: #ffffff; /* White */
+    border-color: #ffffff; /* White */
+}
+
+.input:focus {
+    box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.5); /* Green */
+    outline: none;
+}
+
+/* ICONS */
+.icon {
+    color: #000000; /* Black */
+    font-weight: bold;
+    padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    transition: background-color 0.2s ease;
+}
+
+.icon:hover {
+    background-color: #1ed760; /* Lighter green */
+}
+
+/* SELECT CLASS */
+.select-class {
+    display: block;
+    appearance: none;
+    width: 100%;
+    background-color: #ebebeb; /* Light grey */
+    border: 1px solid #ebebeb; /* Light grey */
+    color: #000000; /* Black */
+    padding: 0.75rem 2rem 0.75rem 1rem;
+    border-radius: 0.25rem;
+    line-height: 1.5;
+}
+
+.select-class:focus {
+    outline: none;
+    background-color: #ffffff; /* White */
+    border-color: #ebebeb; /* Light grey */
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 2rem;
+    border-top: 1px solid #d0d0d0; /* Lighter grey */
+    padding: 1rem 0;
+    text-align: center;
+    color: #000000; /* Black */
+}
+
