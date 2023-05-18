@@ -203,7 +203,7 @@ td {
     text-align: center;
     color: #000000; /* Black */
 }
-
-#logo-img {
-    background-image: url("../images/logo-md-dark.png");
+/*
+#logo-img::before {
+  content: url("../images/logo-md-dark.png");
 }
