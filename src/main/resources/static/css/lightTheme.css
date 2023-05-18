@@ -50,6 +50,10 @@ p {
     color: #000000; /* Black */
 }
 
+span {
+    color: #000000; /* Black */
+}
+
 /* CONTAINER */
 .container {
     display: flex;
@@ -166,6 +170,10 @@ td {
 
 .icon:hover {
     background-color: #1ed760; /* Lighter green */
+}
+
+.icons-colour{
+    color: #000000; /* Black */
 }
 
 /* SELECT CLASS */

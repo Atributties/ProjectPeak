@@ -50,6 +50,10 @@ p {
     color: #ffffff;
 }
 
+span {
+    color: #ffffff;
+}
+
 /* CONTAINER */
 .container {
     display: flex;
@@ -167,6 +171,10 @@ td {
     background-color: #1ed760; /* Lighter green */
 }
 
+.icons-colour{
+    color: #ffffff;
+}
+
 /* SELECT CLASS */
 .select-class {
     display: block;
@@ -189,7 +197,7 @@ td {
 /* FOOTER */
 .footer {
     margin-top: 2rem;
-    border-top: 1px solid #1c1c1c; /* Darker grey */
+    border-top: 1px solid #ffffff;
     padding: 1rem 0;
     text-align: center;
     color: #ffffff;

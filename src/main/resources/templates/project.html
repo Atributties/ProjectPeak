@@ -40,26 +40,26 @@
                 </thead>
                 <tbody>
                 <tr th:each="taskAndSubtask : ${listOfTaskAndSub}" class="hover:bg-blue-900">
-                    <td class="text-white" th:text="${taskAndSubtask.getDaysToStart() == 0 ? 'Started' : taskAndSubtask.getDaysToStart()}"></td>
-                    <td class="text-white" th:text="${taskAndSubtask.name}"></td>
-                    <td class="text-white" th:text="${taskAndSubtask.description}"></td>
-                    <td class="text-white" th:text="${taskAndSubtask.startDate}"></td>
-                    <td class="text-white" th:text="${taskAndSubtask.endDate}"></td>
-                    <td class="text-white" th:text="${taskAndSubtask.daysTask}"></td>
-                    <td class="text-white" th:text="${taskAndSubtask.getDaysLeft() == 0 ? 'Not Started' : taskAndSubtask.getDaysLeft()}"></td>
-                    <td class="text-white" th:text="${taskAndSubtask.status}"></td>
+                    <td th:text="${taskAndSubtask.getDaysToStart() == 0 ? 'Started' : taskAndSubtask.getDaysToStart()}"></td>
+                    <td th:text="${taskAndSubtask.name}"></td>
+                    <td th:text="${taskAndSubtask.description}"></td>
+                    <td th:text="${taskAndSubtask.startDate}"></td>
+                    <td th:text="${taskAndSubtask.endDate}"></td>
+                    <td th:text="${taskAndSubtask.daysTask}"></td>
+                    <td th:text="${taskAndSubtask.getDaysLeft() == 0 ? 'Not Started' : taskAndSubtask.getDaysLeft()}"></td>
+                    <td th:text="${taskAndSubtask.status}"></td>
                     <td><a th:href="@{/showSubtask/{id}(id=${taskAndSubtask.getId()})}"
                            class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
-                        <i class="fa fa-eye fa-lg"></i>
+                        <i class="fa fa-eye fa-lg icon"></i>
                     </a></td>
                     <td> <a th:href="@{/editTask/{id}(id=${taskAndSubtask.getId()})}"
                             class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center">
-                        <i class="fa fa-pencil-square-o fa-lg"></i>
+                        <i class="fa fa-pencil-square-o fa-lg icon"></i>
                     </a></td>
                     <td><a th:href="@{/deleteTask/{id}(id=${taskAndSubtask.getId()})}" type="submit"
                            class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
                            onclick="return confirm('Are you sure you want to delete this project? All you task and subtask will also be deleted.')">
-                        <i class="fa fa-trash fa-lg"></i>
+                        <i class="fa fa-trash fa-lg icon"></i>
                     </a></td>
                 </tr>
                 </tbody>
