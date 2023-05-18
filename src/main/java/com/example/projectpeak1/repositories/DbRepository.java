@@ -452,6 +452,37 @@ public class DbRepository implements IRepository {
             return null;
         }
     }
+    @Override
+    public List<Subtask> getSubtasksByTaskId(int taskId) {
+        List<Subtask> subtasks = new ArrayList<>();
+
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM Subtask WHERE task_id = ?;";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, taskId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int subtaskId = rs.getInt("subtask_id");
+                String subTaskName = rs.getString("name");
+                String subTaskDescription = rs.getString("description");
+                LocalDate subTaskStartDate = rs.getDate("start_date").toLocalDate();
+                LocalDate subTaskEndDate = rs.getDate("end_date").toLocalDate();
+                String subTaskStatus = rs.getString("status");
+                int retrievedTaskId = rs.getInt("task_id");
+
+                Subtask subtask = new Subtask(subtaskId, subTaskName, subTaskDescription, subTaskStartDate, subTaskEndDate, subTaskStatus, retrievedTaskId);
+                subtasks.add(subtask);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return subtasks;
+    }
+
 
     @Override
     public void editSubtask(Subtask subtask) {
@@ -774,6 +805,48 @@ public class DbRepository implements IRepository {
         }
 
         return endDate;
+    }
+
+    public void updateTaskAndSubtaskDates(TaskAndSubtaskDTO task) {
+        try (Connection con = DbManager.getConnection()) {
+            String updateTaskQuery = "UPDATE Task SET start_date = ?, end_date = ? WHERE task_id = ?";
+            String updateSubtaskQuery = "UPDATE Subtask SET start_date = ?, end_date = ? WHERE subtask_id = ?";
+
+            // Update task
+            PreparedStatement taskStatement = con.prepareStatement(updateTaskQuery);
+            taskStatement.setDate(1, Date.valueOf(task.getStartDate()));
+            taskStatement.setDate(2, Date.valueOf(task.getEndDate()));
+            taskStatement.setInt(3, task.getId());
+            taskStatement.executeUpdate();
+            taskStatement.close();
+
+            // Update subtasks
+            for (Subtask subtask : task.getSubTaskList()) {
+                PreparedStatement subtaskStatement = con.prepareStatement(updateSubtaskQuery);
+                subtaskStatement.setDate(1, Date.valueOf(subtask.getSubTaskStartDate()));
+                subtaskStatement.setDate(2, Date.valueOf(subtask.getSubTaskEndDate()));
+                subtaskStatement.setInt(3, subtask.getSubTaskId());
+                subtaskStatement.executeUpdate();
+                subtaskStatement.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateSubtaskDates(Subtask subtask) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "UPDATE Subtask SET start_date = ?, end_date = ? WHERE subtask_id = ?;";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setDate(1, java.sql.Date.valueOf(subtask.getSubTaskStartDate()));
+            ps.setDate(2, java.sql.Date.valueOf(subtask.getSubTaskEndDate()));
+            ps.setInt(3, subtask.getSubTaskId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 

@@ -64,6 +64,8 @@ public interface IRepository {
 
     Subtask getSubtaskById(int subtaskId);
 
+    List<Subtask> getSubtasksByTaskId(int taskId);
+
     void editSubtask(Subtask subtask);
 
     int getProjectIdBySubtaskId(int subtaskId);
@@ -93,4 +95,8 @@ public interface IRepository {
     LocalDate getEndDateProject(int projectId);
 
     LocalDate getEndDateSubtask(int subTaskId);
+
+    void updateTaskAndSubtaskDates(TaskAndSubtaskDTO task);
+
+    void updateSubtaskDates(Subtask subtask);
 }

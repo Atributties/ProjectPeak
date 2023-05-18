@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.security.auth.login.LoginException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,7 +139,22 @@ public class ProjectController {
     }
     @PostMapping("/editProject")
     public String updateProject(@ModelAttribute Project project) {
-        projectService.updateProject(project);
+        Project originalProject = projectService.getProjectById(project.getProjectId());
+
+        // Check if the start date or end date has changed
+        if (!originalProject.getProjectStartDate().equals(project.getProjectStartDate())
+                || !originalProject.getProjectEndDate().equals(project.getProjectEndDate())) {
+
+            // Update the project
+            projectService.updateProject(project);
+
+            // Update task and subtask dates
+            projectService.updateTaskAndSubtaskDates(project, originalProject);
+        } else {
+            // Only update the project without updating task and subtask dates
+            projectService.updateProject(project);
+        }
+
         return "redirect:/userFrontend";
     }
 

@@ -143,6 +143,11 @@ public class StubRepository implements IRepository {
     }
 
     @Override
+    public List<Subtask> getSubtasksByTaskId(int taskId) {
+        return null;
+    }
+
+    @Override
     public void editSubtask(Subtask subtask) {
 
     }
@@ -215,5 +220,15 @@ public class StubRepository implements IRepository {
     @Override
     public LocalDate getEndDateSubtask(int subTaskId) {
         return null;
+    }
+
+    @Override
+    public void updateTaskAndSubtaskDates(TaskAndSubtaskDTO task) {
+
+    }
+
+    @Override
+    public void updateSubtaskDates(Subtask subtask) {
+
     }
 }

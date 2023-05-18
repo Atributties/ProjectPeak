@@ -3,6 +3,7 @@ package com.example.projectpeak1.services;
 
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
+import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.repositories.IRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +11,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -109,4 +112,37 @@ public class ProjectService {
             return (int) ChronoUnit.DAYS.between(currentDate, endDate);
         }
     }
+
+    public void updateTaskAndSubtaskDates(Project project, Project originalProject) {
+        // Calculate the period between the original and updated project start dates
+        Period startDateDifference = Period.between(originalProject.getProjectStartDate(), project.getProjectStartDate());
+
+        // Calculate the period between the original and updated project end dates
+        Period endDateDifference = Period.between(originalProject.getProjectEndDate(), project.getProjectEndDate());
+
+        if (endDateDifference.isZero()) {
+            // Only the start date has changed, so use the start date difference
+            endDateDifference = startDateDifference;
+        } else {
+            // Only update the end date, so reset the start date difference to zero
+            startDateDifference = Period.ZERO;
+            endDateDifference = Period.ZERO;
+        }
+
+        List<TaskAndSubtaskDTO> list = repository.getTaskAndSubTaskList(project.getProjectId());
+
+        for (TaskAndSubtaskDTO task : list) {
+            // Update task start and end dates based on the project's start and end date differences
+            task.setStartDate(task.getStartDate().plusDays(startDateDifference.getDays()));
+            task.setEndDate(task.getEndDate().plusDays(endDateDifference.getDays()));
+
+            // Update subtask start and end dates based on the task's start and end date differences
+            for (Subtask subtask : task.getSubTaskList()) {
+                subtask.setSubTaskStartDate(subtask.getSubTaskStartDate().plusDays(startDateDifference.getDays()));
+                subtask.setSubTaskEndDate(subtask.getSubTaskEndDate().plusDays(endDateDifference.getDays()));
+            }
+            repository.updateTaskAndSubtaskDates(task);
+        }
+    }
+
 }

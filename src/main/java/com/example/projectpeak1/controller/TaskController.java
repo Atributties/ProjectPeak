@@ -76,10 +76,26 @@ public class TaskController {
     }
 
     @PostMapping("/editTask")
-    public String updateProject(@ModelAttribute Task task, @RequestParam("projectId") int projectId) {
-        taskService.updateTask(task);
+    public String updateTask(@ModelAttribute Task task, @RequestParam("projectId") int projectId) {
+        Task originalTask = taskService.getTaskById(task.getTaskId());
+
+        // Check if the start date or end date has changed
+        if (!originalTask.getTaskStartDate().equals(task.getTaskStartDate())
+                || !originalTask.getTaskStartDate().equals(task.getTaskEndDate())) {
+
+            // Update the task
+            taskService.updateTask(task);
+
+            // Update subtask dates
+            taskService.updateSubtaskDates(task, originalTask);
+        } else {
+            // Only update the task without updating subtask dates
+            taskService.updateTask(task);
+        }
+
         return "redirect:/showProject/" + projectId;
     }
+
 
 
     @GetMapping(value = {"/deleteTask/{id}"})
