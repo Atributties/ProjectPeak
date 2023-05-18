@@ -204,3 +204,6 @@ td {
     color: #000000; /* Black */
 }
 
+#logo-img {
+    background-image: url("../images/logo-md-dark.png");
+}
