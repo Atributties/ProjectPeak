@@ -54,6 +54,14 @@ span {
     color: #ffffff;
 }
 
+tr-hover{
+
+}
+
+tr-hover:hover{
+    background-color: #1ed760;
+}
+
 /* CONTAINER */
 .container {
     display: flex;

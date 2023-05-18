@@ -39,7 +39,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="taskAndSubtask : ${listOfTaskAndSub}" class="hover:bg-blue-900">
+                <tr th:each="taskAndSubtask : ${listOfTaskAndSub}" class="hover:bg-gray-300">
                     <td th:text="${taskAndSubtask.getDaysToStart() == 0 ? 'Started' : taskAndSubtask.getDaysToStart()}"></td>
                     <td th:text="${taskAndSubtask.name}"></td>
                     <td th:text="${taskAndSubtask.description}"></td>
