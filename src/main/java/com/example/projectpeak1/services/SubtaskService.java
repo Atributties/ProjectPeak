@@ -1,6 +1,7 @@
 package com.example.projectpeak1.services;
 
 
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.security.auth.login.LoginException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class SubtaskService {
@@ -83,5 +85,9 @@ public class SubtaskService {
 
     public void doneSubtask(int id){
         repository.doneSubtask(id);
+    }
+
+    public List<DoneSubtaskDTO> getAllDoneSubtask(int taskId) {
+        return repository.getAllDoneSubtask(taskId);
     }
 }

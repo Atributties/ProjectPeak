@@ -1,5 +1,7 @@
 package com.example.projectpeak1.controller;
 
+import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Task;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
 
 
 @Controller
@@ -124,6 +127,20 @@ public class TaskController {
 
 
         return "redirect:/showProject/" + projectId;
+
+    }
+
+    @GetMapping(value = {"/showAllTaskProjects/{id}"})
+    public String seeAllDoneTask(HttpSession session, Model model, @PathVariable int id) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+
+        List<DoneTaskDTO> doneTaskDTOS = taskService.seeAllDoneTask(id);
+        model.addAttribute("seeDoneTask", doneTaskDTOS);
+
+        return "showAllDoneTask";
 
     }
 

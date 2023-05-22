@@ -1,6 +1,8 @@
 package com.example.projectpeak1.controller;
 
 
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
@@ -126,6 +128,20 @@ public class SubtaskController {
 
 
         return "redirect:/showSubtask/" + taskId;
+
+    }
+
+    @GetMapping(value = {"/showAllDoneSubtask/{taskId}"})
+    public String seeAllDoneSubtask(HttpSession session, Model model, @PathVariable int taskId) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+
+        List<DoneSubtaskDTO> doneSubtaskDTOS = subtaskService.getAllDoneSubtask(taskId);
+        model.addAttribute("seeDoneSubtask", doneSubtaskDTOS);
+
+        return "showAllDoneSubtask";
 
     }
 

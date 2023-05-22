@@ -1,6 +1,8 @@
 package com.example.projectpeak1.repositories;
 
 import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -858,8 +860,8 @@ public class DbRepository implements IRepository {
     public void doneAllSubtask(int id) {
         try (Connection conn = DbManager.getConnection()) {
             // Move subtasks to DoneSubtask table
-            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status) " +
-                    "SELECT subtask_id, name, description, start_date, end_date, status " +
+            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status, task_id) " +
+                    "SELECT subtask_id, name, description, start_date, end_date, status, task_id " +
                     "FROM Subtask " +
                     "WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
 
@@ -885,8 +887,8 @@ public class DbRepository implements IRepository {
     public void doneSubtask(int subtaskId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move subtasks to DoneSubtask table
-            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status) " +
-                    "SELECT subtask_id, name, description, start_date, end_date, status " +
+            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status, task_id) " +
+                    "SELECT subtask_id, name, description, start_date, end_date, status, task_id " +
                     "FROM Subtask " +
                     "WHERE subtask_id = ?;";
 
@@ -941,8 +943,8 @@ public class DbRepository implements IRepository {
     public void doneAllTask(int projectId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move tasks to DoneTask table
-            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status) " +
-                    "SELECT task_id, name, description, start_date, end_date, status " +
+            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status, project_id) " +
+                    "SELECT task_id, name, description, start_date, end_date, status, project_id " +
                     "FROM Task " +
                     "WHERE project_id = ?";
 
@@ -997,13 +999,77 @@ public class DbRepository implements IRepository {
         return doneProjects;
     }
 
+    @Override
+    public List<DoneTaskDTO> getAllDoneTask(int id) {
+        List<DoneTaskDTO> doneTaskDTOS = new ArrayList<>();
+
+        try (Connection conn = DbManager.getConnection()) {
+            String query = "SELECT * FROM DoneTask WHERE project_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                DoneTaskDTO doneTaskDTO = new DoneTaskDTO();
+                doneTaskDTO.setTaskId(rs.getInt("task_id"));
+                doneTaskDTO.setTaskName(rs.getString("name"));
+                doneTaskDTO.setTaskDescription(rs.getString("description"));
+                doneTaskDTO.setTaskStartDate(rs.getDate("start_date").toLocalDate());
+                doneTaskDTO.setTaskEndDate(rs.getDate("end_date").toLocalDate());
+                doneTaskDTO.setTaskCompletedDate(rs.getDate("task_completed_date").toLocalDate());
+                doneTaskDTO.setStatus(rs.getString("status"));
+                doneTaskDTO.setProjectId(rs.getInt("project_id"));
+
+                doneTaskDTOS.add(doneTaskDTO);
+
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return doneTaskDTOS;
+    }
+
+    @Override
+    public List<DoneSubtaskDTO> getAllDoneSubtask(int taskId) {
+        List<DoneSubtaskDTO> doneSubtaskDTOS = new ArrayList<>();
+
+        try (Connection conn = DbManager.getConnection()) {
+            String query = "SELECT * FROM DoneSubtask WHERE task_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, taskId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                DoneSubtaskDTO doneSubtaskDTO = new DoneSubtaskDTO();
+                doneSubtaskDTO.setSubTaskId(rs.getInt("subtask_id"));
+                doneSubtaskDTO.setSubTaskName(rs.getString("name"));
+                doneSubtaskDTO.setSubTaskDescription(rs.getString("description"));
+                doneSubtaskDTO.setSubTaskStartDate(rs.getDate("start_date").toLocalDate());
+                doneSubtaskDTO.setSubTaskEndDate(rs.getDate("end_date").toLocalDate());
+                doneSubtaskDTO.setSubtaskCompletedDate(rs.getDate("subtask_completed_date").toLocalDate());
+                doneSubtaskDTO.setStatus(rs.getString("status"));
+                doneSubtaskDTO.setTaskId(rs.getInt("task_id"));
+
+                doneSubtaskDTOS.add(doneSubtaskDTO);
+
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return doneSubtaskDTOS;
+    }
+
 
     @Override
     public void doneTask(int taskId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move tasks to DoneTask table
-            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status) " +
-                    "SELECT task_id, name, description, start_date, end_date, status FROM Task WHERE task_id = ?;";
+            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status, project_id) " +
+                    "SELECT task_id, name, description, start_date, end_date, status, project_id FROM Task WHERE task_id = ?;";
 
             try (PreparedStatement moveTasksStmt = conn.prepareStatement(moveTasksQuery)) {
                 moveTasksStmt.setInt(1, taskId);

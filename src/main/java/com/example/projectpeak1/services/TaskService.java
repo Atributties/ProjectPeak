@@ -1,6 +1,7 @@
 package com.example.projectpeak1.services;
 
 
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -93,6 +94,10 @@ public class TaskService {
 
         repository.doneAllSubtask(projectId);
         repository.doneTask(id);
+    }
+
+    public List<DoneTaskDTO> seeAllDoneTask(int id) {
+        return repository.getAllDoneTask(id);
     }
 }
 

@@ -19,17 +19,12 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="doneProject : ${seeDoneProject}">
-    <td th:text="${doneProject.projectName}"></td>
-    <td th:text="${doneProject.projectDescription}"></td>
-    <td th:text="${doneProject.projectStartDate}"></td>
-    <td th:text="${doneProject.projectEndDate}"></td>
-    <td th:text="${doneProject.projectCompletedDate}"></td>
-    <td><a th:href="@{/showAllTaskProjects/{id}(id=${doneProject.getProjectId()})}"
-           class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
-      <i class="fa fa-eye fa-lg icons-colour"></i>
-    </a></td>
-
+  <tr th:each="doneSubtask : ${seeDoneSubtask}">
+    <td th:text="${doneSubtask.subTaskName}"></td>
+    <td th:text="${doneSubtask.subTaskDescription}"></td>
+    <td th:text="${doneSubtask.subTaskStartDate}"></td>
+    <td th:text="${doneSubtask.subTaskEndDate}"></td>
+    <td th:text="${doneSubtask.subtaskCompletedDate}"></td>
   </tr>
   </tbody>
 </table>
