@@ -111,6 +111,22 @@ public class TaskController {
         return "redirect:/showProject/" + projectId;
     }
 
+    @GetMapping(value = {"/doneTask/{id}"})
+    public String doneTask(HttpSession session, @PathVariable("id") int id, Model model) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+
+        int projectId = taskService.getProjectIdFromTaskId(id);
+
+        taskService.doneTask(id);
+
+
+        return "redirect:/showProject/" + projectId;
+
+    }
+
 
 
 }

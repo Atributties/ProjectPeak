@@ -149,9 +149,9 @@ public class ProjectService {
     }
 
     public void doneProject(int id) {
-        repository.doneSubtask(id);
+        repository.doneAllSubtask(id);
 
-        repository.doneTask(id);
+        repository.doneAllTask(id);
 
         repository.doneProject(id);
     }

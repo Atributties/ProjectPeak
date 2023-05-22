@@ -80,4 +80,8 @@ public class SubtaskService {
         }
 
     }
+
+    public void doneSubtask(int id){
+        repository.doneSubtask(id);
+    }
 }

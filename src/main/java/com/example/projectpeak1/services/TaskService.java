@@ -87,5 +87,12 @@ public class TaskService {
             repository.updateSubtaskDates(subtask);
         }
     }
+
+    public void doneTask(int id){
+        int projectId = repository.getProjectIdByTaskId(id);
+
+        repository.doneAllSubtask(projectId);
+        repository.doneTask(id);
+    }
 }
 

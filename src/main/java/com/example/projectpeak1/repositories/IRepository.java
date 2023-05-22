@@ -103,10 +103,14 @@ public interface IRepository {
 
     void updateSubtaskDates(Subtask subtask);
 
+    void doneAllSubtask(int id);
+
     void doneProject(int id);
 
     void doneTask(int id);
 
 
     void doneSubtask(int id);
+
+    void doneAllTask(int projectId);
 }

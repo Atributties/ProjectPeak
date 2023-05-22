@@ -236,6 +236,11 @@ public class StubRepository implements IRepository {
     }
 
     @Override
+    public void doneAllSubtask(int id) {
+
+    }
+
+    @Override
     public void doneProject(int id) {
 
     }
@@ -247,6 +252,11 @@ public class StubRepository implements IRepository {
 
     @Override
     public void doneSubtask(int id) {
+
+    }
+
+    @Override
+    public void doneAllTask(int projectId) {
 
     }
 }

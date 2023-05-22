@@ -1,8 +1,5 @@
 package com.example.projectpeak1.repositories;
 
-import com.example.projectpeak1.dto.DoneProjectDTO;
-import com.example.projectpeak1.dto.DoneSubtaskDTO;
-import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -857,7 +854,7 @@ public class DbRepository implements IRepository {
 
 
     @Override
-    public void doneSubtask(int id) {
+    public void doneAllSubtask(int id) {
         try (Connection conn = DbManager.getConnection()) {
             // Move subtasks to DoneSubtask table
             String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status) " +
@@ -877,6 +874,34 @@ public class DbRepository implements IRepository {
                 deleteSubtasksStmt.setInt(1, id);
                 deleteSubtasksStmt.executeUpdate();
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void doneSubtask(int subtaskId) {
+        try (Connection conn = DbManager.getConnection()) {
+            // Move subtasks to DoneSubtask table
+            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status) " +
+                    "SELECT subtask_id, name, description, start_date, end_date, status " +
+                    "FROM Subtask " +
+                    "WHERE subtask_id = ?;";
+
+            try (PreparedStatement moveSubtasksStmt = conn.prepareStatement(moveSubtasksQuery)) {
+                moveSubtasksStmt.setInt(1, subtaskId);
+                moveSubtasksStmt.executeUpdate();
+            }
+
+            // Remove subtasks from Subtask table
+            String deleteSubtasksQuery = "DELETE FROM Subtask WHERE subtask_id = ?";
+
+            try (PreparedStatement deleteSubtasksStmt = conn.prepareStatement(deleteSubtasksQuery)) {
+                deleteSubtasksStmt.setInt(1, subtaskId);
+                deleteSubtasksStmt.executeUpdate();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -912,7 +937,7 @@ public class DbRepository implements IRepository {
     }
 
     @Override
-    public void doneTask(int projectId) {
+    public void doneAllTask(int projectId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move tasks to DoneTask table
             String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status) " +
@@ -930,6 +955,31 @@ public class DbRepository implements IRepository {
 
             try (PreparedStatement deleteTasksStmt = conn.prepareStatement(deleteTasksQuery)) {
                 deleteTasksStmt.setInt(1, projectId);
+                deleteTasksStmt.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void doneTask(int taskId) {
+        try (Connection conn = DbManager.getConnection()) {
+            // Move tasks to DoneTask table
+            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status) " +
+                    "SELECT task_id, name, description, start_date, end_date, status FROM Task WHERE task_id = ?;";
+
+            try (PreparedStatement moveTasksStmt = conn.prepareStatement(moveTasksQuery)) {
+                moveTasksStmt.setInt(1, taskId);
+                moveTasksStmt.executeUpdate();
+            }
+
+            // Remove tasks from Task table
+            String deleteTasksQuery = "DELETE FROM Task WHERE task_id = ?";
+
+            try (PreparedStatement deleteTasksStmt = conn.prepareStatement(deleteTasksQuery)) {
+                deleteTasksStmt.setInt(1, taskId);
                 deleteTasksStmt.executeUpdate();
             }
 
