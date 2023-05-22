@@ -35,10 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set the theme based on the saved value or use dark theme as default
     if (savedTheme === 'light') {
         themeLink.setAttribute('href', lightTheme);
-        logoImage.src = "/images/logo-white.png";
+        logoImage.src = "/images/logo-md-dark.png";
     } else {
         themeLink.setAttribute('href', darkTheme);
-        logoImage.src = "/images/logo-dark.png";
+        logoImage.src = "/images/logo-md-light.png";
         localStorage.setItem('theme', 'dark'); // Save the theme preference in localStorage
     }
 });
