@@ -14,6 +14,9 @@ public class Task {
     private LocalDate taskEndDate;
     private String status;
     private int projectId;
+    private int daysToStart;
+    private int daysSubtask;
+    private int daysLeft;
 
 
     public Task() {

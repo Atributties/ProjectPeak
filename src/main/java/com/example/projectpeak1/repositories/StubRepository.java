@@ -1,6 +1,9 @@
 package com.example.projectpeak1.repositories;
 
 
+import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -229,6 +232,21 @@ public class StubRepository implements IRepository {
 
     @Override
     public void updateSubtaskDates(Subtask subtask) {
+
+    }
+
+    @Override
+    public void doneProject(int id) {
+
+    }
+
+    @Override
+    public void doneTask(int id) {
+
+    }
+
+    @Override
+    public void doneSubtask(int id) {
 
     }
 }

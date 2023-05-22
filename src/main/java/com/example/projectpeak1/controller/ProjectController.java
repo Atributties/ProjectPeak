@@ -2,6 +2,8 @@ package com.example.projectpeak1.controller;
 
 
 import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -166,25 +168,15 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
-        DoneProjectDTO doneProjectDTO = new DoneProjectDTO();
-        model.addAttribute("doneProject", doneProjectDTO);
 
-        return "redirect:/userFrontend";
-
-    }
-
-    @PostMapping(value = {"/doneProject/{id}"})
-    public String sendDoneProject(HttpSession session, @ModelAttribute DoneProjectDTO doneProjectDTO) throws LoginException {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login";
-        }
-        projectService.doneProject(doneProjectDTO);
+        projectService.doneProject(id);
 
 
         return "redirect:/userFrontend";
 
     }
+
+
 
 
 

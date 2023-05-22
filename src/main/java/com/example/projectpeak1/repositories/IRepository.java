@@ -2,6 +2,8 @@ package com.example.projectpeak1.repositories;
 
 
 import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -101,5 +103,10 @@ public interface IRepository {
 
     void updateSubtaskDates(Subtask subtask);
 
-    void doneProject(DoneProjectDTO doneProjectDTO);
+    void doneProject(int id);
+
+    void doneTask(int id);
+
+
+    void doneSubtask(int id);
 }

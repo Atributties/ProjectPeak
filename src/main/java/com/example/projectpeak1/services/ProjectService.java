@@ -2,6 +2,8 @@ package com.example.projectpeak1.services;
 
 
 import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -146,26 +148,15 @@ public class ProjectService {
         }
     }
 
-    public void doneProject(DoneProjectDTO doneProjectDTO) {
-        // Calculate the duration between project start and end dates
-        Duration duration = Duration.between(doneProjectDTO.getProjectStartDate().atStartOfDay(), doneProjectDTO.getProjectEndDate().atStartOfDay());
+    public void doneProject(int id) {
+        repository.doneSubtask(id);
 
-        // Calculate the total days between project start and end dates
-        int totalDays = (int) duration.toDays();
+        repository.doneTask(id);
 
-        // Set the expected days based on the total days
-        doneProjectDTO.setProjectExpectedDays(totalDays);
-
-        // Calculate the used days between project start and completed dates
-        Duration usedDuration = Duration.between(doneProjectDTO.getProjectStartDate().atStartOfDay(), doneProjectDTO.getProjectCompletedDate().atStartOfDay());
-
-        // Calculate the used days
-        int usedDays = (int) usedDuration.toDays();
-
-        // Set the used days
-        doneProjectDTO.setProjectUsedDays(usedDays);
-
-        repository.doneProject(doneProjectDTO);
+        repository.doneProject(id);
     }
+
+
+
 
 }

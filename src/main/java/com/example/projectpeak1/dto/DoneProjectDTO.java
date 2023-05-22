@@ -26,7 +26,7 @@ public class DoneProjectDTO {
     public DoneProjectDTO() {
     }
 
-    public DoneProjectDTO(int projectId, String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectEndDate, int userId, int daysToStart, int daysForProject, int daysLeft, LocalDate projectCompletedDate, int projectExpectedDays, int projectUsedDays) {
+    public DoneProjectDTO(int projectId, String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectEndDate, int userId, int daysToStart, int daysForProject, int daysLeft, LocalDate projectCompletedDate) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.projectDescription = projectDescription;
@@ -37,8 +37,7 @@ public class DoneProjectDTO {
         this.daysForProject = daysForProject;
         this.daysLeft = daysLeft;
         this.projectCompletedDate = projectCompletedDate;
-        this.projectExpectedDays = projectExpectedDays;
-        this.projectUsedDays = projectUsedDays;
+
     }
 
     public int getProjectId() {

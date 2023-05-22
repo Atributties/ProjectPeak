@@ -1,6 +1,8 @@
 package com.example.projectpeak1.repositories;
 
 import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -851,49 +853,91 @@ public class DbRepository implements IRepository {
     }
 
 
+
+
+
     @Override
-    public void doneProject(DoneProjectDTO doneProjectDTO) {
-        try {
-            Connection con = DbManager.getConnection();
+    public void doneSubtask(int id) {
+        try (Connection conn = DbManager.getConnection()) {
+            // Move subtasks to DoneSubtask table
+            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status) " +
+                    "SELECT subtask_id, name, description, start_date, end_date, status " +
+                    "FROM Subtask " +
+                    "WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
 
-            String selectSQL = "SELECT * FROM Project WHERE project_id = ?;";
-            PreparedStatement selectPS = con.prepareStatement(selectSQL);
-            selectPS.setInt(1, doneProjectDTO.getProjectId());
-            ResultSet rs = selectPS.executeQuery();
-
-            if (rs.next()) {
-                int projectId = rs.getInt("project_id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                LocalDate startDate = rs.getDate("start_date").toLocalDate();
-                LocalDate endDate = rs.getDate("end_date").toLocalDate();
-                int userId = rs.getInt("user_id");
-                int expectedDays = doneProjectDTO.getProjectExpectedDays();
-                int usedDays = doneProjectDTO.getProjectUsedDays();
-
-                String insertSQL = "INSERT INTO DoneProject (project_id, name, description, start_date, end_date, project_completed_date, project_expected_days, project_used_days, user_id) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                PreparedStatement insertPS = con.prepareStatement(insertSQL);
-                insertPS.setInt(1, projectId);
-                insertPS.setString(2, name);
-                insertPS.setString(3, description);
-                insertPS.setDate(4, java.sql.Date.valueOf(startDate));
-                insertPS.setDate(5, java.sql.Date.valueOf(endDate));
-                insertPS.setDate(6, java.sql.Date.valueOf(doneProjectDTO.getProjectCompletedDate())); // Set the project_completed_date to the provided date
-                insertPS.setInt(7, expectedDays);
-                insertPS.setInt(8, usedDays);
-                insertPS.setInt(9, userId);
-
-                insertPS.executeUpdate();
+            try (PreparedStatement moveSubtasksStmt = conn.prepareStatement(moveSubtasksQuery)) {
+                moveSubtasksStmt.setInt(1, id);
+                moveSubtasksStmt.executeUpdate();
             }
 
-            rs.close();
-            selectPS.close();
-            con.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            // Remove subtasks from Subtask table
+            String deleteSubtasksQuery = "DELETE FROM Subtask WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+
+            try (PreparedStatement deleteSubtasksStmt = conn.prepareStatement(deleteSubtasksQuery)) {
+                deleteSubtasksStmt.setInt(1, id);
+                deleteSubtasksStmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
+
+    public void doneProject(int projectId) {
+        try (Connection conn = DbManager.getConnection()) {
+            // Move project to DoneProject table
+            String moveProjectQuery = "INSERT INTO DoneProject (project_id, name, description, start_date, end_date, user_id) " +
+                    "SELECT project_id, name, description, start_date, end_date, user_id " +
+                    "FROM Project " +
+                    "WHERE project_id = ?";
+
+            try (PreparedStatement moveProjectStmt = conn.prepareStatement(moveProjectQuery)) {
+                moveProjectStmt.setInt(1, projectId);
+                moveProjectStmt.executeUpdate();
+            }
+
+            // Remove project from Project table
+            String deleteProjectQuery = "DELETE FROM Project WHERE project_id = ?";
+
+            try (PreparedStatement deleteProjectStmt = conn.prepareStatement(deleteProjectQuery)) {
+                deleteProjectStmt.setInt(1, projectId);
+                deleteProjectStmt.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void doneTask(int projectId) {
+        try (Connection conn = DbManager.getConnection()) {
+            // Move tasks to DoneTask table
+            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status) " +
+                    "SELECT task_id, name, description, start_date, end_date, status " +
+                    "FROM Task " +
+                    "WHERE project_id = ?";
+
+            try (PreparedStatement moveTasksStmt = conn.prepareStatement(moveTasksQuery)) {
+                moveTasksStmt.setInt(1, projectId);
+                moveTasksStmt.executeUpdate();
+            }
+
+            // Remove tasks from Task table
+            String deleteTasksQuery = "DELETE FROM Task WHERE project_id = ?";
+
+            try (PreparedStatement deleteTasksStmt = conn.prepareStatement(deleteTasksQuery)) {
+                deleteTasksStmt.setInt(1, projectId);
+                deleteTasksStmt.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 
