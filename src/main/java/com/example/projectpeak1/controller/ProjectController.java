@@ -182,6 +182,8 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
+        User user = projectService.getUserFromId(userId);
+        model.addAttribute("user", user);
 
         List<DoneProjectDTO> doneProjectDTO = projectService.seeAllDoneProjects(userId);
         model.addAttribute("seeDoneProject", doneProjectDTO);

@@ -137,9 +137,12 @@ public class SubtaskController {
         if (userId == 0) {
             return "login";
         }
+        User user = subtaskService.getUserFromId(userId);
+        model.addAttribute("user", user);
 
         List<DoneSubtaskDTO> doneSubtaskDTOS = subtaskService.getAllDoneSubtask(taskId);
         model.addAttribute("seeDoneSubtask", doneSubtaskDTOS);
+        model.addAttribute("taskId", taskId);
 
         return "showAllDoneSubtask";
 

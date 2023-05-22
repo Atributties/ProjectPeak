@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -158,6 +159,26 @@ public class ProjectService {
 
 
     public List<DoneProjectDTO> seeAllDoneProjects(int userId) {
-        return repository.getAllDoneProjects(userId);
+        List<DoneProjectDTO> doneProjectDTOList = new ArrayList<>();
+
+        List<DoneProjectDTO> listFromDatabase = repository.getAllDoneProjects(userId);
+        // Iterate over each done project and calculate the expected and used days
+        for (DoneProjectDTO doneProject : listFromDatabase) {
+
+            LocalDate projectStartDate = doneProject.getProjectStartDate();
+            LocalDate projectEndDate = doneProject.getProjectEndDate();
+            LocalDate projectCompletedDate = doneProject.getProjectCompletedDate();
+
+            long calculateExpectedDays = ChronoUnit.DAYS.between(projectStartDate, projectEndDate);
+            long calculateUsedDays = ChronoUnit.DAYS.between(projectStartDate, projectCompletedDate);
+
+            doneProject.setProjectExpectedDays((int) calculateExpectedDays);
+            doneProject.setProjectUsedDays((int) calculateUsedDays);
+
+            doneProjectDTOList.add(doneProject);
+        }
+
+        return doneProjectDTOList;
     }
+
 }

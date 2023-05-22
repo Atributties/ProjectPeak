@@ -137,6 +137,9 @@ public class TaskController {
             return "login";
         }
 
+        User user = taskService.getUserFromId(userId);
+        model.addAttribute("user", user);
+
         List<DoneTaskDTO> doneTaskDTOS = taskService.seeAllDoneTask(id);
         model.addAttribute("seeDoneTask", doneTaskDTOS);
 

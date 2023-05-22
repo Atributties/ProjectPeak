@@ -1,6 +1,7 @@
 package com.example.projectpeak1.services;
 
 
+import com.example.projectpeak1.dto.DoneProjectDTO;
 import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
@@ -13,7 +14,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -97,7 +101,26 @@ public class TaskService {
     }
 
     public List<DoneTaskDTO> seeAllDoneTask(int id) {
-        return repository.getAllDoneTask(id);
+        List<DoneTaskDTO> doneTaskDTOS = new ArrayList<>();
+
+        List<DoneTaskDTO> listFromDatabase = repository.getAllDoneTask(id);
+        // Iterate over each done project and calculate the expected and used days
+        for (DoneTaskDTO doneTaskDTO : listFromDatabase) {
+
+            LocalDate taskStartDate = doneTaskDTO.getTaskStartDate();
+            LocalDate taskEndDate = doneTaskDTO.getTaskEndDate();
+            LocalDate taskCompletedDate = doneTaskDTO.getTaskCompletedDate();
+
+            long calculateExpectedDays = ChronoUnit.DAYS.between(taskStartDate, taskEndDate);
+            long calculateUsedDays = ChronoUnit.DAYS.between(taskStartDate, taskCompletedDate);
+
+            doneTaskDTO.setTaskExpectedDays((int) calculateExpectedDays);
+            doneTaskDTO.setTaskUsedDays((int) calculateUsedDays);
+
+            doneTaskDTOS.add(doneTaskDTO);
+        }
+
+        return doneTaskDTOS;
     }
 }
 

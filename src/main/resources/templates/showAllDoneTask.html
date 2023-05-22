@@ -8,6 +8,7 @@
   <link id="theme-style" rel="stylesheet" href="/css/darkTheme.css">
 </head>
 <body>
+<div th:replace="~{components/headerUser :: site-header-user}"></div>
 <table class="table-auto">
   <thead>
   <tr>
@@ -16,6 +17,10 @@
     <th>Start Date</th>
     <th>End Date</th>
     <th>Completed Date</th>
+    <th>Expected Days</th>
+    <th>Used Days</th>
+    <th>Show Subtask</th>
+
   </tr>
   </thead>
   <tbody>
@@ -25,13 +30,16 @@
     <td th:text="${doneTask.taskStartDate}"></td>
     <td th:text="${doneTask.taskEndDate}"></td>
     <td th:text="${doneTask.taskCompletedDate}"></td>
+    <td th:text="${doneTask.taskExpectedDays}"></td>
+    <td th:text="${doneTask.taskUsedDays}"></td>
     <td><a th:href="@{/showAllDoneSubtask/{id}(id=${doneTask.getTaskId()})}"
            class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
       <i class="fa fa-eye fa-lg icons-colour"></i>
     </a></td>
-
   </tr>
   </tbody>
 </table>
+<a th:href="@{/showAllDoneProjects}" class="back-btn">Back</a>
+<div th:replace="~{components/footer :: site-footer}"></div>
 </body>
 </html>
