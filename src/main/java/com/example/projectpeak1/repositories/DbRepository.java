@@ -1,5 +1,6 @@
 package com.example.projectpeak1.repositories;
 
+import com.example.projectpeak1.dto.DoneProjectDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -962,6 +963,40 @@ public class DbRepository implements IRepository {
             e.printStackTrace();
         }
     }
+
+
+    @Override
+    public List<DoneProjectDTO> getAllDoneProjects(int userId) {
+        List<DoneProjectDTO> doneProjects = new ArrayList<>();
+
+        try (Connection conn = DbManager.getConnection()) {
+            String query = "SELECT * FROM DoneProject WHERE user_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                DoneProjectDTO doneProject = new DoneProjectDTO();
+                doneProject.setProjectId(rs.getInt("project_id"));
+                doneProject.setProjectName(rs.getString("name"));
+                doneProject.setProjectDescription(rs.getString("description"));
+                doneProject.setProjectStartDate(rs.getDate("start_date").toLocalDate());
+                doneProject.setProjectEndDate(rs.getDate("end_date").toLocalDate());
+                doneProject.setProjectCompletedDate(rs.getDate("project_completed_date").toLocalDate());
+                doneProject.setUserId(rs.getInt("user_id"));
+
+                doneProjects.add(doneProject);
+
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return doneProjects;
+    }
+
 
     @Override
     public void doneTask(int taskId) {

@@ -176,6 +176,20 @@ public class ProjectController {
 
     }
 
+    @GetMapping(value = {"/showAllDoneProjects"})
+    public String seeAllDoneProjects(HttpSession session, Model model) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+
+        List<DoneProjectDTO> doneProjectDTO = projectService.seeAllDoneProjects(userId);
+        model.addAttribute("seeDoneProject", doneProjectDTO);
+
+        return "showAllDoneProjects";
+
+    }
+
 
 
 

@@ -259,4 +259,9 @@ public class StubRepository implements IRepository {
     public void doneAllTask(int projectId) {
 
     }
+
+    @Override
+    public List<DoneProjectDTO> getAllDoneProjects(int userId) {
+        return null;
+    }
 }

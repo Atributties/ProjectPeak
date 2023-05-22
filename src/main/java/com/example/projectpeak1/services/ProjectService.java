@@ -157,6 +157,7 @@ public class ProjectService {
     }
 
 
-
-
+    public List<DoneProjectDTO> seeAllDoneProjects(int userId) {
+        return repository.getAllDoneProjects(userId);
+    }
 }

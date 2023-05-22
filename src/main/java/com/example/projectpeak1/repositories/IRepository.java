@@ -113,4 +113,6 @@ public interface IRepository {
     void doneSubtask(int id);
 
     void doneAllTask(int projectId);
+
+    List<DoneProjectDTO> getAllDoneProjects(int userId);
 }
