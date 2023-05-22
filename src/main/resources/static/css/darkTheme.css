@@ -158,7 +158,7 @@ td {
     transition: box-shadow 0.15s ease-in-out, outline 0.15s ease-in-out;
     outline: none;
     background-color: #191414; /* Dark grey */
-    border-color: #191414; /* Dark grey */
+    border: 1px solid rgb(29, 185, 84, 0.5);
 }
 
 .input:focus {
@@ -167,15 +167,6 @@ td {
 }
 
 /* ICONS */
-.icon {
-    color: #ffffff;
-    font-weight: bold;
-    padding: 0.25rem 0.25rem 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    display: flex;
-    transition: background-color 0.2s ease;
-}
-
 .icons-colour{
     color: #ffffff;
     justify-content: center;

@@ -29,31 +29,31 @@
                     <span>
                         <!-- Display red circle if the project is not started yet -->
                         <i th:if="${project.getDaysToStart() > 0}" class="fa fa-circle fa-lg text-red-500"></i>
-                        <!-- Display yellow circle if the project has started but not yet completed -->
+                        <!-- Display green circle if the project has started but not yet completed -->
                         <i th:if="${project.getDaysToStart() == 0 and project.getDaysLeft() > 0}" class="fa fa-circle fa-lg text-green-500"></i>
                         <span th:text="${project.getProjectName()}"></span>
                     </span>
                     <form class="inline-block">
 
-                        <span>Days to start:</span>
+                        <span class="font-bold">Days to start:</span>
                         <span th:text="${project.getDaysToStart() == 0 ? 'Started' : project.getDaysToStart()}"></span>
-
-                        <span>Days for the project:</span>
+                        <br>
+                        <span class="font-bold">Days for the project:</span>
                         <span th:text="${project.getDaysForProject()}"></span>
-
-                        <span>Days left for the project:</span>
+                        <br>
+                        <span class="font-bold">Days left for the project:</span>
                         <span th:text="${project.getDaysLeft() == 0 ? 'Not Started' : project.getDaysLeft()}"></span>
+                        <br>
 
 
-
-                        <span>Deadline:</span>
+                        <span class="font-bold">Deadline:</span>
                         <span th:text="${project.getProjectEndDate()}"></span>
                         <a th:href="@{/showProject/{id}(id=${project.getProjectId()})}"
                            class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
                             <i class="fa fa-eye fa-lg icons-colour"></i>
                         </a>
                         <a th:href="@{/editProject/{id}(id=${project.getProjectId()})}"
-                           class="hover:bg-green-5x00 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center">
+                           class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded">
                             <i class="fa fa-pencil-square-o fa-lg icons-colour"></i>
                         </a>
                         <a th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}" type="submit"
@@ -78,7 +78,7 @@
                 </button>
             </a>
         </div>
-        <div class="flex justify-center space-x-4">
+        <div class="flex justify-center space-x-4 mt-2">
             <a th:href="@{/showAllDoneProjects}">
                 <button type="button" class="btn-green">
                     See All Done Projects
