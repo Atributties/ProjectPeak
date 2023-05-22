@@ -159,6 +159,19 @@ public class ProjectController {
     }
 
 
+    @GetMapping(value = {"/doneProject/{id}"})
+    public String doneProject(HttpSession session, @PathVariable("id") int id) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        projectService.deleteProject(id);
+        return "redirect:/userFrontend";
+
+        //TODO add access denied like the one from wishlist
+    }
+
+
 
 
 
