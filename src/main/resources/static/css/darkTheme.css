@@ -176,12 +176,10 @@ td {
     transition: background-color 0.2s ease;
 }
 
-.icon:hover {
-    background-color: #1ed760; /* Lighter green */
-}
-
 .icons-colour{
     color: #ffffff;
+    justify-content: center;
+    align-items: center;
 }
 
 /* SELECT CLASS */
