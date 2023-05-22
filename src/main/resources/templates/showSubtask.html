@@ -57,6 +57,7 @@
 </table>
     <div class="flex items-center mt-2">
         <a th:href="@{/createSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green mr-2">Add Subtask</a>
+        <a th:href="@{/showAllDoneSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green mr-2">See All Done Subtask</a>
         <a th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}" class="back-btn">Back</a>
     </div>
 <div th:replace="~{components/footer :: site-footer}"></div>

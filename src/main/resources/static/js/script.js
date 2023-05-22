@@ -1,6 +1,9 @@
 // script.js
 
 // Function to toggle between light and dark themes
+
+
+
 function toggleTheme() {
     const themeLink = document.getElementById('theme-style');
     const logoImage = document.getElementById("logo-img");
@@ -39,3 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('theme', 'dark'); // Save the theme preference in localStorage
     }
 });
+
+
+

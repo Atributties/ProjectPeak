@@ -7,6 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
   <link id="theme-style" rel="stylesheet" href="/css/darkTheme.css">
   <script src="/js/script.js"></script>
+
 </head>
 <body>
 <div th:replace="~{components/headerUser :: site-header-user}"></div>
@@ -40,7 +41,15 @@
   </tr>
   </tbody>
 </table>
-<a th:href="@{/showAllDoneProjects}" class="back-btn">Back</a>
+<button onclick="goBack()" class="back-btn">Back</button>
 <div th:replace="~{components/footer :: site-footer}"></div>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+
+</script>
+
 </body>
 </html>

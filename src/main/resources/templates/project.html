@@ -73,8 +73,10 @@
 
             <div class="flex items-center mt-2">
                 <a th:href="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" class="btn-green mr-2">Add Task</a>
+                <a th:href="@{/showAllTaskProjects/{id}(id=${project.getProjectId()})}" class="btn-green mr-2">See All Done Task</a>
                 <a th:href="@{/userFrontend}" class="back-btn">Back</a>
             </div>
+
         </div>
     </div>
 
