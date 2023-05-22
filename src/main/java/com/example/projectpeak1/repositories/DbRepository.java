@@ -1,5 +1,6 @@
 package com.example.projectpeak1.repositories;
 
+import com.example.projectpeak1.dto.DoneProjectDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -850,4 +851,54 @@ public class DbRepository implements IRepository {
     }
 
 
+    @Override
+    public void doneProject(DoneProjectDTO doneProjectDTO) {
+        try {
+            Connection con = DbManager.getConnection();
+
+            String selectSQL = "SELECT * FROM Project WHERE project_id = ?;";
+            PreparedStatement selectPS = con.prepareStatement(selectSQL);
+            selectPS.setInt(1, doneProjectDTO.getProjectId());
+            ResultSet rs = selectPS.executeQuery();
+
+            if (rs.next()) {
+                int projectId = rs.getInt("project_id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                LocalDate startDate = rs.getDate("start_date").toLocalDate();
+                LocalDate endDate = rs.getDate("end_date").toLocalDate();
+                int userId = rs.getInt("user_id");
+                int expectedDays = doneProjectDTO.getProjectExpectedDays();
+                int usedDays = doneProjectDTO.getProjectUsedDays();
+
+                String insertSQL = "INSERT INTO DoneProject (project_id, name, description, start_date, end_date, project_completed_date, project_expected_days, project_used_days, user_id) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                PreparedStatement insertPS = con.prepareStatement(insertSQL);
+                insertPS.setInt(1, projectId);
+                insertPS.setString(2, name);
+                insertPS.setString(3, description);
+                insertPS.setDate(4, java.sql.Date.valueOf(startDate));
+                insertPS.setDate(5, java.sql.Date.valueOf(endDate));
+                insertPS.setDate(6, java.sql.Date.valueOf(doneProjectDTO.getProjectCompletedDate())); // Set the project_completed_date to the provided date
+                insertPS.setInt(7, expectedDays);
+                insertPS.setInt(8, usedDays);
+                insertPS.setInt(9, userId);
+
+                insertPS.executeUpdate();
+            }
+
+            rs.close();
+            selectPS.close();
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
+
+
+
+
+
+

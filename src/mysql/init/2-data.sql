@@ -1,30 +1,35 @@
 USE projectPeak;
 
 
-INSERT INTO User (fullname, email, user_password, role)
-VALUES
+-- Users
+INSERT INTO User (fullname, email, user_password, role) VALUES
+    ('John Doe', 'john.doe@example.com', 'password1', 'Admin'),
+    ('Jane Doe', 'jane.doe@example.com', 'password2', 'User');
 
-    ('John Doe', 'johndoe@example.com', 'password123', 'admin'),
-    ('Jane Doe', 'janedoe@example.com', 'password456', 'user');
+-- Projects
+INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES
+    ('Project 1', 'This is project 1', '2023-01-01', '2023-06-01', 1),
+    ('Project 2', 'This is project 2', '2023-02-01', '2023-07-01', 2);
 
-INSERT INTO Project (name, description, start_date, end_date, user_id)
-VALUES
-    ('Project 1', 'Description for project 1', '2022-01-01', '2022-06-30', 1),
-    ('Project 2', 'Description for project 2', '2022-02-01', '2022-07-31', 2);
+-- Tasks
+INSERT INTO Task (name, description, start_date, end_date, status, project_id) VALUES
+    ('Task 1.1', 'This is task 1.1 for project 1', '2023-01-01', '2023-02-01', 'Completed', 1),
+    ('Task 1.2', 'This is task 1.2 for project 1', '2023-02-01', '2023-03-01', 'Completed', 1),
+    ('Task 2.1', 'This is task 2.1 for project 2', '2023-02-01', '2023-03-01', 'In progress', 2);
+-- Subtasks
+INSERT INTO Subtask (name, description, start_date, end_date, status, task_id) VALUES
+    ('Subtask 1.1.1', 'This is subtask 1 for task 1.1', '2023-01-01', '2023-01-15', 'Completed', 1),
+    ('Subtask 1.1.2', 'This is subtask 2 for task 1.1', '2023-01-15', '2023-02-01', 'Completed', 1),
+    ('Subtask 2.1.1', 'This is subtask 1 for task 2.1', '2023-02-01', '2023-02-15', 'In progress', 3);
 
-INSERT INTO Task (name, description, start_date, end_date, status, project_id)
-VALUES
-    ('Task 1', 'Description for task 1', '2022-01-01', '2022-01-31', 'in progress', 1),
-    ('Task 2', 'Description for task 2', '2022-02-01', '2022-02-28', 'not started', 1),
-    ('Task 3', 'Description for task 3', '2022-02-01', '2022-02-28', 'in progress', 2),
-    ('Task 4', 'Description for task 4', '2022-03-01', '2022-03-31', 'not started', 2);
+-- DoneProjects
+INSERT INTO DoneProject (project_id, name, description, start_date, end_date, project_completed_date, project_expected_days, project_used_days, user_id) VALUES
+    (1, 'Project 1', 'This is project 1', '2023-01-01', '2023-06-01', '2023-03-01', 180, 60, 1);
 
-INSERT INTO Subtask (name, description, start_date, end_date, status, task_id)
-VALUES
-    ('Subtask 1', 'Description for subtask 1', '2022-01-01', '2022-01-15', 'complete', 1),
-    ('Subtask 2', 'Description for subtask 2', '2022-01-16', '2022-01-31', 'in progress', 1),
-    ('Subtask 3', 'Description for subtask 3', '2022-02-01', '2022-02-14', 'complete', 2),
-    ('Subtask 4', 'Description for subtask 4', '2022-02-15', '2022-02-28', 'not started', 2),
-    ('Subtask 5', 'Description for subtask 5', '2022-03-01', '2022-03-15', 'in progress', 3),
-    ('Subtask 6', 'Description for subtask 6', '2022-03-16', '2022-03-31', 'not started', 3),
-    ('Subtask 7', 'Description for subtask 7', '2022-04-01', '2022-04-15', 'not started', 4);
+-- DoneTasks
+INSERT INTO DoneTask (task_id, done_project_id, name, description, start_date, end_date, task_completed_date, task_expected_days, task_used_days, status) VALUES
+    (1, 1, 'Task 1.1', 'This is task 1.1 for project 1', '2023-01-01', '2023-02-01', '2023-02-01', 31, 31, 'Completed');
+
+-- DoneSubtasks
+INSERT INTO DoneSubtask (subtask_id, done_task_id, name, description, start_date, end_date, subtask_completed_date, subtask_expected_days, subtask_used_days, status) VALUES
+    (1, 1, 'Subtask 1.1.1', 'This is subtask 1 for task 1.1', '2023-01-01', '2023-01-15', '2023-01-15', 15, 15, 'Completed');

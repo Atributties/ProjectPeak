@@ -1,6 +1,7 @@
 package com.example.projectpeak1.controller;
 
 
+import com.example.projectpeak1.dto.DoneProjectDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -160,15 +161,29 @@ public class ProjectController {
 
 
     @GetMapping(value = {"/doneProject/{id}"})
-    public String doneProject(HttpSession session, @PathVariable("id") int id) throws LoginException {
+    public String doneProject(HttpSession session, @PathVariable("id") int id, Model model) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login";
         }
-        projectService.deleteProject(id);
+        DoneProjectDTO doneProjectDTO = new DoneProjectDTO();
+        model.addAttribute("doneProject", doneProjectDTO);
+
         return "redirect:/userFrontend";
 
-        //TODO add access denied like the one from wishlist
+    }
+
+    @PostMapping(value = {"/doneProject/{id}"})
+    public String sendDoneProject(HttpSession session, @ModelAttribute DoneProjectDTO doneProjectDTO) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        projectService.doneProject(doneProjectDTO);
+
+
+        return "redirect:/userFrontend";
+
     }
 
 
