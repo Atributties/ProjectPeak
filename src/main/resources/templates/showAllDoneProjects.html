@@ -13,10 +13,10 @@
   <div th:replace="~{components/headerUser :: site-header-user}"></div>
   <main class="flex-grow">
     <h1>Done Projects</h1>
-    <hr class="mt-8 border-t border-gray-300 py-4 text-center">
+    <hr class="mt-8 border-t py-4 text-center">
     <table class="table-auto w-full mb-6 border-separate">
       <tbody>
-      <tr th:each="doneProject : ${seeDoneProject}" class="hover:bg-gray-300">
+      <tr th:each="doneProject : ${seeDoneProject}">
         <td class="text-white flex justify-between items-center">
             <span>
                 <i class="fa fa-circle fa-lg text-green-500"></i> <!-- Display green circle for completed projects -->

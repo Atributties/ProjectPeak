@@ -12,7 +12,7 @@
 <div class="container">
     <div th:replace="~{components/headerUser :: site-header-user}"></div>
     <main class="flex-grow flex items-center justify-center">
-        <form th:action="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" th:object="${task}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
+        <form th:action="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" th:object="${task}" method="post" class="rounded px-8 pt-6 pb-8 w-2/5">
             <h1>Create a Task for <span th:text="${project.getProjectName()}"></span></h1>
             <div class="mb-4">
                 <label class="label" for="taskName">Task Name:</label>

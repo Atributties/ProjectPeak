@@ -12,9 +12,9 @@
 <div class="container">
     <div th:replace="~{components/headerUser :: site-header-user}"></div>
     <h1 th:text="${project.getProjectName()}"></h1>
-    <hr class="mt-8 border-t border-gray-300 py-4 text-center">
+    <hr class="mt-8 border-t py-4 text-center">
     <div class="p-6">
-        <div class="bg-main-blue rounded-lg shadow-lg p-6">
+        <div class="rounded-lg shadow-lg p-6">
             <h2>Description:</h2>
             <p><span th:text="${project.getProjectDescription()}"></span></p>
             <h2>Start Date:</h2>
@@ -24,7 +24,7 @@
 
             <table class="table-auto">
                 <thead>
-                <tr>
+                <tr class="no-hover">
                     <th>Days to start</th>
                     <th>Task Name</th>
                     <th>Task Description</th>
@@ -40,7 +40,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="taskAndSubtask : ${listOfTaskAndSub}" class="hover:bg-gray-300 text-center align-middle">
+                <tr th:each="taskAndSubtask : ${listOfTaskAndSub}" class="text-center align-middle">
                     <td th:text="${taskAndSubtask.getDaysToStart() == 0 ? 'Started' : taskAndSubtask.getDaysToStart()}"></td>
                     <td th:text="${taskAndSubtask.name}"></td>
                     <td th:text="${taskAndSubtask.description}"></td>

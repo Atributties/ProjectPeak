@@ -12,10 +12,10 @@
 <div class="container">
 <div th:replace="~{components/headerUser :: site-header-user}"></div>
     <h1>Subtask details for <span th:text="${taskAndSubtask.getName()}"></span></h1>
-    <hr class="mt-8 border-t border-gray-300 py-4 text-center">
+    <hr class="mt-8 border-t py-4 text-center">
 <table>
     <thead>
-    <tr>
+    <tr class="no-hover">
         <th>Days to start</th>
         <th>Subtask Name</th>
         <th>Subtask Description</th>
@@ -30,7 +30,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="items-center hover:bg-gray-300 text-center align-middle" th:each="subtask : ${taskAndSubtask.subTaskList}">
+    <tr class="items-center text-center align-middle" th:each="subtask : ${taskAndSubtask.subTaskList}">
         <td th:text="${subtask.getDaysToStart() == 0 ? 'Started' : subtask.getDaysToStart()}"></td>
         <td th:text="${subtask.subTaskName}"></td>
         <td th:text="${subtask.subTaskDescription}"></td>

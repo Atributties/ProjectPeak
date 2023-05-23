@@ -12,7 +12,7 @@
 <div class="container">
     <div th:replace="~{components/headerFront :: site-header}"></div>
     <main class="mb-44 flex-grow flex items-center justify-center">
-        <form class="bg-main-blue p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/login}" th:object="${user}" method="post">
+        <form class="p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/login}" th:object="${user}" method="post">
 
             <div class="mb-4">
                 <label class="label" for="email">Email:</label>

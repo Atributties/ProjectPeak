@@ -12,7 +12,7 @@
 <div class="container">
   <div th:replace="~{components/headerUser :: site-header-user}"></div>
   <main class="flex-grow flex items-center justify-center">
-    <form th:action="@{/editSubtask}" th:object="${subtask}" method="post" class="bg-main-blue rounded px-8 pt-6 pb-8 w-2/5">
+    <form th:action="@{/editSubtask}" th:object="${subtask}" method="post" class="rounded px-8 pt-6 pb-8 w-2/5">
       <h1>Edit Subtask</h1>
       <input type="hidden" th:field="*{taskId}"/>
       <input type="hidden" th:field="*{subTaskId}"/>

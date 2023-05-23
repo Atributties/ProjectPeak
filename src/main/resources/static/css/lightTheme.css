@@ -25,9 +25,22 @@
 
 /* BODY BACKGROUND */
 body {
-    background-color: #d8f8dc; /* Light grey */
+    background-color: #ebebeb; /* Light grey */
     min-height: 100vh;
 }
+
+hr {
+    border-color: #292929;
+}
+
+tr:hover {
+    background-color: #c4c4c4;
+}
+
+.no-hover {
+    pointer-events: none;
+}
+
 
 /* HEADINGS */
 h1 {
@@ -73,7 +86,7 @@ th {
 }
 
 td {
-    border: 1px solid #e5e7eb;
+    border: 1px solid #292929;
     padding: 1rem 0.5rem;
 }
 
@@ -187,7 +200,7 @@ td {
 /* FOOTER */
 .footer {
     margin-top: 2rem;
-    border-top: 1px solid #d0d0d0; /* Lighter grey */
+    border-top: 1px solid #292929; /* Lighter grey */
     padding: 1rem 0;
     text-align: center;
     color: #000000; /* Black */
