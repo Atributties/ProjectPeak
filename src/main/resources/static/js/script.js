@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logoImage.src = "/images/logo-md-dark.png";
     } else {
         themeLink.setAttribute('href', darkTheme);
-        logoImage.src = "/images/logo-md-light.png";
+        logoImage.src = "/images/logo-md-white.png";
         localStorage.setItem('theme', 'dark'); // Save the theme preference in localStorage
     }
 });
