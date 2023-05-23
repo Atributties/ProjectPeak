@@ -14,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.security.auth.login.LoginException;
+import java.text.DateFormatSymbols;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -191,6 +193,59 @@ public class ProjectController {
         return "showAllDoneProjects";
 
     }
+
+    @GetMapping(value = {"/ganttChartProject/{projectId}"})
+    public String showGanttChart(HttpSession session, Model model, @PathVariable int projectId) throws LoginException {
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        String[] monthNames = new DateFormatSymbols().getMonths();
+        model.addAttribute("monthNames", monthNames);
+
+        User user = projectService.getUserFromId(userId);
+        model.addAttribute("user", user);
+
+        Project project = projectService.getProjectById(projectId);
+        model.addAttribute("project", project);
+
+        List<Project> list = projectService.getAllProjectById(userId);
+
+        for (Project project1 : list) {
+            int daysToStart = projectService.getDaysToStartProject(project1.getProjectId());
+            project1.setDaysToStart(daysToStart);
+            int daysForProject = projectService.getDaysForProject(project1.getProjectId());
+            project1.setDaysForProject(daysForProject);
+            int daysLeft = projectService.getDaysLeftProject(project1.getProjectId());
+            project1.setDaysLeft(daysLeft);
+        }
+        model.addAttribute("projects", list);
+
+        List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
+        List<List<Object>> chartData = new ArrayList<>();
+        for (TaskAndSubtaskDTO taskAndSubtaskDTO : listOfTaskAndSub) {
+            List<Object> row = new ArrayList<>();
+            row.add(taskAndSubtaskDTO.getName());
+            row.add(taskAndSubtaskDTO.getName());
+            row.add(taskAndSubtaskDTO.getStartDate());
+            row.add(taskAndSubtaskDTO.getEndDate());
+            row.add(null);
+            row.add(0);
+            row.add(null);
+            chartData.add(row);
+        }
+        model.addAttribute("taskAndSubtask", listOfTaskAndSub);
+
+        List<String> colors = Arrays.asList("#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF");
+        model.addAttribute("color", colors);
+
+        model.addAttribute("chartData", chartData);
+
+        return "ganttChartProject";
+    }
+
+
+
 
 
 

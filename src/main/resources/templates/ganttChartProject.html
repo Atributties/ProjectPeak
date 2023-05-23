@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link id="theme-style" rel="stylesheet" href="/css/darkTheme.css">
+</head>
+
+<body>
+<!-- Add your existing HTML code here -->
+
+<div id="chart_div"></div>
+
+<!-- Include the Google Charts library -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['gantt'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Task ID');
+        data.addColumn('string', 'Task Name');
+        data.addColumn('date', 'Start Date');
+        data.addColumn('date', 'End Date');
+        data.addColumn('number', 'Duration');
+        data.addColumn('number', 'Percent Complete');
+        data.addColumn('string', 'Dependencies');
+        data.addRows([
+            ['Task 1', 'Task 1', new Date(2023, 4, 1), new Date(2023, 4, 5), null, 0, null],
+            ['Task 2', 'Task 2', new Date(2023, 4, 6), new Date(2023, 4, 10), null, 0, null],
+            ['Task 3', 'Task 3', new Date(2023, 4, 11), new Date(2023, 4, 15), null, 0, null],
+            ['Task 4', 'Task 4', new Date(2023, 4, 16), new Date(2023, 4, 20), null, 0, null],
+        ]);
+
+        var options = {
+            height: 400
+        };
+
+        var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+</body>
+
+</html>
+
+
