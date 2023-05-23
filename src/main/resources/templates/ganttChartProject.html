@@ -5,47 +5,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gantt Chart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link id="theme-style" rel="stylesheet" href="/css/darkTheme.css">
+    <script src="/js/script.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
-<!-- Add your existing HTML code here -->
+<div class="container">
+    <div th:replace="~{components/headerUser :: site-header-user}"></div>
+    <!-- Add your existing HTML code here -->
 
-<div id="chart_div"></div>
+    <div id="chart_div"></div>
 
-<!-- Include the Google Charts library -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', { 'packages': ['gantt'] });
-    google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
+    <div th:replace="~{components/footer :: site-footer}"></div>
+</div>
+</body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var projectData = /*[[${chartData}]]*/ [];
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(function() {
+        drawChart(projectData);
+    });
+
+    function daysToMilliseconds(days) {
+        return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawChart(projectData) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Task ID');
         data.addColumn('string', 'Task Name');
+        data.addColumn('string', 'Resource');
         data.addColumn('date', 'Start Date');
         data.addColumn('date', 'End Date');
         data.addColumn('number', 'Duration');
         data.addColumn('number', 'Percent Complete');
         data.addColumn('string', 'Dependencies');
-        data.addRows([
-            ['Task 1', 'Task 1', new Date(2023, 4, 1), new Date(2023, 4, 5), null, 0, null],
-            ['Task 2', 'Task 2', new Date(2023, 4, 6), new Date(2023, 4, 10), null, 0, null],
-            ['Task 3', 'Task 3', new Date(2023, 4, 11), new Date(2023, 4, 15), null, 0, null],
-            ['Task 4', 'Task 4', new Date(2023, 4, 16), new Date(2023, 4, 20), null, 0, null],
-        ]);
+
+        var rows = projectData.map(function(task) {
+            var startDate = new Date(task[2]); // Parsing the date string
+            var endDate = new Date(task[3]); // Parsing the date string
+
+            // set the hours to noon
+            startDate.setHours(12, 0, 0, 0);
+            endDate.setHours(12, 0, 0, 0);
+
+            // calculate duration in milliseconds
+            var duration = endDate - startDate;
+
+            return [
+                task[0].toString(),
+                task[1],
+                null,
+                startDate,
+                endDate,
+                duration, // use the calculated duration
+                0,  // Assuming this is a percentage out of 100
+                null
+            ];
+        });
+
+        data.addRows(rows);
 
         var options = {
-            height: 400
+            height: 400,
+            gantt: {
+                defaultStartDateMillis: new Date().getTime() // set chart start date to today
+            }
         };
 
         var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
+    /*]]>*/
 </script>
-</body>
 
 </html>
-
 
