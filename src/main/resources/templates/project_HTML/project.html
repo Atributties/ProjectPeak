@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="~{components/headerUser :: site-header-user}"></div>
+    <div th:replace="~{components_HTML/headerUser :: site-header-user}"></div>
     <h1 th:text="${project.getProjectName()}"></h1>
     <hr class="mt-8 border-t py-4 text-center">
     <div class="p-6">
@@ -90,13 +90,13 @@
             <div class="flex items-center mt-2">
                 <a th:href="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" class="btn-green mr-2">Add Task</a>
                 <a th:href="@{/showAllTaskProjects/{id}(id=${project.getProjectId()})}" class="btn-green mr-2">See All Done Task</a>
-                <a th:href="@{/userFrontend}" class="back-btn">Back</a>
+                <a th:href="@{/frontendWithProjects}" class="back-btn">Back</a>
             </div>
 
         </div>
     </div>
 
-    <div th:replace="~{components/footer :: site-footer}"></div>
+    <div th:replace="~{components_HTML/footer :: site-footer}"></div>
 </div>
 
 

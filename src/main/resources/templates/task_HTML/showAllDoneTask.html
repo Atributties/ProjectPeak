@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Done Subtasks - Project Peak</title>
+  <title>Done Tasks - Project Peak</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
   <link id="theme-style" rel="stylesheet" href="/css/darkTheme.css">
@@ -10,34 +10,44 @@
 </head>
 <body>
 <div class="container">
-  <div th:replace="~{components/headerUser :: site-header-user}"></div>
+  <div th:replace="~{components_HTML/headerUser :: site-header-user}"></div>
   <main class="flex-grow">
-    <h1>Done Subtasks</h1>
+    <h1>Done Tasks</h1>
     <hr class="mt-8 border-t py-4 text-center">
     <table class="table-auto w-full mb-6 border-separate">
       <tbody>
-      <tr th:each="doneSubtask : ${seeDoneSubtask}">
+      <tr th:each="doneTask : ${seeDoneTask}">
         <td class="text-white flex justify-between items-center">
             <span>
-                <i class="fa fa-circle fa-lg text-green-500"></i> <!-- Display green circle for completed subtasks -->
-                <span th:text="${doneSubtask.subTaskName}"></span>
-                <p th:text="${doneSubtask.subTaskDescription}"></p>
+                <i class="fa fa-circle fa-lg text-green-500"></i> <!-- Display green circle for completed tasks -->
+                <span th:text="${doneTask.taskName}"></span>
+                <p th:text="${doneTask.taskDescription}"></p>
             </span>
           <form class="inline-block">
             <span class="font-bold">Start Date:</span>
-            <span th:text="${doneSubtask.subTaskStartDate}"></span>
+            <span th:text="${doneTask.taskStartDate}"></span>
             <br>
             <span class="font-bold">End Date:</span>
-            <span th:text="${doneSubtask.subTaskEndDate}"></span>
+            <span th:text="${doneTask.taskEndDate}"></span>
             <br>
             <span class="font-bold">Completed Date:</span>
-            <span th:text="${doneSubtask.subtaskCompletedDate}"></span>
+            <span th:text="${doneTask.taskCompletedDate}"></span>
             <br>
             <span class="font-bold">Expected Days:</span>
-            <span th:text="${doneSubtask.subtaskExpectedDays}"></span>
+            <span th:text="${doneTask.taskExpectedDays}"></span>
             <br>
             <span class="font-bold">Used Days:</span>
-            <span th:text="${doneSubtask.subtaskUsedDays}"></span>
+            <span th:text="${doneTask.taskUsedDays}"></span>
+          </form>
+        </td>
+        <td class="text-white text-center align-middle w-1/6">
+          <form class="inline-block">
+            <span class="font-bold">View Done Subtasks:</span>
+            <br>
+            <a th:href="@{/showAllDoneSubtask/{id}(id=${doneTask.getTaskId()})}"
+               class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+              <i class="fa fa-eye fa-lg icons-colour"></i>
+            </a>
           </form>
         </td>
       </tr>
@@ -49,9 +59,8 @@
       <button onclick="goBack()" class="btn-green">Back</button>
     </div>
   </main>
-  <div th:replace="~{components/footer :: site-footer}"></div>
+  <div th:replace="~{components_HTML/footer :: site-footer}"></div>
 </div>
-
 <script>
   function goBack() {
     window.history.back();

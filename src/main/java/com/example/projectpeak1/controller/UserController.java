@@ -28,24 +28,24 @@ public class UserController {
     public String editUser(HttpSession session, @PathVariable("id") int userIdPath, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
-            return "login";
+            return "login_HTML/login";
         }
         User user = userService.getUserFromId(userIdPath);
         model.addAttribute("user", user);
-        return "editUser";
+        return "user_HTML/editUser";
     }
 
     @PostMapping("/editUser")
     public String updateUser(@ModelAttribute User user) {
         userService.updateUser(user);
-        return "redirect:/userFrontend";
+        return "redirect:/project_HTML/frontendWithProjects";
     }
 
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(HttpSession session, @PathVariable("id") int userIdPath) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
-            return "login";
+            return "login_HTML/login";
         }
         session.invalidate();
         userService.deleteUser(userIdPath);

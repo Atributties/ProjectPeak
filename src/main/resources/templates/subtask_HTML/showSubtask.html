@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-<div th:replace="~{components/headerUser :: site-header-user}"></div>
+<div th:replace="~{components_HTML/headerUser :: site-header-user}"></div>
     <h1>Subtask details for <span th:text="${taskAndSubtask.getName()}"></span></h1>
     <hr class="mt-8 border-t py-4 text-center">
 <table>
@@ -60,7 +60,7 @@
         <a th:href="@{/showAllDoneSubtask/{id}(id=${taskAndSubtask.getId()})}" class="btn-green mr-2">See All Done Subtask</a>
         <a th:href="@{/showProject/{projectId}(projectId=${taskAndSubtask.getProjectId()})}" class="back-btn">Back</a>
     </div>
-<div th:replace="~{components/footer :: site-footer}"></div>
+<div th:replace="~{components_HTML/footer :: site-footer}"></div>
 </div>
 </body>
 </html>

@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="~{components/headerFront :: site-header}"></div>
+    <div th:replace="~{components_HTML/headerFront :: site-header}"></div>
     <main class="mb-44 flex-grow flex items-center justify-center">
         <form class="p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/login}" th:object="${user}" method="post">
 
@@ -24,11 +24,11 @@
             </div>
             <div class="flex items-center ">
                 <button type="submit" class="btn-green mr-2">Login</button>
-                <a class="back-btn" th:href="@{/}">Back</a>
+                <a class="back-btn" th:href="@{/static}">Back</a>
             </div>
         </form>
     </main>
-    <div th:replace="~{components/footer :: site-footer}"></div>
+    <div th:replace="~{components_HTML/footer :: site-footer}"></div>
 </div>
 </body>
 </html>

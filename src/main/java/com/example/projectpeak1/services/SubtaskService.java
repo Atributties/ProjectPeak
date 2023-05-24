@@ -6,7 +6,10 @@ import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
-import com.example.projectpeak1.repositories.IRepository;
+
+import com.example.projectpeak1.repositories.ISubtaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -21,64 +24,66 @@ import java.util.List;
 public class SubtaskService {
 
 
-    IRepository repository;
+    ISubtaskRepository subtaskRepository;
 
-    public SubtaskService(ApplicationContext context, @Value("${projectPeak.repository.impl}") String impl) {
-        repository = (IRepository) context.getBean(impl);
+    public SubtaskService(ISubtaskRepository subtaskRepository) {
+        this.subtaskRepository = subtaskRepository;
     }
 
     public boolean isUserAuthorized(int userId, int projectId){
-        return repository.isUserAuthorized(userId, projectId);
+        return subtaskRepository.isUserAuthorized(userId, projectId);
     }
 
-    public void createTask(Subtask subtask, int taskId) {
-        repository.createSubtask(subtask, taskId);
+    public User getUserFromId(int id){
+        return subtaskRepository.getUserFromId(id);
+    }
+
+    public void createSubtask(Subtask subtask, int taskId) {
+        subtaskRepository.createSubtask(subtask, taskId);
     }
 
     public Subtask getSubtaskById(int subtaskId) {
-        return repository.getSubtaskById(subtaskId);
+        return subtaskRepository.getSubtaskById(subtaskId);
     }
 
     public void editSubtask(Subtask subtask) {
-        repository.editSubtask(subtask);
+        subtaskRepository.editSubtask(subtask);
     }
 
     public int getProjectIdBtSubtaskId(int subtaskId) {
-        return repository.getProjectIdBySubtaskId(subtaskId);
+        return subtaskRepository.getProjectIdBySubtaskId(subtaskId);
     }
 
     public void deleteSubtask(int subtaskId) throws LoginException {
-        repository.deleteSubtask(subtaskId);
+        subtaskRepository.deleteSubtask(subtaskId);
     }
 
 
     public TaskAndSubtaskDTO getTaskAndSubTaskById(int taskId) {
-        return repository.getTaskAndSubTask(taskId);
-    }
-    public User getUserFromId(int id){
-        return repository.getUserFromId(id);
+        return subtaskRepository.getTaskAndSubTask(taskId);
     }
 
+
     public int getTaskIdBySubtaskId(int subtaskId) throws LoginException {
-        return repository.getTaskIdBySubtaskId(subtaskId);
+        return subtaskRepository.getTaskIdBySubtaskId(subtaskId);
     }
     public int getDaysToStartSubtask(int subTaskId) {
-        LocalDate startDate = repository.getStartDateSubtask(subTaskId);
+        LocalDate startDate = subtaskRepository.getStartDateSubtask(subTaskId);
         LocalDate currentDate = LocalDate.now();
         return (int) ChronoUnit.DAYS.between(currentDate, startDate);
     }
 
 
     public int getDaysForSubtask(int subTaskId) {
-        LocalDate startDate = repository.getStartDateSubtask(subTaskId);
-        LocalDate endDate = repository.getEndDateSubtask(subTaskId);
+        LocalDate startDate = subtaskRepository.getStartDateSubtask(subTaskId);
+        LocalDate endDate = subtaskRepository.getEndDateSubtask(subTaskId);
         return (int) ChronoUnit.DAYS.between(startDate, endDate);
     }
 
     public int getDaysLeftSubtask(int subTaskId) {
 
-        LocalDate endDate = repository.getEndDateSubtask(subTaskId);
-        LocalDate startDate = repository.getStartDateSubtask(subTaskId);
+        LocalDate endDate = subtaskRepository.getEndDateSubtask(subTaskId);
+        LocalDate startDate = subtaskRepository.getStartDateSubtask(subTaskId);
         LocalDate currentDate = LocalDate.now();
 
         if(currentDate.isBefore(startDate)){
@@ -90,13 +95,13 @@ public class SubtaskService {
     }
 
     public void doneSubtask(int id){
-        repository.doneSubtask(id);
+        subtaskRepository.doneSubtask(id);
     }
 
     public List<DoneSubtaskDTO> getAllDoneSubtask(int taskId) {
         List<DoneSubtaskDTO> doneSubtaskDTOS = new ArrayList<>();
 
-        List<DoneSubtaskDTO> listFromDatabase = repository.getAllDoneSubtask(taskId);
+        List<DoneSubtaskDTO> listFromDatabase = subtaskRepository.getAllDoneSubtask(taskId);
         // Iterate over each done project and calculate the expected and used days
         for (DoneSubtaskDTO doneSubtaskDTO : listFromDatabase) {
 

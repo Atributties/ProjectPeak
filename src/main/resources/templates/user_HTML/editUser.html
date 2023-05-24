@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-  <div th:replace="~{components/headerUser :: site-header-user}"></div>
+  <div th:replace="~{components_HTML/headerUser :: site-header-user}"></div>
   <main class="flex-grow flex items-center justify-center">
     <form th:action="@{/editUser}" th:object="${user}" method="post" class="rounded px-8 pt-6 pb-8 w-2/5" onsubmit="return validatePasswords()">
       <h1>Edit User</h1>
@@ -38,7 +38,7 @@
            onclick="return confirm('Are you sure you want to delete this user?')">Delete User</a>
 
 
-        <a class="back-btn" th:href="@{/userFrontend}">Back</a>
+        <a class="back-btn" th:href="@{/frontendWithProjects}">Back</a>
       </div>
     </form>
 
@@ -58,7 +58,7 @@
 
 
   </main>
-  <div th:replace="~{components/footer :: site-footer}"></div>
+  <div th:replace="~{components_HTML/footer :: site-footer}"></div>
 </div>
 </body>
 </html>

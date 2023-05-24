@@ -25,10 +25,10 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginForm(HttpSession session, Model model) {
         if (session.getAttribute("userId") != null) {
-            return "redirect:/userFrontend";
+            return "redirect:/project_HTML/frontendWithProjects";
         } else {
             model.addAttribute("user", new User());
-            return "login";
+            return "login_HTML/login";
         }
     }
 
@@ -41,13 +41,13 @@ public class LoginController {
             User user1 = loginService.login(user.getEmail(), user.getPassword());
             if (user1 != null) {
                 session.setAttribute("userId", user1.getUserId());
-                return "redirect:/userFrontend";
+                return "redirect:/frontendWithProjects";
             } else {
                 throw new LoginException("Invalid email or password");
             }
         } catch (LoginException e) {
             model.addAttribute("errorLogin", e.getMessage());
-            return "login";
+            return "login_HTML/login";
         }
     }
 
@@ -56,13 +56,13 @@ public class LoginController {
     @GetMapping("/signup")
     public String showSignUp(Model model) {
         model.addAttribute("user", new User());
-        return "signup";
+        return "login_HTML/signup";
     }
 
     @PostMapping("/signup")
     public String signUp(@ModelAttribute User user) throws LoginException {
         loginService.createUser(user);
-        return "login";
+        return "login_HTML/login";
     }
 
 

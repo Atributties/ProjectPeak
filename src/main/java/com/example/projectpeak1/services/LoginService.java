@@ -2,7 +2,9 @@ package com.example.projectpeak1.services;
 
 
 import com.example.projectpeak1.entities.User;
-import com.example.projectpeak1.repositories.IRepository;
+import com.example.projectpeak1.repositories.ILoginRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -12,19 +14,19 @@ import javax.security.auth.login.LoginException;
 @Service
 public class LoginService {
 
-    IRepository repository;
+    ILoginRepository loginRepository;
 
-    public LoginService(ApplicationContext context, @Value("${projectPeak.repository.impl}") String impl) {
-        repository = (IRepository) context.getBean(impl);
+    public LoginService(ILoginRepository loginRepository) {
+        this.loginRepository = loginRepository;
     }
 
 
     public User login(String email, String password) throws LoginException {
-        return repository.login(email, password);
+        return loginRepository.login(email, password);
     }
 
     public void createUser(User user) throws LoginException {
-        repository.createUser(user);
+        loginRepository.createUser(user);
     }
 
 

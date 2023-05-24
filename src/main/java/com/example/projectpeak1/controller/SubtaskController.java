@@ -2,10 +2,8 @@ package com.example.projectpeak1.controller;
 
 
 import com.example.projectpeak1.dto.DoneSubtaskDTO;
-import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
-import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
 import com.example.projectpeak1.services.SubtaskService;
 import jakarta.servlet.http.HttpSession;
@@ -41,43 +39,42 @@ public class SubtaskController {
     public String createTask(@PathVariable("id") int taskId, HttpSession session, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {               // Check that the session with userid is logged in.
-            return "login";
+            return "login_HTML/login";
         }
         TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId);
         model.addAttribute("task", taskAndSubtask);
 
         if(!isUserAuthorized(session, taskAndSubtask.getProjectId())){
-            return "error/accessDenied";
+            return "error_HTML/accessDenied";
         }
 
         User user = subtaskService.getUserFromId(userId);
         model.addAttribute("user", user);
         model.addAttribute("taskId", taskId);
         model.addAttribute("subtask", new Subtask());
-        return "addSubtask";
+        return "subtask_HTML/addSubtask";
     }
 
     @PostMapping(value = {"/createSubtask/{id}"})
     public String createTask(@PathVariable("id") int taskId, @ModelAttribute Subtask subtask) {
 
-        subtaskService.createTask(subtask, taskId);
+        subtaskService.createSubtask(subtask, taskId);
         return "redirect:/showSubtask/" + taskId;
 
-        //TODO: Redirect to projectId instead of taskId
     }
 
     @GetMapping("/showSubtask/{taskId}")
     public String showSubtaskDetails(HttpSession session, @PathVariable("taskId") int taskId, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
-            return "login";
+            return "login_HTML/login";
         }
         User user = subtaskService.getUserFromId(userId);
         model.addAttribute("user", user);
         TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId);
 
         if(!isUserAuthorized(session, taskAndSubtask.getProjectId())){
-            return "error/accessDenied";
+            return "error_HTML/accessDenied";
         }
 
         for (Subtask subtask : taskAndSubtask.getSubTaskList()) {
@@ -91,14 +88,14 @@ public class SubtaskController {
 
 
         model.addAttribute("taskAndSubtask", taskAndSubtask);
-        return "showSubtask";
+        return "subtask_HTML/showSubtask";
     }
 
     @GetMapping("/editSubtask/{id}")
     public String editSubtask(HttpSession session, @PathVariable("id") int subtaskId, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
-            return "login";
+            return "login_HTML/login";
         }
         Subtask subtask1 = subtaskService.getSubtaskById(subtaskId); //get the subtask, so we can show in html edit site.
         model.addAttribute("subtask", subtask1);
@@ -106,12 +103,12 @@ public class SubtaskController {
         model.addAttribute("task", taskAndSubtask);
         model.addAttribute("taskId", subtask1.getTaskId());
         if(!isUserAuthorized(session, taskAndSubtask.getProjectId())){
-            return "error/accessDenied";
+            return "error_HTML/accessDenied";
         }
         User user = subtaskService.getUserFromId(userId);
         model.addAttribute("user", user);
 
-        return "editSubtask";
+        return "subtask_HTML/editSubtask";
     }
 
     @PostMapping("/editSubtask")
@@ -124,7 +121,7 @@ public class SubtaskController {
     public String deleteTask(HttpSession session, @PathVariable("id") int subtaskId) throws LoginException {
         int taskId = subtaskService.getTaskIdBySubtaskId(subtaskId);
         if(!isUserAuthorized(session, subtaskService.getProjectIdBtSubtaskId(subtaskId))){
-            return "error/accessDenied";
+            return "error_HTML/accessDenied";
         }
         subtaskService.deleteSubtask(subtaskId);
         return "redirect:/showSubtask/" + taskId;
@@ -134,10 +131,10 @@ public class SubtaskController {
     public String doneSubtask(HttpSession session, @PathVariable("id") int id, Model model) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
-            return "login";
+            return "login_HTML/login";
         }
         if(!isUserAuthorized(session, subtaskService.getProjectIdBtSubtaskId(id))){
-            return "error/accessDenied";
+            return "error_HTML/accessDenied";
         }
         int taskId = subtaskService.getTaskIdBySubtaskId(id);
         subtaskService.doneSubtask(id);
@@ -151,7 +148,7 @@ public class SubtaskController {
     public String seeAllDoneSubtask(HttpSession session, Model model, @PathVariable int taskId) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
-            return "login";
+            return "login_HTML/login";
         }
 
 
@@ -162,7 +159,7 @@ public class SubtaskController {
         model.addAttribute("seeDoneSubtask", doneSubtaskDTOS);
         model.addAttribute("taskId", taskId);
 
-        return "showAllDoneSubtask";
+        return "subtask_HTML/showAllDoneSubtask";
 
     }
 
