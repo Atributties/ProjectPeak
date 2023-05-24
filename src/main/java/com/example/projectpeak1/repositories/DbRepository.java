@@ -153,6 +153,28 @@ public class DbRepository implements IRepository {
         }
     }
 
+
+    @Override
+    public boolean isUserAuthorized(int userId, int projectId){
+        try {
+            Connection con = DbManager.getConnection();
+            String query = "SELECT COUNT(*) FROM ProjectMember WHERE project_id = ? AND user_id = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setInt(1, projectId);
+            stmt.setInt(2, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // User is authorized if a matching row exists in ProjectMember
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // User is not authorized or not logged in
+    }
+
+
     @Override
     public List<Project> getAllProjectById(int userId) {
         try {

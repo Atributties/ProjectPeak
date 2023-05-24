@@ -34,6 +34,11 @@ public class ProjectController {
         return (int) session.getAttribute("userId");
     }
 
+    public boolean isUserAuthorized(HttpSession session, int id) {
+        int userId = getUserId(session);
+        return projectService.isUserAuthorized(userId, id);
+    }
+
 
     @GetMapping(value = {"/userFrontend"})
     public String index(HttpSession session, Model model) {
@@ -63,6 +68,9 @@ public class ProjectController {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login";
+        }
+        if(!isUserAuthorized(session, projectId)){
+            return "error/accessDenied";
         }
 
 
@@ -120,6 +128,10 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
+        if(!isUserAuthorized(session, id)){
+            return "error/accessDenied";
+        }
+
         projectService.deleteProject(id);
         return "redirect:/userFrontend";
 
@@ -134,6 +146,11 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
+        if(!isUserAuthorized(session, projectId)){
+            return "error/accessDenied";
+        }
+
+
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
@@ -170,6 +187,9 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
+        if(!isUserAuthorized(session, id)){
+            return "error/accessDenied";
+        }
 
         projectService.doneProject(id);
 
@@ -200,9 +220,10 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
-        String[] monthNames = new DateFormatSymbols().getMonths();
-        model.addAttribute("monthNames", monthNames);
 
+        if(!isUserAuthorized(session, projectId)){
+            return "error/accessDenied";
+        }
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
@@ -236,8 +257,6 @@ public class ProjectController {
         }
         model.addAttribute("taskAndSubtask", listOfTaskAndSub);
 
-        List<String> colors = Arrays.asList("#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF");
-        model.addAttribute("color", colors);
 
         model.addAttribute("chartData", chartData);
 
@@ -251,6 +270,10 @@ public class ProjectController {
         if (userId == 0) {
             return "login";
         }
+        if(!isUserAuthorized(session, projectId)){
+            return "error/accessDenied";
+        }
+
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 

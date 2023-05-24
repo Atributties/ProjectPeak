@@ -29,13 +29,19 @@ public class TaskController {
     private int getUserId(HttpSession session) {
         return (int) session.getAttribute("userId");
     }
-
+    public boolean isUserAuthorized(HttpSession session, int id) {
+        int userId = getUserId(session);
+        return taskService.isUserAuthorized(userId, id);
+    }
 
     @GetMapping("/addTask/{id}")
     public String createTask(HttpSession session, @PathVariable("id") int projectId, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login";
+        }
+        if(!isUserAuthorized(session, projectId)){
+            return "error/accessDenied";
         }
         User user = taskService.getUserFromId(userId);
         Project project = taskService.getProjectFromId(projectId);
@@ -75,6 +81,10 @@ public class TaskController {
         Project project = taskService.getProjectFromId(task.getProjectId());
         model.addAttribute("project", project);
 
+        if(!isUserAuthorized(session, task.getProjectId())){
+            return "error/accessDenied";
+        }
+
         return "editTask";
     }
 
@@ -108,6 +118,10 @@ public class TaskController {
             return "login";
         }
         int projectId = taskService.getProjectIdFromTaskId(taskId);
+        if(!isUserAuthorized(session, projectId)){
+            return "error/accessDenied";
+        }
+
 
         taskService.deleteTask(taskId);
 
@@ -122,6 +136,10 @@ public class TaskController {
         }
 
         int projectId = taskService.getProjectIdFromTaskId(id);
+
+        if(!isUserAuthorized(session, projectId)){
+            return "error/accessDenied";
+        }
 
         taskService.doneTask(id);
 

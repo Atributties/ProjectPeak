@@ -42,6 +42,8 @@ public interface IRepository {
 
     void createProject(Project list, int projectId);
 
+    boolean isUserAuthorized(int userId, int projectId);
+
     List<Project> getAllProjectById(int userId);
 
     void deleteProject(int id) throws LoginException;

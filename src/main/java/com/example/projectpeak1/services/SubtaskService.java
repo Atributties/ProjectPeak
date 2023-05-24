@@ -27,6 +27,10 @@ public class SubtaskService {
         repository = (IRepository) context.getBean(impl);
     }
 
+    public boolean isUserAuthorized(int userId, int projectId){
+        return repository.isUserAuthorized(userId, projectId);
+    }
+
     public void createTask(Subtask subtask, int taskId) {
         repository.createSubtask(subtask, taskId);
     }

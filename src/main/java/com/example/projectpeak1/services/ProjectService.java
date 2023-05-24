@@ -31,6 +31,10 @@ public class ProjectService {
         repository = (IRepository) context.getBean(impl);
     }
 
+    public boolean isUserAuthorized(int userId, int projectId){
+        return repository.isUserAuthorized(userId, projectId);
+    }
+
 
     public User getUserFromId(int id){
         return repository.getUserFromId(id);

@@ -88,6 +88,11 @@ public class StubRepository implements IRepository {
     }
 
     @Override
+    public boolean isUserAuthorized(int userId, int projectId) {
+        return false;
+    }
+
+    @Override
     public List<Project> getAllProjectById(int userId) {
         return null;
     }

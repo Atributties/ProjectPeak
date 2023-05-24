@@ -28,4 +28,6 @@ public class UserService {
     public void deleteUser(int userIdPath) throws LoginException {
         repository.deleteUser(userIdPath);
     }
+
+
 }

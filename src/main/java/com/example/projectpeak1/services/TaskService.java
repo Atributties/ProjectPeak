@@ -24,8 +24,14 @@ import java.util.List;
 public class TaskService {
     IRepository repository;
 
+
+
     public TaskService(ApplicationContext context, @Value("${projectPeak.repository.impl}") String impl) {
         repository = (IRepository) context.getBean(impl);
+    }
+
+    public boolean isUserAuthorized(int userId, int projectId){
+        return repository.isUserAuthorized(userId, projectId);
     }
 
     public void createTask(Task task, int projectId){
