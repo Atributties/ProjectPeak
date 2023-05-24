@@ -22,6 +22,15 @@ CREATE TABLE Project (
   FOREIGN KEY(user_id) REFERENCES User(user_id)
 );
 
+CREATE TABLE ProjectMember (
+  project_member_id INT AUTO_INCREMENT,
+  project_id INT,
+  user_id INT,
+  PRIMARY KEY(project_member_id),
+  FOREIGN KEY(project_id) REFERENCES Project(project_id) ON DELETE CASCADE,
+  FOREIGN KEY(user_id) REFERENCES User(user_id)
+);
+
 CREATE TABLE Task (
   task_id INT AUTO_INCREMENT,
   name VARCHAR(255),
@@ -66,18 +75,18 @@ CREATE TABLE DoneTask (
   end_date DATE,
   task_completed_date DATE DEFAULT (CURRENT_DATE),
   status VARCHAR(255),
-  project_id int,
+  project_id INT,
   PRIMARY KEY(task_id)
 );
 
 CREATE TABLE DoneSubtask (
-   subtask_id INT,
-   name VARCHAR(255),
-   description VARCHAR(255),
-   start_date DATE,
-   end_date DATE,
-   subtask_completed_date DATE DEFAULT (CURRENT_DATE),
-   status VARCHAR(255),
-   task_id int,
-   PRIMARY KEY(subtask_id)
+  subtask_id INT,
+  name VARCHAR(255),
+  description VARCHAR(255),
+  start_date DATE,
+  end_date DATE,
+  subtask_completed_date DATE DEFAULT (CURRENT_DATE),
+  status VARCHAR(255),
+  task_id INT,
+  PRIMARY KEY(subtask_id)
 );
