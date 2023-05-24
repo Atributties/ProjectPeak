@@ -13,11 +13,20 @@
 </head>
 
 <body>
+
+
+
+
 <div class="container">
     <div th:replace="~{components/headerUser :: site-header-user}"></div>
     <!-- Add your existing HTML code here -->
 
     <div id="chart_div"></div>
+
+    <div class="flex items-center mt-2">
+        <a th:href="@{/userFrontend}" class="back-btn">Back</a>
+    </div>
+
 
 
     <div th:replace="~{components/footer :: site-footer}"></div>

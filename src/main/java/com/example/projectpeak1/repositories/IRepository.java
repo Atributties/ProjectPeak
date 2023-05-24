@@ -107,6 +107,7 @@ public interface IRepository {
 
     void doneProject(int id);
 
+
     void doneTask(int id);
 
 
@@ -119,4 +120,10 @@ public interface IRepository {
     List<DoneTaskDTO> getAllDoneTask(int id);
 
     List<DoneSubtaskDTO> getAllDoneSubtask(int taskId);
+
+    void addMemberToProject(int projectId, int memberUserId);
+
+    int getUserIdByEmail(String email);
+
+
 }

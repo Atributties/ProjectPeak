@@ -181,4 +181,14 @@ public class ProjectService {
         return doneProjectDTOList;
     }
 
+    public void addMemberToProject(int projectId, int memberUserId) {
+        repository.addMemberToProject(projectId, memberUserId);
+    }
+
+
+    public int getUserIdByEmail(String email) {
+        return repository.getUserIdByEmail(email);
+    }
+
+
 }

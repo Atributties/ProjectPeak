@@ -209,3 +209,19 @@ td {
 #logo-img::before {
   content: url("../images/logo-md-dark.png");
 }
+
+ */
+
+.email-option {
+    display: none;
+}
+
+.email-option.block {
+    display: block;
+}
+
+/* Add this code to your CSS file */
+.black-input {
+    color: black;
+    /* Add any other desired styling */
+}

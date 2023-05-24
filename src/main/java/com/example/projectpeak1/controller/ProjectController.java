@@ -244,6 +244,34 @@ public class ProjectController {
         return "ganttChartProject";
     }
 
+    @PostMapping(value = {"/addMemberToProject/{projectId}"})
+    public String addMemberToProject(HttpSession session, @PathVariable int projectId, @ModelAttribute("email") String email, Model model) throws LoginException {
+
+        int userId = getUserId(session);
+        if (userId == 0) {
+            return "login";
+        }
+        User user = projectService.getUserFromId(userId);
+        model.addAttribute("user", user);
+
+
+        // Check if the email exists
+        int memberUserId = projectService.getUserIdByEmail(email);
+        if (memberUserId != 0) {
+            projectService.addMemberToProject(projectId, memberUserId);
+        } else {
+            // Handle the case where the user with the given email doesn't exist
+            // Display an error message or take appropriate action
+        }
+
+        return "redirect:/showProject/" + projectId;
+    }
+
+
+
+
+
+
 
 
 

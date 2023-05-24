@@ -213,7 +213,21 @@ td {
 #logo-img {
     background-image: url("../images/logo-md-white.png");
 }
+ */
 
+.email-option {
+    display: none;
+}
+
+.email-option.block {
+    display: block;
+}
+
+/* Add this code to your CSS file */
+.black-input {
+    color: black;
+    /* Add any other desired styling */
+}
 
 
 

@@ -127,31 +127,39 @@ public class DbRepository implements IRepository {
     public void createProject(Project project, int userId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
+            String projectSQL = "INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement projectPs = con.prepareStatement(projectSQL, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            ps.setString(1, project.getProjectName());
-            ps.setString(2, project.getProjectDescription());
-            ps.setDate(3, Date.valueOf(project.getProjectStartDate()));
-            ps.setDate(4, Date.valueOf(project.getProjectEndDate()));
-            ps.setInt(5, userId);
-            ps.executeUpdate();
-            ResultSet ids = ps.getGeneratedKeys();
-            ids.next();
-            int id = ids.getInt(1);
+            projectPs.setString(1, project.getProjectName());
+            projectPs.setString(2, project.getProjectDescription());
+            projectPs.setDate(3, Date.valueOf(project.getProjectStartDate()));
+            projectPs.setDate(4, Date.valueOf(project.getProjectEndDate()));
+            projectPs.setInt(5, userId);
+            projectPs.executeUpdate();
+            ResultSet projectIds = projectPs.getGeneratedKeys();
+            projectIds.next();
+            int projectId = projectIds.getInt(1);
 
+            String projectMemberSQL = "INSERT INTO ProjectMember (project_id, user_id) VALUES (?, ?)";
+            PreparedStatement projectMemberPs = con.prepareStatement(projectMemberSQL);
+            projectMemberPs.setInt(1, projectId);
+            projectMemberPs.setInt(2, userId);
+            projectMemberPs.executeUpdate();
 
-            Project createdProject = new Project(project.getProjectName(), project.getProjectDescription(), project.getProjectStartDate(), project.getProjectEndDate(), project.getUserId());
-            createdProject.setProjectId(id);
+            Project createdProject = new Project(project.getProjectName(), project.getProjectDescription(), project.getProjectStartDate(), project.getProjectEndDate(), userId);
+            createdProject.setProjectId(projectId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public List<Project> getAllProjectById(int userId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM project WHERE user_id = ?;";
+            String SQL = "SELECT p.* FROM Project p " +
+                    "INNER JOIN ProjectMember pm ON p.project_id = pm.project_id " +
+                    "WHERE pm.user_id = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
@@ -162,7 +170,8 @@ public class DbRepository implements IRepository {
                 String projectDescription = rs.getString("description");
                 LocalDate projectStartDate = rs.getDate("start_date").toLocalDate();
                 LocalDate projectEndDate = rs.getDate("end_date").toLocalDate();
-                Project project = new Project(projectId, projectName, projectDescription, projectStartDate, projectEndDate, userId);
+                int projectUserId = rs.getInt("user_id");
+                Project project = new Project(projectId, projectName, projectDescription, projectStartDate, projectEndDate, projectUserId);
                 list.add(project);
             }
             return list;
@@ -172,24 +181,32 @@ public class DbRepository implements IRepository {
         }
     }
 
+
     @Override
     public void deleteProject(int projectId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
-            // delete subtasks
+            // Delete project from ProjectMember
+            String deleteProjectMemberSQL = "DELETE FROM ProjectMember WHERE project_id = ?";
+            try (PreparedStatement deleteProjectMemberStmt = con.prepareStatement(deleteProjectMemberSQL)) {
+                deleteProjectMemberStmt.setInt(1, projectId);
+                deleteProjectMemberStmt.executeUpdate();
+            }
+
+            // Delete subtasks
             String deleteSubtasksSQL = "DELETE FROM Subtask WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
             try (PreparedStatement deleteSubtasksStmt = con.prepareStatement(deleteSubtasksSQL)) {
                 deleteSubtasksStmt.setInt(1, projectId);
                 deleteSubtasksStmt.executeUpdate();
             }
 
-            // delete tasks
+            // Delete tasks
             String deleteTasksSQL = "DELETE FROM Task WHERE project_id = ?";
             try (PreparedStatement deleteTasksStmt = con.prepareStatement(deleteTasksSQL)) {
                 deleteTasksStmt.setInt(1, projectId);
                 deleteTasksStmt.executeUpdate();
             }
 
-            // delete the project record
+            // Delete the project record
             String deleteProjectSQL = "DELETE FROM Project WHERE project_id = ?";
             try (PreparedStatement deleteProjectStmt = con.prepareStatement(deleteProjectSQL)) {
                 deleteProjectStmt.setInt(1, projectId);
@@ -199,6 +216,7 @@ public class DbRepository implements IRepository {
             throw new LoginException(ex.getMessage());
         }
     }
+
 
 
     @Override
@@ -1062,6 +1080,49 @@ public class DbRepository implements IRepository {
         }
         return doneSubtaskDTOS;
     }
+
+    @Override
+    public void addMemberToProject(int projectId, int memberUserId) {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "INSERT INTO ProjectMember (project_id, user_id) VALUES (?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, projectId);
+            ps.setInt(2, memberUserId);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle the exception appropriately
+        }
+    }
+
+
+    @Override
+    public int getUserIdByEmail(String email) {
+        int userId = 0;
+
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT user_id FROM User WHERE email = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                userId = rs.getInt("user_id");
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Handle the exception appropriately
+        }
+
+        return userId;
+    }
+
 
 
     @Override

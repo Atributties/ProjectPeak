@@ -245,6 +245,8 @@ public class StubRepository implements IRepository {
 
     }
 
+
+
     @Override
     public void doneTask(int id) {
 
@@ -274,4 +276,17 @@ public class StubRepository implements IRepository {
     public List<DoneSubtaskDTO> getAllDoneSubtask(int taskId) {
         return null;
     }
+
+    @Override
+    public void addMemberToProject(int projectId, int memberUserId) {
+
+    }
+
+
+    @Override
+    public int getUserIdByEmail(String email) {
+        return 0;
+    }
+
+
 }
