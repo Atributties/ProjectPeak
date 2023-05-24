@@ -90,6 +90,9 @@ public class ProjectController {
             taskAndSubtaskDTO.setDaysLeft(daysLeft);
         }
 
+        List<String> allEmailsOnAProject = projectService.getAllEmailsOnProject(projectId);
+        model.addAttribute("allEmails", allEmailsOnAProject);
+
         model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
 
         return "project";
@@ -289,6 +292,9 @@ public class ProjectController {
 
         return "redirect:/showProject/" + projectId;
     }
+
+
+
 
 
 

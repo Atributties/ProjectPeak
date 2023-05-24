@@ -268,9 +268,10 @@ public class StubRepository implements IRepository {
     }
 
     @Override
-    public List<DoneProjectDTO> getAllDoneProjects(int userId) {
+    public List<DoneProjectDTO> getDoneProjectsByUserId(int userId) {
         return null;
     }
+
 
     @Override
     public List<DoneTaskDTO> getAllDoneTask(int id) {
@@ -292,6 +293,13 @@ public class StubRepository implements IRepository {
     public int getUserIdByEmail(String email) {
         return 0;
     }
+
+    @Override
+    public List<String> getAllEmailsOnProject(int projectId) {
+        return null;
+    }
+
+
 
 
 }

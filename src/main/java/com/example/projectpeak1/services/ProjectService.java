@@ -165,7 +165,7 @@ public class ProjectService {
     public List<DoneProjectDTO> seeAllDoneProjects(int userId) {
         List<DoneProjectDTO> doneProjectDTOList = new ArrayList<>();
 
-        List<DoneProjectDTO> listFromDatabase = repository.getAllDoneProjects(userId);
+        List<DoneProjectDTO> listFromDatabase = repository.getDoneProjectsByUserId(userId);
         // Iterate over each done project and calculate the expected and used days
         for (DoneProjectDTO doneProject : listFromDatabase) {
 
@@ -194,5 +194,9 @@ public class ProjectService {
         return repository.getUserIdByEmail(email);
     }
 
+
+    public List<String> getAllEmailsOnProject(int projectId) {
+        return repository.getAllEmailsOnProject(projectId);
+    }
 
 }

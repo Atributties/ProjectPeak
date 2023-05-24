@@ -75,11 +75,12 @@
                             <button type="submit" class="btn-green">Add</button>
                         </form>
                     </td>
-
-
-
-
-
+                    <td><h2>All Emails:</h2>
+                        <ul>
+                            <li th:each="email : ${allEmails}">
+                                <span th:text="${email}"></span>
+                            </li>
+                        </ul></td>
 
 
                 </tr>

@@ -900,8 +900,8 @@ public class DbRepository implements IRepository {
     public void doneAllSubtask(int id) {
         try (Connection conn = DbManager.getConnection()) {
             // Move subtasks to DoneSubtask table
-            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status, task_id) " +
-                    "SELECT subtask_id, name, description, start_date, end_date, status, task_id " +
+            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, task_id, name, description, start_date, end_date, status) " +
+                    "SELECT subtask_id,task_id, name, description, start_date, end_date, status  " +
                     "FROM Subtask " +
                     "WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
 
@@ -1008,7 +1008,7 @@ public class DbRepository implements IRepository {
 
 
     @Override
-    public List<DoneProjectDTO> getAllDoneProjects(int userId) {
+    public List<DoneProjectDTO> getDoneProjectsByUserId(int userId) {
         List<DoneProjectDTO> doneProjects = new ArrayList<>();
 
         try (Connection conn = DbManager.getConnection()) {
@@ -1028,8 +1028,6 @@ public class DbRepository implements IRepository {
                 doneProject.setUserId(rs.getInt("user_id"));
 
                 doneProjects.add(doneProject);
-
-
             }
 
         } catch (SQLException ex) {
@@ -1038,6 +1036,11 @@ public class DbRepository implements IRepository {
 
         return doneProjects;
     }
+
+
+
+
+
 
     @Override
     public List<DoneTaskDTO> getAllDoneTask(int id) {
@@ -1143,6 +1146,31 @@ public class DbRepository implements IRepository {
         }
 
         return userId;
+    }
+
+    @Override
+    public List<String> getAllEmailsOnProject(int projectId) {
+        List<String> emails = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT User.email FROM User " +
+                "JOIN ProjectMember ON User.user_id = ProjectMember.user_id " +
+                "WHERE ProjectMember.project_id = ?";
+        Connection con = DbManager.getConnection();
+
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setInt(1, projectId);
+            ResultSet resultSet = statement.executeQuery();
+
+
+            while (resultSet.next()) {
+                String email = resultSet.getString("email");
+                emails.add(email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return emails;
     }
 
 
