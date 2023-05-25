@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
 
-@Repository("LoginRepository")
+@Repository
 public interface ILoginRepository {
     User login(String email, String password) throws LoginException;
 

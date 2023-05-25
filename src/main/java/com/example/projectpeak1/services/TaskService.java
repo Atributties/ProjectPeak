@@ -5,6 +5,7 @@ import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
 import com.example.projectpeak1.entities.User;
+import com.example.projectpeak1.repositories.ISubtaskRepository;
 import com.example.projectpeak1.repositories.ITaskRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +24,8 @@ public class TaskService {
 
 
 
-    public TaskService(ITaskRepository taskRepository){
-        this.taskRepository = taskRepository;
+    public TaskService(ApplicationContext context, @Value("${taskrepository.impl}") String impl) {
+        this.taskRepository = (ITaskRepository) context.getBean(impl);
     }
 
     public boolean isUserAuthorized(int userId, int projectId){

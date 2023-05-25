@@ -8,6 +8,7 @@ import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
+import com.example.projectpeak1.repositories.ILoginRepository;
 import com.example.projectpeak1.repositories.IProjectRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,8 +29,8 @@ public class ProjectService {
 
     IProjectRepository projectRepository;
 
-    public ProjectService(IProjectRepository projectRepository){
-        this.projectRepository = projectRepository;
+    public ProjectService(ApplicationContext context, @Value("${projectrepository.impl}") String impl) {
+        this.projectRepository = (IProjectRepository) context.getBean(impl);
     }
 
     public boolean isUserAuthorized(int userId, int projectId){

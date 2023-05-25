@@ -7,6 +7,7 @@ import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
 
+import com.example.projectpeak1.repositories.IProjectRepository;
 import com.example.projectpeak1.repositories.ISubtaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,8 +27,8 @@ public class SubtaskService {
 
     ISubtaskRepository subtaskRepository;
 
-    public SubtaskService(ISubtaskRepository subtaskRepository) {
-        this.subtaskRepository = subtaskRepository;
+    public SubtaskService(ApplicationContext context, @Value("${subtaskrepository.impl}") String impl) {
+        this.subtaskRepository = (ISubtaskRepository) context.getBean(impl);
     }
 
     public boolean isUserAuthorized(int userId, int projectId){

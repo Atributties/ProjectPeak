@@ -10,8 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository
-public class LoginRepository implements ILoginRepository {
+@Repository("LoginRepository_DB")
+public class LoginRepository_DB implements ILoginRepository {
 
 
     @Override

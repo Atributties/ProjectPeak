@@ -16,8 +16,8 @@ public class LoginService {
 
     ILoginRepository loginRepository;
 
-    public LoginService(ILoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
+    public LoginService(ApplicationContext context, @Value("${loginrepository.impl}") String impl) {
+        this.loginRepository = (ILoginRepository) context.getBean(impl);
     }
 
 

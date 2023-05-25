@@ -13,8 +13,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public class SubtaskRepository implements ISubtaskRepository {
+@Repository("SubtaskRepository_DB")
+public class SubtaskRepository_DB implements ISubtaskRepository {
 
 
     //__________________USER DATA__________________________________
@@ -51,10 +51,8 @@ public class SubtaskRepository implements ISubtaskRepository {
                 String fullName = rs.getString("FULLNAME");
                 String email = rs.getString("EMAIL");
                 String userPassword = rs.getString("USER_PASSWORD");
-                String userRole = rs.getString("USER_PASSWORD");
-                user1 = new User(userId, fullName, email, userPassword, userRole);
+                user1 = new User(userId, fullName, email, userPassword);
             }
-
             return user1;
 
         } catch (SQLException ex) {

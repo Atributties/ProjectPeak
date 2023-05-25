@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
 
-@Repository("UserRepository")
+@Repository
 public interface IUserRepository {
     User getUserFromId(int id);
     void updateUser(User user);

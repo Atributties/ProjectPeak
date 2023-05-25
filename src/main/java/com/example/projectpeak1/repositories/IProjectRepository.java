@@ -10,7 +10,7 @@ import javax.security.auth.login.LoginException;
 import java.time.LocalDate;
 import java.util.List;
 
-@Repository("ProjectRepository")
+@Repository
 public interface IProjectRepository {
     boolean isUserAuthorized(int userId, int projectId);
 

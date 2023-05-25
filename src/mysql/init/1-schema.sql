@@ -7,7 +7,6 @@ CREATE TABLE User (
   fullname VARCHAR(255),
   email VARCHAR(255),
   user_password VARCHAR(255),
-  role VARCHAR(255),
   PRIMARY KEY(user_id)
 );
 

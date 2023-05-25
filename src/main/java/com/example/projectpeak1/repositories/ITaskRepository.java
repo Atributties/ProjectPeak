@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.security.auth.login.LoginException;
 import java.util.List;
 
-@Repository("TaskRepository")
+@Repository
 public interface ITaskRepository {
 
     boolean isUserAuthorized(int userId, int projectId);

@@ -2,6 +2,7 @@ package com.example.projectpeak1.services;
 
 
 import com.example.projectpeak1.entities.User;
+import com.example.projectpeak1.repositories.ITaskRepository;
 import com.example.projectpeak1.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +16,8 @@ public class UserService {
 
     IUserRepository userRepository;
 
-    public UserService(IUserRepository userRepository){
-        this.userRepository = userRepository;
+    public UserService(ApplicationContext context, @Value("${userrepository.impl}") String impl) {
+        this.userRepository = (IUserRepository) context.getBean(impl);
     }
     public User getUserFromId(int userId) {
         return userRepository.getUserFromId(userId);
