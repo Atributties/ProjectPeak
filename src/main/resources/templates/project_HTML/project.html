@@ -35,7 +35,8 @@
                         <h2>Add Member:</h2>
                         <form th:action="@{/addMemberToProject/{projectId}(projectId=${project.getProjectId()})}" method="post" class="flex flex-col items-center">
                             <div class="mb-4">
-                                <input type="email" name="email" placeholder="Enter email" required class="black-input text-black">
+                                <label class="label" for="addMember"></label>
+                                <input class="input" id="addMember" type="email" name="email" placeholder="Enter email" required>
                             </div>
                             <button type="submit" class="btn-green">Add</button>
                         </form>
