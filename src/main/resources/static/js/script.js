@@ -32,6 +32,7 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', function() {
     const themeLink = document.getElementById('theme-style');
     const logoImage = document.getElementById("logo-img");
+    const frontImage = document.getElementById("img-front");
     const savedTheme = localStorage.getItem('theme');
     const lightTheme = '/css/lightTheme.css';
     const darkTheme = '/css/darkTheme.css';
@@ -39,9 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set the theme based on the saved value or use dark theme as default
     if (savedTheme === 'light') {
         themeLink.setAttribute('href', lightTheme);
+        frontImage.src = "/images/frontUser-white.png"
         logoImage.src = "/images/logo-md-dark.png";
     } else {
         themeLink.setAttribute('href', darkTheme);
+        frontImage.src = "/images/frontUser-dark.png"
         logoImage.src = "/images/logo-md-white.png";
         localStorage.setItem('theme', 'dark'); // Save the theme preference in localStorage
     }
