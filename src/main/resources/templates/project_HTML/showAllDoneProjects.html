@@ -21,7 +21,10 @@
             <span>
                 <i class="fa fa-circle fa-lg text-green-500"></i> <!-- Display green circle for completed projects -->
                 <span th:text="${doneProject.projectName}"></span>
+              <hr class="w-44 border-t border-white">
+            <span class="overflow-ellipsis overflow-hidden" th:utext="${#strings.abbreviate(doneProject.getProjectDescription(), 100)}"></span>
             </span>
+
           <form class="inline-block">
             <span class="font-bold">Start Date:</span>
             <span th:text="${doneProject.projectStartDate}"></span>
