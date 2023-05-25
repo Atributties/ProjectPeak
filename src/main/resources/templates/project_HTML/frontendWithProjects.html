@@ -57,7 +57,8 @@
                         </a>
                         <a th:href="@{/doneProject/{id}(id=${project.getProjectId()})}"
                            th:title="${'Done ' + project.getProjectName()}"
-                           class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center">
+                           class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center"
+                           onclick="return confirm('Are you sure you are finish with this project? All your task and subtask will also be finished.')">
                             <i class="fa fa-check fa-lg icons-colour"></i>
                         </a>
                         <a th:href="@{/editProject/{id}(id=${project.getProjectId()})}"
@@ -68,7 +69,7 @@
                         <a th:href="@{/deleteProject/{id}(id=${project.getProjectId()})}" type="submit"
                            th:title="${'Delete: ' + project.getProjectName()}"
                            class="hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                           onclick="return confirm('Are you sure you want to delete this project? All you task and subtask will also be deleted.')">
+                           onclick="return confirm('Are you sure you want to delete this project? All your task and subtask will also be deleted.')">
                             <i class="fa fa-trash fa-lg icons-colour"></i>
                         </a>
                     </form>

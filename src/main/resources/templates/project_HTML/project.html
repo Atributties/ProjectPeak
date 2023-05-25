@@ -93,7 +93,8 @@
                         <i class="fa fa-trash fa-lg icons-colour"></i>
                     </a></td>
                     <td><a th:href="@{/doneTask/{id}(id=${taskAndSubtask.getId()})}"
-                           class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center">
+                           class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center"
+                           onclick="return confirm('Are you sure you are finish with this task? All your subtask will also be finished.')">
                         <i class="fa fa-check fa-lg icons-colour"></i>
                     </a></td>
                 </tr>
