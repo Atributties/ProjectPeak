@@ -25,7 +25,7 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginForm(HttpSession session, Model model) {
         if (session.getAttribute("userId") != null) {
-            return "redirect:/project_HTML/frontendWithProjects";
+            return "redirect:/frontendWithProjects";
         } else {
             model.addAttribute("user", new User());
             return "login_HTML/login";

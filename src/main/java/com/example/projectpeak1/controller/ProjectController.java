@@ -223,21 +223,6 @@ public class ProjectController {
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
-        Project project = projectService.getProjectById(projectId);
-        model.addAttribute("project", project);
-
-        List<Project> list = projectService.getAllProjectById(userId);
-
-        for (Project project1 : list) {
-            int daysToStart = projectService.getDaysToStartProject(project1.getProjectId());
-            project1.setDaysToStart(daysToStart);
-            int daysForProject = projectService.getDaysForProject(project1.getProjectId());
-            project1.setDaysForProject(daysForProject);
-            int daysLeft = projectService.getDaysLeftProject(project1.getProjectId());
-            project1.setDaysLeft(daysLeft);
-        }
-        model.addAttribute("projects", list);
-
         List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
         List<List<Object>> chartData = new ArrayList<>();
         for (TaskAndSubtaskDTO taskAndSubtaskDTO : listOfTaskAndSub) {
@@ -251,9 +236,6 @@ public class ProjectController {
             row.add(null);
             chartData.add(row);
         }
-        model.addAttribute("taskAndSubtask", listOfTaskAndSub);
-
-
         model.addAttribute("chartData", chartData);
 
         return "project_HTML/ganttChartProject";
