@@ -197,9 +197,14 @@ td {
 
 .select-class:focus {
     outline: none;
-    background-color: #ffffff;
     border-color: #2b2626;
 }
+
+.break-word {
+    word-wrap: break-word;
+    max-width: 50px;
+}
+
 
 /* FOOTER */
 .footer {

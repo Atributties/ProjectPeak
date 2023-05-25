@@ -116,7 +116,7 @@ public class ProjectController {
         int userId = getUserId(session);
 
         projectService.createProject(project, userId);
-        return "redirect:/project_HTML/frontendWithProjects";
+        return "redirect:/frontendWithProjects";
     }
 
     @GetMapping(value = {"/deleteProject/{id}"})
@@ -130,7 +130,7 @@ public class ProjectController {
         }
 
         projectService.deleteProject(id);
-        return "redirect:/project_HTML/frontendWithProjects";
+        return "redirect:/frontendWithProjects";
 
     }
 
@@ -173,7 +173,7 @@ public class ProjectController {
             projectService.updateProject(project);
         }
 
-        return "redirect:/project_HTML/frontendWithProjects";
+        return "redirect:/frontendWithProjects";
     }
 
 
@@ -190,7 +190,7 @@ public class ProjectController {
         projectService.doneProject(id);
 
 
-        return "redirect:/project_HTML/frontendWithProjects";
+        return "redirect:/frontendWithProjects";
 
     }
 

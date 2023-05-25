@@ -197,6 +197,12 @@ td {
     border-color: #ebebeb; /* Light grey */
 }
 
+.break-word {
+    word-wrap: break-word;
+    max-width: 50px;
+}
+
+
 /* FOOTER */
 .footer {
     margin-top: 2rem;

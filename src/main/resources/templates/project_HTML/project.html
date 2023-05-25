@@ -15,14 +15,43 @@
     <hr class="mt-8 border-t py-4 text-center">
     <div class="p-6">
         <div class="rounded-lg shadow-lg p-6">
-            <h2>Description:</h2>
-            <p><span th:text="${project.getProjectDescription()}"></span></p>
-            <h2>Start Date:</h2>
-            <p><span th:text="${project.getProjectStartDate()}"></span></p>
-            <h2>End Date:</h2>
-            <p><span th:text="${project.getProjectEndDate()}"></span></p>
+            <div class="flex justify-between">
 
-            <table class="table-auto">
+                    <div class="text-center w-full max-w-lg">
+                        <h2>Description:</h2>
+                        <p class="overflow-ellipsis overflow-hidden"><span th:text="${project.getProjectDescription()}"></span></p>
+                    </div>
+                    <div class="text-center mx-auto">
+                        <h2>Start Date:</h2>
+                        <p><span th:text="${project.getProjectStartDate()}"></span></p>
+                    </div>
+                    <div class="text-center mx-auto">
+                        <h2>End Date:</h2>
+                        <p><span th:text="${project.getProjectEndDate()}"></span></p>
+                    </div>
+
+                <div class="flex space-x-4">
+                    <div class="p-4 pt-0 flex flex-col items-center">
+                        <h2>Add Member:</h2>
+                        <form th:action="@{/addMemberToProject/{projectId}(projectId=${project.getProjectId()})}" method="post" class="flex flex-col items-center">
+                            <div class="mb-4">
+                                <input type="email" name="email" placeholder="Enter email" required class="black-input text-black">
+                            </div>
+                            <button type="submit" class="btn-green">Add</button>
+                        </form>
+                    </div>
+                    <div class="p-4 pt-0 flex flex-col items-center">
+                        <h2>Members:</h2>
+                        <ul>
+                            <li th:each="email : ${allEmails}">
+                                <span th:text="${email}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table-auto w-full">
                 <thead>
                 <tr class="no-hover">
                     <th>Days to start</th>
@@ -53,8 +82,8 @@
                            class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
                         <i class="fa fa-eye fa-lg icons-colour"></i>
                     </a></td>
-                    <td> <a th:href="@{/editTask/{id}(id=${taskAndSubtask.getId()})}"
-                            class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
+                    <td><a th:href="@{/editTask/{id}(id=${taskAndSubtask.getId()})}"
+                           class="hover:bg-green-500 text-white font-bold py-1 px-2 rounded">
                         <i class="fa fa-pencil-square-o fa-lg icons-colour"></i>
                     </a></td>
                     <td><a th:href="@{/deleteTask/{id}(id=${taskAndSubtask.getId()})}" type="submit"
@@ -66,30 +95,15 @@
                            class="hover:bg-green-500 text-white font-bold py-1 pr-1 pl-2 rounded d-flex align-items-center justify-content-center">
                         <i class="fa fa-check fa-lg icons-colour"></i>
                     </a></td>
-                    <td colspan="12" class="text-center">
-                        <form th:action="@{/addMemberToProject/{projectId}(projectId=${project.getProjectId()})}" method="post">
-                            <h2>Add Member:</h2>
-                            <div class="mb-4">
-                                <input type="email" name="email" placeholder="Enter email" required class="black-input text-black">
-                            </div>
-                            <button type="submit" class="btn-green">Add</button>
-                        </form>
-                    </td>
-                    <td><h2>All Emails:</h2>
-                        <ul>
-                            <li th:each="email : ${allEmails}">
-                                <span th:text="${email}"></span>
-                            </li>
-                        </ul></td>
-
-
                 </tr>
                 </tbody>
             </table>
 
             <div class="flex items-center mt-2">
-                <a th:href="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" class="btn-green mr-2">Add Task</a>
-                <a th:href="@{/showAllTaskProjects/{id}(id=${project.getProjectId()})}" class="btn-green mr-2">See All Done Task</a>
+                <a th:href="@{/addTask/{projectId}(projectId=${project.getProjectId()})}" class="btn-green mr-2">Add
+                    Task</a>
+                <a th:href="@{/showAllTaskProjects/{id}(id=${project.getProjectId()})}" class="btn-green mr-2">See All
+                    Done Task</a>
                 <a th:href="@{/frontendWithProjects}" class="back-btn">Back</a>
             </div>
 
@@ -98,8 +112,6 @@
 
     <div th:replace="~{components_HTML/footer :: site-footer}"></div>
 </div>
-
-
 
 
 </body>
