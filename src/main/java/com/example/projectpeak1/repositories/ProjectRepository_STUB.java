@@ -11,10 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository("ProjectRepository_STUB")
 public class ProjectRepository_STUB implements IProjectRepository{
@@ -32,7 +29,7 @@ public class ProjectRepository_STUB implements IProjectRepository{
     public boolean isUserAuthorized(int userId, int projectId) {
         HashMap<Integer, Integer> projectMembers = testDataStub.getProjectMembers();
 
-        return projectMembers.containsKey(userId) && projectMembers.get(userId) == projectId;
+        return projectMembers.containsKey(userId) && projectMembers.containsKey(projectId);
     }
 
     @Override
@@ -52,8 +49,22 @@ public class ProjectRepository_STUB implements IProjectRepository{
 
     @Override
     public List<Project> getAllProjectById(int userId) {
-        return testDataStub.getProjects();
+        List<Project> projects = testDataStub.getProjects();
+        HashMap<Integer, Integer> projectMembers = testDataStub.getProjectMembers();
+
+        List<Project> userProjects = new ArrayList<>();
+
+        for (Project project : projects) {
+            Integer projectId = project.getProjectId();
+            if (project.getUserId() == userId || (projectMembers.containsKey(userId) && projectMembers.get(userId).equals(projectId))) {
+                userProjects.add(project);
+            }
+        }
+
+        return userProjects;
     }
+
+
 
     @Override
     public List<TaskAndSubtaskDTO> getTaskAndSubTaskList(int projectId) {
@@ -199,17 +210,23 @@ public class ProjectRepository_STUB implements IProjectRepository{
 
 
     @Override
-    public void doneAllSubtask(int id) {
+    public void doneAllSubtask(int projectId) {
         List<Subtask> subtasks = testDataStub.getSubtasks();
+        List<Task> tasks = testDataStub.getTasks();
 
-        for (Subtask subtask : subtasks) {
-            if(subtask.getTaskId() == id) {
-                testDataStub.addDoneSubtask(subtask);
-                testDataStub.getSubtasks().remove(subtask);
+        Iterator<Subtask> subtaskIterator = subtasks.iterator();
+        while (subtaskIterator.hasNext()) {
+            Subtask subtask = subtaskIterator.next();
+            for (Task task : tasks) {
+                if (task.getProjectId() == projectId && subtask.getTaskId() == task.getTaskId()) {
+                    testDataStub.addDoneSubtask(subtask);
+                    subtaskIterator.remove();
+                    break;
+                }
             }
         }
-
     }
+
 
     @Override
     public void doneProject(int projectId) {
@@ -226,13 +243,17 @@ public class ProjectRepository_STUB implements IProjectRepository{
     @Override
     public void doneAllTask(int projectId) {
         List<Task> tasks = testDataStub.getTasks();
-        for (Task task : tasks) {
-            if(task.getProjectId() == projectId) {
+
+        Iterator<Task> taskIterator = tasks.iterator();
+        while (taskIterator.hasNext()) {
+            Task task = taskIterator.next();
+            if (task.getProjectId() == projectId) {
                 testDataStub.addDoneTask(task);
-                testDataStub.getTasks().remove(task);
+                taskIterator.remove();
             }
         }
     }
+
 
     @Override
     public List<DoneProjectDTO> getDoneProjectsByUserId(int userId) {

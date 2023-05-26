@@ -23,15 +23,13 @@ public class Loginrepository_STUB implements ILoginRepository{
     @Override
     public User login(String email, String password) throws LoginException {
         List<User> users = testDataStub.getUsers();
-
-        for(User user : testDataStub.getUsers() ) {
+        for(User user : users) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 return user;
-            } else {
-                throw new LoginException("Wrong email or password");
+
             }
         }
-        return null;
+        throw new LoginException("Wrong email or password");
     }
 
     @Override

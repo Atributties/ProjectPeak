@@ -21,7 +21,7 @@ public class TestData_STUB {
 
     // Create users
     User user1 = new User(1, "John Doe", "john.doe@example.com", "password1");
-    User user2 = new User(2, "Jane Doe", "jane.doe@example.com", "password2");
+    User user2 = new User(2, "Jane Doe", "jane.doe@example.com", "12");
     List<User> users = new ArrayList<>(Arrays.asList(user1,user2));
 
 
