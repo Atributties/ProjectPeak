@@ -13,18 +13,21 @@
 <div>
     <div class="container">
         <div th:replace="~{components_HTML/headerFront :: site-header}"></div>
-        <h1>What is Project Peak?</h1>
+        <h1 class="text-6xl">Welcome To Project Peak</h1>
         <hr class="mt-8 border-t py-4 text-center">
         <div class="flex items-center justify-center space-x-4">
-            <p class="w-1/2 leading-relaxed">Project Peak is a project management tool designed to simplify the process of project cost calculation. With Project Peak, users can easily calculate the cost of their project by entering details such as labor costs, material costs, and other expenses.
+            <div>
+                <h2 class="mt-0">What is Project Peak?</h2>
+                <p class="leading-relaxed">Project Peak is a project management tool designed to simplify the process of project cost calculation. With Project Peak, users can easily calculate the cost of their project by entering details such as labor costs, material costs, and other expenses.
 
-                Users can also set priorities and track progress, making it easy to stay on top of project budgets and deadlines. Project Peak's user-friendly interface and powerful features make it an ideal solution for anyone looking to streamline their project cost calculation process and improve project management efficiency.
+                    Users can also set priorities and track progress, making it easy to stay on top of project budgets and deadlines. Project Peak's user-friendly interface and powerful features make it an ideal solution for anyone looking to streamline their project cost calculation process and improve project management efficiency.
 
-                Whether you're a small business owner or a project manager, Project Peak can help you stay organized and keep your project on track. With its robust functionality and intuitive design, Project Peak is the perfect tool for anyone looking to achieve project success.</p>
+                    Whether you're a small business owner or a project manager, Project Peak can help you stay organized and keep your project on track. With its robust functionality and intuitive design, Project Peak is the perfect tool for anyone looking to achieve project success. Sign up now, its free!</p>
+            </div>
             <img src="/images/frontUser-white.png" alt="Logo" id="img-front" />
         </div>
         <main class="flex-grow flex items-center justify-center">
-<!--            <img src="/images/logo-lg.png" alt="Logo" id="img-front" />-->
+
         </main>
         <div th:replace="~{components_HTML/footer :: site-footer}"></div>
     </div>
