@@ -211,12 +211,6 @@ td {
     text-align: center;
     color: #000000; /* Black */
 }
-/*
-#logo-img::before {
-  content: url("../images/logo-md-dark.png");
-}
-
- */
 
 .email-option {
     display: none;
