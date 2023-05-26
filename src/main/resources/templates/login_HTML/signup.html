@@ -13,6 +13,9 @@
     <div th:replace="~{components_HTML/headerFront :: site-header}"></div>
     <main class="flex-grow flex items-center justify-center">
         <form class="p-8 rounded-lg shadow-md w-full sm:w-2/5" th:action="@{/signup}" th:object="${user}" method="post" onsubmit="return validatePasswords()">
+            <div th:if="${errorSignUp}" class="alert alert-danger" role="alert">
+                <p th:text="${errorSignUp}"></p>
+            </div>
             <div class="mb-4">
                 <label class="label" for="email">Email:</label>
                 <input class="input" id="email" type="email" th:field="*{email}" required>

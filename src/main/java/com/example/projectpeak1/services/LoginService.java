@@ -29,6 +29,8 @@ public class LoginService {
         loginRepository.createUser(user);
     }
 
-
+    public boolean doesUserExist(String email) throws LoginException {
+        return loginRepository.doesUserExist(email);
+    }
 
 }

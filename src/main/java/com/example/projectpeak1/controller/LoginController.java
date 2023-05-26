@@ -60,9 +60,19 @@ public class LoginController {
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute User user) throws LoginException {
-        loginService.createUser(user);
-        return "login_HTML/login";
+    public String signUp(@ModelAttribute User user, Model model) {
+        try {
+            if (loginService.doesUserExist(user.getEmail())) {
+                model.addAttribute("errorSignUp", "An account with this email already exists.");
+                return "login_HTML/signup";
+            } else {
+                loginService.createUser(user);
+                return "redirect:/login";
+            }
+        } catch (LoginException e) {
+            model.addAttribute("errorSignUp", e.getMessage());
+            return "login_HTML/signup";
+        }
     }
 
 
@@ -72,7 +82,4 @@ public class LoginController {
         session.invalidate();
         return "redirect:/";
     }
-
-
-
 }

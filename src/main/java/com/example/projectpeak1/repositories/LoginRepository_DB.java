@@ -57,6 +57,18 @@ public class LoginRepository_DB implements ILoginRepository {
         }
     }
 
+    public boolean doesUserExist(String email) throws LoginException {
+        try {
+            Connection con = DbManager.getConnection();
+            String SQL = "SELECT * FROM user WHERE email = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
 
+            return rs.next();
+        } catch (SQLException ex) {
+            throw new LoginException(ex.getMessage());
+        }
+    }
 
 }

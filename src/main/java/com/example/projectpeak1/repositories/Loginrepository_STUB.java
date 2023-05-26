@@ -16,4 +16,9 @@ public class Loginrepository_STUB implements ILoginRepository{
     public void createUser(User user) throws LoginException {
 
     }
+
+    @Override
+    public boolean doesUserExist(String email) throws LoginException {
+        return false;
+    }
 }

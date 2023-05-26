@@ -10,4 +10,6 @@ public interface ILoginRepository {
     User login(String email, String password) throws LoginException;
 
     void createUser(User user) throws LoginException;
+
+    boolean doesUserExist(String email) throws LoginException;
 }
