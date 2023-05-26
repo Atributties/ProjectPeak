@@ -65,31 +65,32 @@ public class ProjectService {
     public void updateProject(Project project){
         projectRepository.updateProject(project);
     }
-
-
     public int getDaysToStartProject(int projectId) {
-
         LocalDate startDate = projectRepository.getStartDateProject(projectId);
         LocalDate currentDate = LocalDate.now();
         return (int) ChronoUnit.DAYS.between(currentDate, startDate);
-
     }
-
     public int getDaysToStartTask(int taskId) {
         LocalDate startDate = projectRepository.getStartDateTask(taskId);
         LocalDate currentDate = LocalDate.now();
         return (int) ChronoUnit.DAYS.between(currentDate, startDate);
-
     }
-
-
     public int getDaysForTask(int taskId) {
         LocalDate startDate = projectRepository.getStartDateTask(taskId);
         LocalDate endDate = projectRepository.getEndDateTask(taskId);
-
         return (int) ChronoUnit.DAYS.between(startDate, endDate);
-
     }
+    public int getDaysLeftTask(int taskId) {
+        LocalDate endDate = projectRepository.getEndDateTask(taskId);
+        LocalDate startDate = projectRepository.getStartDateTask(taskId);
+        LocalDate currentDate = LocalDate.now();
+        if(currentDate.isBefore(startDate)){
+            return 0;
+        }else {
+            return (int) ChronoUnit.DAYS.between(currentDate, endDate);
+        }
+    }
+
 
     public int getDaysForProject(int projectId) {
         LocalDate startDate = projectRepository.getStartDateProject(projectId);
@@ -101,27 +102,13 @@ public class ProjectService {
         LocalDate endDate = projectRepository.getEndDateProject(projectId);
         LocalDate startDate = projectRepository.getStartDateProject(projectId);
         LocalDate currentDate = LocalDate.now();
-
-        if(currentDate.isBefore(startDate)){
-            return 0;
-        }else {
-            return (int) ChronoUnit.DAYS.between(currentDate, endDate);
-        }
-
-    }
-
-    public int getDaysLeftTask(int taskId) {
-
-        LocalDate endDate = projectRepository.getEndDateTask(taskId);
-        LocalDate startDate = projectRepository.getStartDateTask(taskId);
-        LocalDate currentDate = LocalDate.now();
-
         if(currentDate.isBefore(startDate)){
             return 0;
         }else {
             return (int) ChronoUnit.DAYS.between(currentDate, endDate);
         }
     }
+
 
     public void updateTaskAndSubtaskDates(Project project, Project originalProject) {
         // Calculate the period between the original and updated project start dates

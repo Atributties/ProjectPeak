@@ -66,8 +66,6 @@ public class ProjectController {
         if(!isUserAuthorized(session, projectId)){
             return "error_HTML/accessDenied";
         }
-
-
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
@@ -186,10 +184,7 @@ public class ProjectController {
         if(!isUserAuthorized(session, id)){
             return "error_HTML/accessDenied";
         }
-
         projectService.doneProject(id);
-
-
         return "redirect:/frontendWithProjects";
 
     }

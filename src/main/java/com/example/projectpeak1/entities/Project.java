@@ -3,6 +3,8 @@ package com.example.projectpeak1.entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Project {
     private int projectId;
@@ -111,4 +113,6 @@ public class Project {
     public void setDaysLeft(int daysLeft) {
         this.daysLeft = daysLeft;
     }
+
+
 }

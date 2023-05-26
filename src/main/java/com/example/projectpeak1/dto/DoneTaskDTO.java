@@ -40,6 +40,15 @@ public class DoneTaskDTO {
         this.taskUsedDays = taskUsedDays;
     }
 
+    public DoneTaskDTO(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskEndDate, String status, int projectId) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskStartDate = taskStartDate;
+        this.taskEndDate = taskEndDate;
+        this.status = status;
+        this.projectId = projectId;
+    }
 
     public DoneTaskDTO() {
     }

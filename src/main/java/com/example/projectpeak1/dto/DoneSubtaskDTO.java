@@ -39,6 +39,16 @@ public class DoneSubtaskDTO {
         this.subtaskUsedDays = subtaskUsedDays;
     }
 
+    public DoneSubtaskDTO(int subTaskId, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate, String status, int taskId) {
+        this.subTaskId = subTaskId;
+        this.subTaskName = subTaskName;
+        this.subTaskDescription = subTaskDescription;
+        this.subTaskStartDate = subTaskStartDate;
+        this.subTaskEndDate = subTaskEndDate;
+        this.status = status;
+        this.taskId = taskId;
+    }
+
     public DoneSubtaskDTO() {
     }
 
