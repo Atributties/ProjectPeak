@@ -126,14 +126,14 @@ public class ProjectRepository_STUB implements IProjectRepository{
     public void updateProject(Project project) {
         List<Project> projects = testDataStub.getProjects();
         for (Project project1 : projects) {
-            if(project1.getProjectId() == project.getProjectId()) {
-                testDataStub.getProjects().remove(project1);
-                testDataStub.getProjects().add(project);
+            if (project1.getProjectId() == project.getProjectId()) {
+                projects.remove(project1);
+                projects.add(project);
+                break; // Exit the loop after updating the project
             }
         }
-
-
     }
+
 
     @Override
     public LocalDate getStartDateProject(int projectId) {
@@ -186,27 +186,30 @@ public class ProjectRepository_STUB implements IProjectRepository{
         List<Subtask> subtasks = testDataStub.getSubtasks();
 
         // Update the task's start and end dates
-        for (Task t : tasks) {
-            if (t.getTaskId() == task.getId()) {
-                t.setTaskStartDate(task.getStartDate());
-                t.setTaskEndDate(task.getStartDate());
-                testDataStub.getTasks().remove(t);
-                testDataStub.addTask(t);
+        for (int i = 0; i < tasks.size(); i++) {
+            Task currentTask = tasks.get(i);
+            if (currentTask.getTaskId() == task.getId()) {
+                currentTask.setTaskStartDate(task.getStartDate());
+                currentTask.setTaskEndDate(task.getEndDate());
+                tasks.set(i, currentTask);
+                break; // Exit the loop after updating the task
             }
         }
 
         // Update the subtasks' start and end dates
-        for (Subtask subtask : subtasks) {
+        for (int i = 0; i < subtasks.size(); i++) {
+            Subtask currentSubtask = subtasks.get(i);
             for (Subtask sub : task.getSubTaskList()) {
-                if (subtask.getSubTaskId() == sub.getSubTaskId()) {
-                    subtask.setSubTaskStartDate(sub.getSubTaskStartDate());
-                    subtask.setSubTaskEndDate(sub.getSubTaskEndDate());
-                    testDataStub.getSubtasks().remove(sub);
-                    testDataStub.addSubtask(sub);
+                if (currentSubtask.getSubTaskId() == sub.getSubTaskId()) {
+                    currentSubtask.setSubTaskStartDate(sub.getSubTaskStartDate());
+                    currentSubtask.setSubTaskEndDate(sub.getSubTaskEndDate());
+                    subtasks.set(i, currentSubtask);
+                    break; // Exit the loop after updating the subtask
                 }
             }
         }
     }
+
 
 
     @Override

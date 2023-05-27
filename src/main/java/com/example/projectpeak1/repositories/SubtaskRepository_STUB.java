@@ -79,13 +79,16 @@ public class SubtaskRepository_STUB implements ISubtaskRepository{
     @Override
     public void editSubtask(Subtask subtask) {
         List<Subtask> subtasks = testDataStub.getSubtasks();
-        for (Subtask subtask1 : subtasks) {
-            if(subtask1.getSubTaskId() == subtask.getSubTaskId()) {
-                testDataStub.getSubtasks().remove(subtask1);
-                testDataStub.getSubtasks().add(subtask);
+        for (int i = 0; i < subtasks.size(); i++) {
+            Subtask currentSubtask = subtasks.get(i);
+            if (currentSubtask.getSubTaskId() == subtask.getSubTaskId()) {
+                subtasks.remove(i);
+                subtasks.add(i, subtask);
+                break; // Exit the loop after updating the subtask
             }
         }
     }
+
 
     @Override
     public int getProjectIdBySubtaskId(int subtaskId) {
