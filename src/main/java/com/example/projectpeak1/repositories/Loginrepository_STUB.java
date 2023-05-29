@@ -43,7 +43,7 @@ public class Loginrepository_STUB implements ILoginRepository{
 
     }
 
-    public boolean doesUserExist(String email) throws LoginException {
+    public boolean doesUserExist(String email){
         for(User user : testDataStub.getUsers()){
             return user.getEmail().equals(email);
         }

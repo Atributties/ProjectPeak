@@ -23,21 +23,6 @@ public class DoneSubtaskDTO {
     private int subtaskExpectedDays;
     private int subtaskUsedDays;
 
-    public DoneSubtaskDTO(int subTaskId, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate, String status, int taskId, int daysToStart, int daysSubtask, int daysLeft, LocalDate subtaskCompletedDate, int subtaskExpectedDays, int subtaskUsedDays) {
-        this.subTaskId = subTaskId;
-        this.subTaskName = subTaskName;
-        this.subTaskDescription = subTaskDescription;
-        this.subTaskStartDate = subTaskStartDate;
-        this.subTaskEndDate = subTaskEndDate;
-        this.status = status;
-        this.taskId = taskId;
-        this.daysToStart = daysToStart;
-        this.daysSubtask = daysSubtask;
-        this.daysLeft = daysLeft;
-        this.subtaskCompletedDate = subtaskCompletedDate;
-        this.subtaskExpectedDays = subtaskExpectedDays;
-        this.subtaskUsedDays = subtaskUsedDays;
-    }
 
     public DoneSubtaskDTO(int subTaskId, String subTaskName, String subTaskDescription, LocalDate subTaskStartDate, LocalDate subTaskEndDate, String status, int taskId) {
         this.subTaskId = subTaskId;

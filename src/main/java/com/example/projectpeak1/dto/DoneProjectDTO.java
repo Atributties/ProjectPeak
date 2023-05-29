@@ -26,20 +26,6 @@ public class DoneProjectDTO {
     public DoneProjectDTO() {
     }
 
-    public DoneProjectDTO(int projectId, String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectEndDate, int userId, int daysToStart, int daysForProject, int daysLeft, LocalDate projectCompletedDate) {
-        this.projectId = projectId;
-        this.projectName = projectName;
-        this.projectDescription = projectDescription;
-        this.projectStartDate = projectStartDate;
-        this.projectEndDate = projectEndDate;
-        this.userId = userId;
-        this.daysToStart = daysToStart;
-        this.daysForProject = daysForProject;
-        this.daysLeft = daysLeft;
-        this.projectCompletedDate = projectCompletedDate;
-
-    }
-
     public DoneProjectDTO(int projectId, String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectEndDate, int userId) {
         this.projectId = projectId;
         this.projectName = projectName;
