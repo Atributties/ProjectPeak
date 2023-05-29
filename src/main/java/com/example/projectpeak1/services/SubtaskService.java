@@ -1,20 +1,13 @@
 package com.example.projectpeak1.services;
 
-
 import com.example.projectpeak1.dto.DoneSubtaskDTO;
-import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
-
-import com.example.projectpeak1.repositories.IProjectRepository;
 import com.example.projectpeak1.repositories.ISubtaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-
 import javax.security.auth.login.LoginException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

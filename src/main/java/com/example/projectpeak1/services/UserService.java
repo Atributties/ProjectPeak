@@ -2,9 +2,7 @@ package com.example.projectpeak1.services;
 
 
 import com.example.projectpeak1.entities.User;
-import com.example.projectpeak1.repositories.ITaskRepository;
 import com.example.projectpeak1.repositories.IUserRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,7 @@ public class UserService {
         userRepository.updateUser(user);
     }
 
-    public void deleteUser(int userIdPath) throws LoginException {
+    public void deleteUser(int userIdPath){
         userRepository.deleteUser(userIdPath);
     }
 

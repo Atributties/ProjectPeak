@@ -117,7 +117,7 @@ public class SubtaskController {
     }
 
     @PostMapping(value = {"/doneSubtask/{id}"})
-    public String doneSubtask(HttpSession session, @PathVariable("id") int id, Model model) throws LoginException {
+    public String doneSubtask(HttpSession session, @PathVariable("id") int id) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";
@@ -134,7 +134,7 @@ public class SubtaskController {
     }
 
     @GetMapping(value = {"/showAllDoneSubtask/{taskId}"})
-    public String seeAllDoneSubtask(HttpSession session, Model model, @PathVariable int taskId) throws LoginException {
+    public String seeAllDoneSubtask(HttpSession session, Model model, @PathVariable int taskId) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";

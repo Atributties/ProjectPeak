@@ -128,7 +128,7 @@ public class TaskController {
     }
 
     @GetMapping(value = {"/showAllTaskProjects/{id}"})
-    public String seeAllDoneTask(HttpSession session, Model model, @PathVariable int id) throws LoginException {
+    public String seeAllDoneTask(HttpSession session, Model model, @PathVariable int id) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";
