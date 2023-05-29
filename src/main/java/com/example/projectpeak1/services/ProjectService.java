@@ -183,6 +183,8 @@ public class ProjectService {
         List<DoneProjectDTO> doneProjectDTOList = new ArrayList<>();
 
         List<DoneProjectDTO> listFromDatabase = projectRepository.getDoneProjectsByUserId(userId);
+
+
         // Iterate over each done project and calculate the expected and used days
         for (DoneProjectDTO doneProject : listFromDatabase) {
 

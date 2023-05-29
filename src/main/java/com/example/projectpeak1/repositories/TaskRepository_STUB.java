@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.security.auth.login.LoginException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 @Repository("TaskRepository_STUB")
 public class TaskRepository_STUB implements ITaskRepository {
@@ -23,10 +25,16 @@ public class TaskRepository_STUB implements ITaskRepository {
     }
     @Override
     public boolean isUserAuthorized(int userId, int projectId) {
-        HashMap<Integer, Integer> projectMembers = testDataStub.getProjectMembers();
+        HashMap<Integer, List<Integer>> projectMembers = testDataStub.getProjectMembers();
 
-        return projectMembers.containsKey(userId) && projectMembers.get(userId) == projectId;
+        if (projectMembers.containsKey(userId)) {
+            List<Integer> projectIds = projectMembers.get(userId);
+            return projectIds.contains(projectId);
+        }
+
+        return false;
     }
+
     @Override
     public User getUserFromId(int id) {
         List<User> users = testDataStub.getUsers();
@@ -126,41 +134,76 @@ public class TaskRepository_STUB implements ITaskRepository {
     }
 
     @Override
-    public void doneAllSubtask(int id) {
+    public void doneAllSubtask(int projectId) {
         List<Subtask> subtasks = testDataStub.getSubtasks();
+        List<Task> tasks = testDataStub.getTasks();
 
-        for (Subtask subtask : subtasks) {
-            if(subtask.getTaskId() == id) {
-                testDataStub.addDoneSubtask(subtask);
-                testDataStub.getSubtasks().remove(subtask);
+        Iterator<Subtask> subtaskIterator = subtasks.iterator();
+        while (subtaskIterator.hasNext()) {
+            Subtask subtask = subtaskIterator.next();
+            for (Task task : tasks) {
+                if (task.getProjectId() == projectId && subtask.getTaskId() == task.getTaskId()) {
+                    DoneSubtaskDTO doneSubtask = new DoneSubtaskDTO();
+                    doneSubtask.setSubTaskId(subtask.getSubTaskId());
+                    doneSubtask.setSubTaskName(subtask.getSubTaskName());
+                    doneSubtask.setSubTaskDescription(subtask.getSubTaskDescription());
+                    doneSubtask.setSubTaskStartDate(subtask.getSubTaskStartDate());
+                    doneSubtask.setSubTaskEndDate(subtask.getSubTaskEndDate());
+                    doneSubtask.setSubtaskCompletedDate(LocalDate.now());
+                    doneSubtask.setStatus(subtask.getStatus());
+                    doneSubtask.setTaskId(subtask.getTaskId());
+
+                    testDataStub.addDoneSubtask(doneSubtask);
+                    subtaskIterator.remove();
+                    break;
+                }
             }
         }
     }
+
 
     @Override
     public void doneTask(int taskId) {
         List<Task> tasks = testDataStub.getTasks();
+        Task taskToRemove = null;
 
         for (Task task : tasks) {
-            if(task.getTaskId() == taskId) {
-                testDataStub.addDoneTask(task);
-                testDataStub.getTasks().remove(task);
+            if (task.getTaskId() == taskId) {
+                taskToRemove = task;
+                break;
             }
+        }
+
+        if (taskToRemove != null) {
+            DoneTaskDTO doneTask = new DoneTaskDTO();
+            doneTask.setTaskId(taskToRemove.getTaskId());
+            doneTask.setTaskName(taskToRemove.getTaskName());
+            doneTask.setTaskDescription(taskToRemove.getTaskDescription());
+            doneTask.setTaskStartDate(taskToRemove.getTaskStartDate());
+            doneTask.setTaskEndDate(taskToRemove.getTaskEndDate());
+            doneTask.setTaskCompletedDate(LocalDate.now()); // Set current date
+            doneTask.setStatus(taskToRemove.getStatus());
+            doneTask.setProjectId(taskToRemove.getProjectId());
+
+            testDataStub.addDoneTask(doneTask);
+            testDataStub.getTasks().remove(taskToRemove);
         }
     }
 
+
+
     @Override
     public List<DoneTaskDTO> getAllDoneTask(int id) {
-        List<Task> tasks = testDataStub.getTasks();
+        List<DoneTaskDTO> tasks = testDataStub.getDoneTask();
         List<DoneTaskDTO> doneTaskDTOS = new ArrayList<>();
 
-        for (Task task : tasks) {
-            if(task.getTaskId() == id) {
-                DoneTaskDTO doneTaskDTO = new DoneTaskDTO(task.getTaskId(), task.getTaskName(), task.getTaskDescription(), task.getTaskStartDate(), task.getTaskEndDate(), task.getStatus(), task.getProjectId());
-                doneTaskDTOS.add(doneTaskDTO);
+        for (DoneTaskDTO task : tasks) {
+            if (task.getProjectId() == id) {
+                doneTaskDTOS.add(task);
             }
 
         }
         return doneTaskDTOS;
     }
+
 }

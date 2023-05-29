@@ -27,10 +27,16 @@ public class SubtaskRepository_STUB implements ISubtaskRepository{
     }
     @Override
     public boolean isUserAuthorized(int userId, int projectId) {
-        HashMap<Integer, Integer> projectMembers = testDataStub.getProjectMembers();
+        HashMap<Integer, List<Integer>> projectMembers = testDataStub.getProjectMembers();
 
-        return projectMembers.containsKey(userId) && projectMembers.get(userId) == projectId;
+        if (projectMembers.containsKey(userId)) {
+            List<Integer> projectIds = projectMembers.get(userId);
+            return projectIds.contains(projectId);
+        }
+
+        return false;
     }
+
 
 
     @Override
@@ -174,30 +180,46 @@ public class SubtaskRepository_STUB implements ISubtaskRepository{
     }
 
     @Override
-    public void doneSubtask(int subtaskId) {
+    public void doneSubtask(int taskId) {
         List<Subtask> subtasks = testDataStub.getSubtasks();
+        Subtask subtaskToRemove = null;
 
         for (Subtask subtask : subtasks) {
-            if(subtask.getSubTaskId() == subtaskId) {
-                testDataStub.addDoneSubtask(subtask);
-                testDataStub.getSubtasks().remove(subtask);
+            if (subtask.getTaskId() == taskId) {
+                subtaskToRemove = subtask;
+                break;
             }
+        }
+
+        if (subtaskToRemove != null) {
+            DoneSubtaskDTO doneSubtaskDTO = new DoneSubtaskDTO();
+            doneSubtaskDTO.setSubTaskId(subtaskToRemove.getSubTaskId());
+            doneSubtaskDTO.setSubTaskName(subtaskToRemove.getSubTaskName());
+            doneSubtaskDTO.setSubTaskDescription(subtaskToRemove.getSubTaskDescription());
+            doneSubtaskDTO.setSubTaskStartDate(subtaskToRemove.getSubTaskStartDate());
+            doneSubtaskDTO.setSubTaskEndDate(subtaskToRemove.getSubTaskEndDate());
+            doneSubtaskDTO.setSubtaskCompletedDate(LocalDate.now()); // Set current date as projectCompletedDate
+            doneSubtaskDTO.setStatus(subtaskToRemove.getStatus());
+            doneSubtaskDTO.setTaskId(subtaskToRemove.getTaskId());
+
+            testDataStub.addDoneSubtask(doneSubtaskDTO);
+            testDataStub.getSubtasks().remove(subtaskToRemove);
         }
     }
 
+
+
     @Override
     public List<DoneSubtaskDTO> getAllDoneSubtask(int taskId) {
-        List<Subtask> subtasks = testDataStub.getSubtasks();
-        List<DoneSubtaskDTO> doneSubtaskDTOS = new ArrayList<>();
+        List<DoneSubtaskDTO> doneSubtaskDTOS = testDataStub.getDoneSubtask();
+        List<DoneSubtaskDTO> filteredSubtask = new ArrayList<>();
 
-        for (Subtask subtask : subtasks) {
-            if(subtask.getTaskId() == taskId) {
-                DoneSubtaskDTO subtaskDTO = new DoneSubtaskDTO(subtask.getSubTaskId(), subtask.getSubTaskName(), subtask.getSubTaskDescription(), subtask.getSubTaskStartDate(), subtask.getSubTaskEndDate(), subtask.getStatus(),subtask.getTaskId());
-                doneSubtaskDTOS.add(subtaskDTO);
+        for (DoneSubtaskDTO subtaskDTO : doneSubtaskDTOS) {
+            if (subtaskDTO.getTaskId() == taskId) {
+                filteredSubtask.add(subtaskDTO);
             }
-
         }
-        return doneSubtaskDTOS;
 
+        return filteredSubtask;
     }
 }

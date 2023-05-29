@@ -98,7 +98,7 @@ public class ProjectController {
         return "redirect:/frontendWithProjects";
     }
 
-    @PostMapping(value = {"/deleteProject/{id}"})
+    @GetMapping(value = {"/deleteProject/{id}"})
     public String deleteProject(HttpSession session, @PathVariable("id") int id) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
@@ -165,7 +165,6 @@ public class ProjectController {
 
         List<DoneProjectDTO> doneProjectDTO = projectService.seeAllDoneProjects(userId);
         model.addAttribute("seeDoneProject", doneProjectDTO);
-
         return "project_HTML/showAllDoneProjects";
 
     }
@@ -191,41 +190,29 @@ public class ProjectController {
     }
 
     @PostMapping(value = {"/addMemberToProject/{projectId}"})
-    public String addMemberToProject(HttpSession session, @PathVariable int projectId, @ModelAttribute("email") String email, Model model) throws LoginException {
-
+    public String addMemberToProject(HttpSession session, @PathVariable int projectId, @ModelAttribute("email") String email, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";
         }
-        if(!isUserAuthorized(session, projectId)){
+        if (!isUserAuthorized(session, projectId)) {
             return "error_HTML/accessDenied";
         }
 
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
-        int memberUserId = projectService.getUserIdByEmail(email);
-        projectService.addMemberToProject(projectId, memberUserId);
+        try {
+            int memberUserId = projectService.getUserIdByEmail(email);
+            projectService.addMemberToProject(projectId, memberUserId);
+        } catch (LoginException e) {
+            model.addAttribute("error", "User doesn't exist");
+        }
+
+        model.addAttribute("project", projectService.getProjectById(projectId)); // Add this line
 
         return "redirect:/showProject/" + projectId;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

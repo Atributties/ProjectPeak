@@ -1,5 +1,6 @@
 package com.example.projectpeak1.dto;
 
+import com.example.projectpeak1.entities.Project;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

@@ -39,7 +39,13 @@
                                 <input class="input" id="addMember" type="email" name="email" placeholder="Enter email" required>
                             </div>
                             <button type="submit" class="btn-green">Add</button>
+                            <div th:if="${error}" class="error-message">
+                                <p th:text="${error}"></p>
+                            </div>
                         </form>
+
+
+
                     </div>
                     <div class="p-4 pt-0 flex flex-col items-center">
                         <h2>Members:</h2>

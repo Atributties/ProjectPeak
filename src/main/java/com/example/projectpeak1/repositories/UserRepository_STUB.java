@@ -31,14 +31,15 @@ public class UserRepository_STUB implements IUserRepository{
     @Override
     public void updateUser(User user) {
         List<User> users = testDataStub.getUsers();
-        for (User user1 : users) {
-            if(user1.getUserId() == user.getUserId()) {
-                testDataStub.getUsers().remove(user1);
-                testDataStub.getUsers().add(user);
+        for (int i = 0; i < users.size(); i++) {
+            User existingUser = users.get(i);
+            if (existingUser.getUserId() == user.getUserId()) {
+                users.set(i, user);
+                break;
             }
         }
-
     }
+
 
     @Override
     public void deleteUser(int userId) {

@@ -1,5 +1,8 @@
 package com.example.projectpeak1.repositories;
 
+import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.Task;
@@ -14,9 +17,9 @@ public class TestData_STUB {
 
 
 
-    List<Project> doneProjects = new ArrayList<>();
-    List<Task> doneTask = new ArrayList<>();
-    List<Subtask> doneSubtask = new ArrayList<>();
+    List<DoneProjectDTO> doneProjects = new ArrayList<>();
+    List<DoneTaskDTO> doneTask = new ArrayList<>();
+    List<DoneSubtaskDTO> doneSubtask = new ArrayList<>();
 
 
     // Create users
@@ -36,9 +39,10 @@ public class TestData_STUB {
     List<Project> projects = new ArrayList<>(Arrays.asList(project1,project2));
 
 
-    HashMap<Integer, Integer> projectMembers = new HashMap<>(Map.of(
-            user1.getUserId(), project1.getProjectId(),
-            user2.getUserId(), project2.getProjectId()));
+    HashMap<Integer, List<Integer>> projectMembers = new HashMap<>(Map.of(
+            user1.getUserId(), new ArrayList<>(List.of(project1.getProjectId())),
+            user2.getUserId(), new ArrayList<>(List.of(project2.getProjectId()))
+    ));
 
 
 
@@ -106,30 +110,34 @@ public class TestData_STUB {
 
 
 
-    public void addDoneProject(Project project) {
+    public void addDoneProject(DoneProjectDTO project) {
         doneProjects.add(project);
     }
-    public void addDoneTask(Task task) {
+    public void addDoneTask(DoneTaskDTO task) {
         doneTask.add(task);
     }
-    public void addDoneSubtask(Subtask subtask) {
+    public void addDoneSubtask(DoneSubtaskDTO subtask) {
         doneSubtask.add(subtask);
     }
 
-    public List<Project> getDoneProjects() {
+    public List<DoneProjectDTO> getDoneProjects() {
         return doneProjects;
     }
 
-    public List<Task> getDoneTask() {
+    public List<DoneTaskDTO> getDoneTask() {
         return doneTask;
     }
 
-    public List<Subtask> getDoneSubtask() {
+    public List<DoneSubtaskDTO> getDoneSubtask() {
         return doneSubtask;
     }
 
-    public HashMap<Integer, Integer> getProjectMembers() {
+    public HashMap<Integer, List<Integer>> getProjectMembers() {
         return projectMembers;
+    }
+
+    public void addProjectMember(int userId, int projectId) {
+        projectMembers.computeIfAbsent(userId, k -> new ArrayList<>()).add(projectId);
     }
 
 

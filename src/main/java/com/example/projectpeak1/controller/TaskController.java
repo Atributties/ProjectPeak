@@ -94,7 +94,7 @@ public class TaskController {
 
 
 
-    @PostMapping(value = {"/deleteTask/{id}"})
+    @GetMapping(value = {"/deleteTask/{id}"})
     public String deleteTask(HttpSession session, @PathVariable("id") int taskId) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {

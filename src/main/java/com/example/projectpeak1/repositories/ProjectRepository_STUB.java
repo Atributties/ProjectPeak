@@ -1,6 +1,8 @@
 package com.example.projectpeak1.repositories;
 
 import com.example.projectpeak1.dto.DoneProjectDTO;
+import com.example.projectpeak1.dto.DoneSubtaskDTO;
+import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
@@ -27,10 +29,16 @@ public class ProjectRepository_STUB implements IProjectRepository{
 
     @Override
     public boolean isUserAuthorized(int userId, int projectId) {
-        HashMap<Integer, Integer> projectMembers = testDataStub.getProjectMembers();
+        HashMap<Integer, List<Integer>> projectMembers = testDataStub.getProjectMembers();
 
-        return projectMembers.containsKey(userId) && projectMembers.containsKey(projectId);
+        if (projectMembers.containsKey(userId)) {
+            List<Integer> projectIds = projectMembers.get(userId);
+            return projectIds.contains(projectId);
+        }
+
+        return false;
     }
+
 
     @Override
     public User getUserFromId(int id) {
@@ -50,19 +58,20 @@ public class ProjectRepository_STUB implements IProjectRepository{
     @Override
     public List<Project> getAllProjectById(int userId) {
         List<Project> projects = testDataStub.getProjects();
-        HashMap<Integer, Integer> projectMembers = testDataStub.getProjectMembers();
+        HashMap<Integer, List<Integer>> projectMembers = testDataStub.getProjectMembers();
 
         List<Project> userProjects = new ArrayList<>();
 
         for (Project project : projects) {
             Integer projectId = project.getProjectId();
-            if (project.getUserId() == userId || (projectMembers.containsKey(userId) && projectMembers.get(userId).equals(projectId))) {
+            if (project.getUserId() == userId || (projectMembers.containsKey(userId) && projectMembers.get(userId).contains(projectId))) {
                 userProjects.add(project);
             }
         }
 
         return userProjects;
     }
+
 
 
 
@@ -106,21 +115,33 @@ public class ProjectRepository_STUB implements IProjectRepository{
 
     @Override
     public void createProject(Project project, int userId) {
+        // Generate the next available projectId
+        int nextProjectId = testDataStub.getProjects().size() + 1;
+
+        project.setProjectId(nextProjectId);
         project.setUserId(userId);
         testDataStub.addProject(project);
 
+        // Add the userId to the projectMembers HashMap
+       testDataStub.addProjectMember(userId, nextProjectId);
     }
+
+
+
 
     @Override
-    public void deleteProject(int projectId) throws LoginException {
+    public void deleteProject(int projectId)  {
         List<Project> projects = testDataStub.getProjects();
-        for (Project project : projects) {
-            if(project.getProjectId() == projectId) {
-                testDataStub.getProjects().remove(project);
+
+        for (Iterator<Project> iterator = projects.iterator(); iterator.hasNext(); ) {
+            Project project = iterator.next();
+            if (project.getProjectId() == projectId) {
+                iterator.remove();
+                break;
             }
         }
-
     }
+
 
     @Override
     public void updateProject(Project project) {
@@ -222,7 +243,17 @@ public class ProjectRepository_STUB implements IProjectRepository{
             Subtask subtask = subtaskIterator.next();
             for (Task task : tasks) {
                 if (task.getProjectId() == projectId && subtask.getTaskId() == task.getTaskId()) {
-                    testDataStub.addDoneSubtask(subtask);
+                    DoneSubtaskDTO doneSubtask = new DoneSubtaskDTO();
+                    doneSubtask.setSubTaskId(subtask.getSubTaskId());
+                    doneSubtask.setSubTaskName(subtask.getSubTaskName());
+                    doneSubtask.setSubTaskDescription(subtask.getSubTaskDescription());
+                    doneSubtask.setSubTaskStartDate(subtask.getSubTaskStartDate());
+                    doneSubtask.setSubTaskEndDate(subtask.getSubTaskEndDate());
+                    doneSubtask.setSubtaskCompletedDate(LocalDate.now()); // Set current date as projectCompletedDate
+                    doneSubtask.setStatus(subtask.getStatus());
+                    doneSubtask.setTaskId(subtask.getTaskId());
+
+                    testDataStub.addDoneSubtask(doneSubtask);
                     subtaskIterator.remove();
                     break;
                 }
@@ -231,19 +262,33 @@ public class ProjectRepository_STUB implements IProjectRepository{
     }
 
 
+
     public void doneProject(int projectId) {
-        Project projectToRemove = null;
+        Project projectToMarkAsDone = null;
         for (Project project : testDataStub.getProjects()) {
             if (project.getProjectId() == projectId) {
-                projectToRemove = project;
+                projectToMarkAsDone = project;
                 break;
             }
         }
-        if (projectToRemove != null) {
-            testDataStub.getProjects().remove(projectToRemove);
-            testDataStub.addDoneProject(projectToRemove);
+        if (projectToMarkAsDone != null) {
+            DoneProjectDTO doneProjectDTO = new DoneProjectDTO();
+            doneProjectDTO.setProjectId(projectToMarkAsDone.getProjectId());
+            doneProjectDTO.setProjectName(projectToMarkAsDone.getProjectName());
+            doneProjectDTO.setProjectDescription(projectToMarkAsDone.getProjectDescription());
+            doneProjectDTO.setProjectStartDate(projectToMarkAsDone.getProjectStartDate());
+            doneProjectDTO.setProjectEndDate(projectToMarkAsDone.getProjectEndDate());
+            doneProjectDTO.setProjectCompletedDate(LocalDate.now()); // Set current date as projectCompletedDate
+            doneProjectDTO.setUserId(projectToMarkAsDone.getUserId());
+
+
+            testDataStub.addDoneProject(doneProjectDTO);
+            testDataStub.getProjects().remove(projectToMarkAsDone);
         }
     }
+
+
+
 
 
     @Override
@@ -254,40 +299,49 @@ public class ProjectRepository_STUB implements IProjectRepository{
         while (taskIterator.hasNext()) {
             Task task = taskIterator.next();
             if (task.getProjectId() == projectId) {
-                testDataStub.addDoneTask(task);
+                DoneTaskDTO doneTask = new DoneTaskDTO();
+                doneTask.setTaskId(task.getTaskId());
+                doneTask.setTaskName(task.getTaskName());
+                doneTask.setTaskDescription(task.getTaskDescription());
+                doneTask.setTaskStartDate(task.getTaskStartDate());
+                doneTask.setTaskEndDate(task.getTaskEndDate());
+                doneTask.setTaskCompletedDate(LocalDate.now()); // Set current date as projectCompletedDate
+                doneTask.setStatus(task.getStatus());
+                doneTask.setProjectId(task.getProjectId());
+
+                testDataStub.addDoneTask(doneTask);
                 taskIterator.remove();
             }
         }
     }
 
 
+
     @Override
     public List<DoneProjectDTO> getDoneProjectsByUserId(int userId) {
-        List<Project> doneProjects = testDataStub.getDoneProjects();
-        List<DoneProjectDTO> doneProjectDTOList = new ArrayList<>();
+        List<DoneProjectDTO> userDoneProjects = new ArrayList<>();
+        List<DoneProjectDTO> doneProjectDTOS = testDataStub.getDoneProjects();
 
-        for (Project project : doneProjects) {
-            if (project.getUserId() == userId) {
-                DoneProjectDTO doneProjectDTO = new DoneProjectDTO(
-                        project.getProjectId(),
-                        project.getProjectName(),
-                        project.getProjectDescription(),
-                        project.getProjectStartDate(),
-                        project.getProjectEndDate(),
-                        project.getUserId()
-                );
-                doneProjectDTOList.add(doneProjectDTO);
+        for (DoneProjectDTO doneProject : doneProjectDTOS ) {
+            if (doneProject.getUserId() == userId) {
+                userDoneProjects.add(doneProject);
             }
         }
 
-        return doneProjectDTOList;
+        return userDoneProjects;
     }
+
 
 
     @Override
     public void addMemberToProject(int projectId, int memberUserId) {
-        testDataStub.projectMembers.put(memberUserId, projectId);
+        HashMap<Integer, List<Integer>> projectMembers = testDataStub.getProjectMembers();
+
+        List<Integer> projectIds = projectMembers.getOrDefault(memberUserId, new ArrayList<>());
+        projectIds.add(projectId);
+        projectMembers.put(memberUserId, projectIds);
     }
+
 
     @Override
     public int getUserIdByEmail(String email) {
@@ -304,10 +358,13 @@ public class ProjectRepository_STUB implements IProjectRepository{
     public List<String> getAllEmailsOnProject(int projectId) {
         List<String> emails = new ArrayList<>();
         List<User> users = testDataStub.getUsers();
-        for (Map.Entry<Integer, Integer> entry : testDataStub.getProjectMembers().entrySet()) {
+        HashMap<Integer, List<Integer>> projectMembers = testDataStub.getProjectMembers();
+
+        for (Map.Entry<Integer, List<Integer>> entry : projectMembers.entrySet()) {
             int userId = entry.getKey();
-            int associatedProjectId = entry.getValue();
-            if (associatedProjectId == projectId) {
+            List<Integer> associatedProjectIds = entry.getValue();
+
+            if (associatedProjectIds.contains(projectId)) {
                 for (User user : users) {
                     if (user.getUserId() == userId) {
                         emails.add(user.getEmail());
@@ -316,7 +373,9 @@ public class ProjectRepository_STUB implements IProjectRepository{
                 }
             }
         }
+
         return emails;
     }
+
 
 }

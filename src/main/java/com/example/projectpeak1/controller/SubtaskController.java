@@ -106,7 +106,7 @@ public class SubtaskController {
         return "redirect:/showSubtask/" + taskId;
     }
 
-    @PostMapping(value = "/deleteSubtask/{id}")
+    @GetMapping(value = "/deleteSubtask/{id}")
     public String deleteTask(HttpSession session, @PathVariable("id") int subtaskId) throws LoginException {
         int taskId = subtaskService.getTaskIdBySubtaskId(subtaskId);
         if(!isUserAuthorized(session, subtaskService.getProjectIdBtSubtaskId(subtaskId))){
