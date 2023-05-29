@@ -140,7 +140,7 @@ public class ProjectController {
     }
 
 
-    @PostMapping(value = {"/doneProject/{id}"})
+    @GetMapping(value = {"/doneProject/{id}"})
     public String doneProject(HttpSession session, @PathVariable("id") int id){
         int userId = getUserId(session);
         if (userId == 0) {

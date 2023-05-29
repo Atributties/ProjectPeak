@@ -231,17 +231,20 @@ public class ProjectRepository_STUB implements IProjectRepository{
     }
 
 
-    @Override
     public void doneProject(int projectId) {
-        List<Project> projects = testDataStub.getProjects();
-        for (Project project : projects) {
-            if(project.getProjectId() == projectId) {
-                testDataStub.addDoneProject(project);
-                testDataStub.getProjects().remove(project);
+        Project projectToRemove = null;
+        for (Project project : testDataStub.getProjects()) {
+            if (project.getProjectId() == projectId) {
+                projectToRemove = project;
+                break;
             }
         }
-
+        if (projectToRemove != null) {
+            testDataStub.getProjects().remove(projectToRemove);
+            testDataStub.addDoneProject(projectToRemove);
+        }
     }
+
 
     @Override
     public void doneAllTask(int projectId) {
@@ -260,17 +263,26 @@ public class ProjectRepository_STUB implements IProjectRepository{
 
     @Override
     public List<DoneProjectDTO> getDoneProjectsByUserId(int userId) {
-        List<Project> projects = testDataStub.getProjects();
+        List<Project> doneProjects = testDataStub.getDoneProjects();
         List<DoneProjectDTO> doneProjectDTOList = new ArrayList<>();
 
-        for (Project project : projects) {
-            if (project.getUserId() == userId){
-                DoneProjectDTO doneProjectDTO = new DoneProjectDTO(project.getProjectId(), project.getProjectName(), project.getProjectDescription(), project.getProjectStartDate(), project.getProjectEndDate(), project.getUserId());
+        for (Project project : doneProjects) {
+            if (project.getUserId() == userId) {
+                DoneProjectDTO doneProjectDTO = new DoneProjectDTO(
+                        project.getProjectId(),
+                        project.getProjectName(),
+                        project.getProjectDescription(),
+                        project.getProjectStartDate(),
+                        project.getProjectEndDate(),
+                        project.getUserId()
+                );
                 doneProjectDTOList.add(doneProjectDTO);
             }
         }
+
         return doneProjectDTOList;
     }
+
 
     @Override
     public void addMemberToProject(int projectId, int memberUserId) {

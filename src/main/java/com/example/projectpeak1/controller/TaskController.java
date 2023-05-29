@@ -111,7 +111,7 @@ public class TaskController {
         return "redirect:/showProject/" + projectId;
     }
 
-    @PostMapping(value = {"/doneTask/{id}"})
+    @GetMapping(value = {"/doneTask/{id}"})
     public String doneTask(HttpSession session, @PathVariable("id") int id) {
         int userId = getUserId(session);
         if (userId == 0) {

@@ -116,7 +116,7 @@ public class SubtaskController {
         return "redirect:/showSubtask/" + taskId;
     }
 
-    @PostMapping(value = {"/doneSubtask/{id}"})
+    @GetMapping(value = {"/doneSubtask/{id}"})
     public String doneSubtask(HttpSession session, @PathVariable("id") int id) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
