@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -45,14 +44,6 @@ public class ProjectController {
 
         List<Project> list = projectService.getAllProjectById(userId);
 
-        for (Project project : list ) {
-            int daysToStart = projectService.getDaysToStartProject(project.getProjectId());
-            project.setDaysToStart(daysToStart);
-            int daysForProject = projectService.getDaysForProject(project.getProjectId());
-            project.setDaysForProject(daysForProject);
-            int daysLeft = projectService.getDaysLeftProject(project.getProjectId());
-            project.setDaysLeft(daysLeft);
-        }
         model.addAttribute("projects", list);
         return "project_HTML/frontendWithProjects";
     }
@@ -73,19 +64,10 @@ public class ProjectController {
         model.addAttribute("project", project);
 
         List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
-        for (TaskAndSubtaskDTO taskAndSubtaskDTO : listOfTaskAndSub) {
-            int daysToStartTask = projectService.getDaysToStartTask(taskAndSubtaskDTO.getId());
-            taskAndSubtaskDTO.setDaysToStart(daysToStartTask);
-            int daysForTask = projectService.getDaysForTask(taskAndSubtaskDTO.getId());
-            taskAndSubtaskDTO.setDaysTask(daysForTask);
-            int daysLeft = projectService.getDaysLeftTask(taskAndSubtaskDTO.getId());
-            taskAndSubtaskDTO.setDaysLeft(daysLeft);
-        }
+        model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
 
         List<String> allEmailsOnAProject = projectService.getAllEmailsOnProject(projectId);
         model.addAttribute("allEmails", allEmailsOnAProject);
-
-        model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
 
         return "project_HTML/project";
     }
@@ -112,12 +94,11 @@ public class ProjectController {
     @PostMapping(value = {"/createProject"})
     public String processCreateProject(HttpSession session, @ModelAttribute Project project) {
         int userId = getUserId(session);
-
         projectService.createProject(project, userId);
         return "redirect:/frontendWithProjects";
     }
 
-    @GetMapping(value = {"/deleteProject/{id}"})
+    @PostMapping(value = {"/deleteProject/{id}"})
     public String deleteProject(HttpSession session, @PathVariable("id") int id) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
@@ -126,7 +107,6 @@ public class ProjectController {
         if(!isUserAuthorized(session, id)){
             return "error_HTML/accessDenied";
         }
-
         projectService.deleteProject(id);
         return "redirect:/frontendWithProjects";
 
@@ -155,28 +135,13 @@ public class ProjectController {
     }
     @PostMapping("/editProject")
     public String updateProject(@ModelAttribute Project project) {
-        Project originalProject = projectService.getProjectById(project.getProjectId());
-
-        // Check if the start date or end date has changed
-        if (!originalProject.getProjectStartDate().equals(project.getProjectStartDate())
-                || !originalProject.getProjectEndDate().equals(project.getProjectEndDate())) {
-
-            // Update the project
-            projectService.updateProject(project);
-
-            // Update task and subtask dates
-            projectService.updateTaskAndSubtaskDates(project, originalProject);
-        } else {
-            // Only update the project without updating task and subtask dates
-            projectService.updateProject(project);
-        }
-
+        projectService.updateProject(project);
         return "redirect:/frontendWithProjects";
     }
 
 
-    @GetMapping(value = {"/doneProject/{id}"})
-    public String doneProject(HttpSession session, @PathVariable("id") int id, Model model) throws LoginException {
+    @PostMapping(value = {"/doneProject/{id}"})
+    public String doneProject(HttpSession session, @PathVariable("id") int id){
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";
@@ -190,7 +155,7 @@ public class ProjectController {
     }
 
     @GetMapping(value = {"/showAllDoneProjects"})
-    public String seeAllDoneProjects(HttpSession session, Model model) throws LoginException {
+    public String seeAllDoneProjects(HttpSession session, Model model) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";
@@ -206,7 +171,7 @@ public class ProjectController {
     }
 
     @GetMapping(value = {"/ganttChartProject/{projectId}"})
-    public String showGanttChart(HttpSession session, Model model, @PathVariable int projectId) throws LoginException {
+    public String showGanttChart(HttpSession session, Model model, @PathVariable int projectId){
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";
@@ -218,19 +183,8 @@ public class ProjectController {
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
-        List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
-        List<List<Object>> chartData = new ArrayList<>();
-        for (TaskAndSubtaskDTO taskAndSubtaskDTO : listOfTaskAndSub) {
-            List<Object> row = new ArrayList<>();
-            row.add(taskAndSubtaskDTO.getName());
-            row.add(taskAndSubtaskDTO.getName());
-            row.add(taskAndSubtaskDTO.getStartDate());
-            row.add(taskAndSubtaskDTO.getEndDate());
-            row.add(null);
-            row.add(0);
-            row.add(null);
-            chartData.add(row);
-        }
+        List<List<Object>> chartData = projectService.getTaskAndSubtaskDisplayGantt(projectId);
+
         model.addAttribute("chartData", chartData);
 
         return "project_HTML/ganttChartProject";
@@ -250,15 +204,8 @@ public class ProjectController {
         User user = projectService.getUserFromId(userId);
         model.addAttribute("user", user);
 
-
-        // Check if the email exists
         int memberUserId = projectService.getUserIdByEmail(email);
-        if (memberUserId != 0) {
-            projectService.addMemberToProject(projectId, memberUserId);
-        } else {
-            // Handle the case where the user with the given email doesn't exist
-            // Display an error message or take appropriate action
-        }
+        projectService.addMemberToProject(projectId, memberUserId);
 
         return "redirect:/showProject/" + projectId;
     }

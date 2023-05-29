@@ -88,28 +88,13 @@ public class TaskController {
 
     @PostMapping("/editTask")
     public String updateTask(@ModelAttribute Task task, @RequestParam("projectId") int projectId) {
-        Task originalTask = taskService.getTaskById(task.getTaskId());
-
-        // Check if the start date or end date has changed
-        if (!originalTask.getTaskStartDate().equals(task.getTaskStartDate())
-                || !originalTask.getTaskStartDate().equals(task.getTaskEndDate())) {
-
-            // Update the task
-            taskService.updateTask(task);
-
-            // Update subtask dates
-            taskService.updateSubtaskDates(task, originalTask);
-        } else {
-            // Only update the task without updating subtask dates
-            taskService.updateTask(task);
-        }
-
+        taskService.updateTask(task);
         return "redirect:/showProject/" + projectId;
     }
 
 
 
-    @GetMapping(value = {"/deleteTask/{id}"})
+    @PostMapping(value = {"/deleteTask/{id}"})
     public String deleteTask(HttpSession session, @PathVariable("id") int taskId) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {
@@ -126,8 +111,8 @@ public class TaskController {
         return "redirect:/showProject/" + projectId;
     }
 
-    @GetMapping(value = {"/doneTask/{id}"})
-    public String doneTask(HttpSession session, @PathVariable("id") int id, Model model) throws LoginException {
+    @PostMapping(value = {"/doneTask/{id}"})
+    public String doneTask(HttpSession session, @PathVariable("id") int id) {
         int userId = getUserId(session);
         if (userId == 0) {
             return "login_HTML/login";
@@ -138,12 +123,8 @@ public class TaskController {
         if(!isUserAuthorized(session, projectId)){
             return "error_HTML/accessDenied";
         }
-
         taskService.doneTask(id);
-
-
         return "redirect:/showProject/" + projectId;
-
     }
 
     @GetMapping(value = {"/showAllTaskProjects/{id}"})

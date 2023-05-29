@@ -72,22 +72,11 @@ public class SubtaskController {
         User user = subtaskService.getUserFromId(userId);
         model.addAttribute("user", user);
         TaskAndSubtaskDTO taskAndSubtask = subtaskService.getTaskAndSubTaskById(taskId);
+        model.addAttribute("taskAndSubtask", taskAndSubtask);
 
         if(!isUserAuthorized(session, taskAndSubtask.getProjectId())){
             return "error_HTML/accessDenied";
         }
-
-        for (Subtask subtask : taskAndSubtask.getSubTaskList()) {
-            int daysToStartSubtask = subtaskService.getDaysToStartSubtask(subtask.getSubTaskId());
-            subtask.setDaysToStart(daysToStartSubtask);
-            int daysForSubtask = subtaskService.getDaysForSubtask(subtask.getSubTaskId());
-            subtask.setDaysSubtask(daysForSubtask);
-            int daysLeft = subtaskService.getDaysLeftSubtask(subtask.getSubTaskId());
-            subtask.setDaysLeft(daysLeft);
-        }
-
-
-        model.addAttribute("taskAndSubtask", taskAndSubtask);
         return "subtask_HTML/showSubtask";
     }
 
@@ -117,7 +106,7 @@ public class SubtaskController {
         return "redirect:/showSubtask/" + taskId;
     }
 
-    @GetMapping(value = "/deleteSubtask/{id}")
+    @PostMapping(value = "/deleteSubtask/{id}")
     public String deleteTask(HttpSession session, @PathVariable("id") int subtaskId) throws LoginException {
         int taskId = subtaskService.getTaskIdBySubtaskId(subtaskId);
         if(!isUserAuthorized(session, subtaskService.getProjectIdBtSubtaskId(subtaskId))){
@@ -127,7 +116,7 @@ public class SubtaskController {
         return "redirect:/showSubtask/" + taskId;
     }
 
-    @GetMapping(value = {"/doneSubtask/{id}"})
+    @PostMapping(value = {"/doneSubtask/{id}"})
     public String doneSubtask(HttpSession session, @PathVariable("id") int id, Model model) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {

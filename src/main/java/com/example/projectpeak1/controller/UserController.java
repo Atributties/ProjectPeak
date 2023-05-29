@@ -41,7 +41,7 @@ public class UserController {
         return "redirect:/frontendWithProjects";
     }
 
-    @GetMapping("/deleteUser/{id}")
+    @PostMapping("/deleteUser/{id}")
     public String deleteUser(HttpSession session, @PathVariable("id") int userIdPath) throws LoginException {
         int userId = getUserId(session);
         if (userId == 0) {

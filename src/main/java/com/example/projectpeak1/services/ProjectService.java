@@ -2,21 +2,16 @@ package com.example.projectpeak1.services;
 
 
 import com.example.projectpeak1.dto.DoneProjectDTO;
-import com.example.projectpeak1.dto.DoneSubtaskDTO;
-import com.example.projectpeak1.dto.DoneTaskDTO;
 import com.example.projectpeak1.dto.TaskAndSubtaskDTO;
 import com.example.projectpeak1.entities.Project;
 import com.example.projectpeak1.entities.Subtask;
 import com.example.projectpeak1.entities.User;
-import com.example.projectpeak1.repositories.ILoginRepository;
 import com.example.projectpeak1.repositories.IProjectRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
@@ -43,11 +38,31 @@ public class ProjectService {
     }
 
     public List<Project> getAllProjectById(int userId){
-        return projectRepository.getAllProjectById(userId);
+        List<Project> list = projectRepository.getAllProjectById(userId);
+
+        for (Project project : list ) {
+            int daysToStart = getDaysToStartProject(project.getProjectId());
+            project.setDaysToStart(daysToStart);
+            int daysForProject = getDaysForProject(project.getProjectId());
+            project.setDaysForProject(daysForProject);
+            int daysLeft = getDaysLeftProject(project.getProjectId());
+            project.setDaysLeft(daysLeft);
+        }
+        return list;
     }
 
     public List<TaskAndSubtaskDTO> getTaskAndSubTask(int projectId){
-        return projectRepository.getTaskAndSubTaskList(projectId);
+        List<TaskAndSubtaskDTO> list = projectRepository.getTaskAndSubTaskList(projectId);
+
+        for (TaskAndSubtaskDTO taskAndSubtaskDTO : list) {
+            int daysToStartTask = getDaysToStartTask(taskAndSubtaskDTO.getId());
+            taskAndSubtaskDTO.setDaysToStart(daysToStartTask);
+            int daysForTask = getDaysForTask(taskAndSubtaskDTO.getId());
+            taskAndSubtaskDTO.setDaysTask(daysForTask);
+            int daysLeft = getDaysLeftTask(taskAndSubtaskDTO.getId());
+            taskAndSubtaskDTO.setDaysLeft(daysLeft);
+        }
+        return list;
     }
 
     public Project getProjectById(int id){
@@ -63,7 +78,20 @@ public class ProjectService {
     }
 
     public void updateProject(Project project){
-        projectRepository.updateProject(project);
+        Project originalProject = projectRepository.getProjectById(project.getProjectId());
+        // Check if the start date or end date has changed
+        if (!originalProject.getProjectStartDate().equals(project.getProjectStartDate())
+                || !originalProject.getProjectEndDate().equals(project.getProjectEndDate())) {
+
+            // Update the project
+            projectRepository.updateProject(project);
+
+            // Update task and subtask dates
+            updateTaskAndSubtaskDates(project, originalProject);
+        } else {
+            // Only update the project without updating task and subtask dates
+            projectRepository.updateProject(project);
+        }
     }
     public int getDaysToStartProject(int projectId) {
         LocalDate startDate = projectRepository.getStartDateProject(projectId);
@@ -174,8 +202,14 @@ public class ProjectService {
         return doneProjectDTOList;
     }
 
-    public void addMemberToProject(int projectId, int memberUserId) {
-        projectRepository.addMemberToProject(projectId, memberUserId);
+    public void addMemberToProject(int projectId, int memberUserId) throws LoginException {
+        //Check if the user exit or return exception
+        if (memberUserId != 0) {
+            projectRepository.addMemberToProject(projectId, memberUserId);
+        } else {
+            throw new LoginException("user dosen't exist");
+        }
+
     }
 
 
@@ -186,6 +220,24 @@ public class ProjectService {
 
     public List<String> getAllEmailsOnProject(int projectId) {
         return projectRepository.getAllEmailsOnProject(projectId);
+    }
+
+    public List<List<Object>> getTaskAndSubtaskDisplayGantt(int projectId) {
+        List<TaskAndSubtaskDTO> list = projectRepository.getTaskAndSubTaskList(projectId);
+
+        List<List<Object>> chartData = new ArrayList<>();
+        for (TaskAndSubtaskDTO taskAndSubtaskDTO : list) {
+            List<Object> row = new ArrayList<>();
+            row.add(taskAndSubtaskDTO.getName());
+            row.add(taskAndSubtaskDTO.getName());
+            row.add(taskAndSubtaskDTO.getStartDate());
+            row.add(taskAndSubtaskDTO.getEndDate());
+            row.add(null);
+            row.add(0);
+            row.add(null);
+            chartData.add(row);
+        }
+        return chartData;
     }
 
 }

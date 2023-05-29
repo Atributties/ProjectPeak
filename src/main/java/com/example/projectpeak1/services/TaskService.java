@@ -56,7 +56,22 @@ public class TaskService {
     }
 
     public void updateTask(Task task) {
-        taskRepository.editTask(task);
+        Task originalTask = taskRepository.getTaskById(task.getTaskId());
+
+        // Check if the start date or end date has changed
+        if (!originalTask.getTaskStartDate().equals(task.getTaskStartDate())
+                || !originalTask.getTaskStartDate().equals(task.getTaskEndDate())) {
+
+            // Update the task
+            taskRepository.editTask(task);
+
+            // Update subtask dates
+            updateSubtaskDates(task, originalTask);
+        } else {
+            // Only update the task without updating subtask dates
+            taskRepository.editTask(task);
+        }
+
     }
 
     public int getProjectIdFromTaskId(int taskId) {

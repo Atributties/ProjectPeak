@@ -61,7 +61,17 @@ public class SubtaskService {
 
 
     public TaskAndSubtaskDTO getTaskAndSubTaskById(int taskId) {
-        return subtaskRepository.getTaskAndSubTask(taskId);
+        TaskAndSubtaskDTO taskAndSubtaskDTO = subtaskRepository.getTaskAndSubTask(taskId);
+        for (Subtask subtask : taskAndSubtaskDTO.getSubTaskList()) {
+            int daysToStartSubtask = getDaysToStartSubtask(subtask.getSubTaskId());
+            subtask.setDaysToStart(daysToStartSubtask);
+            int daysForSubtask = getDaysForSubtask(subtask.getSubTaskId());
+            subtask.setDaysSubtask(daysForSubtask);
+            int daysLeft = getDaysLeftSubtask(subtask.getSubTaskId());
+            subtask.setDaysLeft(daysLeft);
+        }
+
+        return taskAndSubtaskDTO;
     }
 
 
