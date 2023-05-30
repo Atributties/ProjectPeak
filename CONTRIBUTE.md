@@ -26,6 +26,7 @@ Download MySQL Workbench: https://dev.mysql.com/downloads/workbench/ version: 8.
 
 Now, on MySQL Workbench open a new tab and run this script: 
 
+```
 DROP DATABASE IF EXISTS projectPeak;
 CREATE DATABASE projectPeak;
 USE projectPeak;
@@ -156,7 +157,7 @@ VALUES
 INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status, task_id) 
 VALUES 
 (1, 'Done Subtask 1', 'This is a completed subtask', '2023-06-02', '2023-06-04', 'Completed', 1);
-
+```
 Now, you have access to MySQL database, and you can now create a user in Project Peak! 
 Feel free to try our test client also
 
