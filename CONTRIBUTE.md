@@ -1,23 +1,26 @@
-# Contributing to WishlistMCM
+# Contributing to Project Peak
 
-Thank you for considering contributing to WishlistMCM! We welcome all contributions, including bug fixes, feature implementations, and documentation improvements.
+Thank you for considering contributing to Project Peak! We welcome all contributions, including bug fixes, feature implementations, and documentation improvements.
+Here are some guidelines for contributing. 
 
 ## Technologies Used
 
-#### WishlistMCM is built using the following technologies:
+#### Project Peak is built using the following technologies:
 
 * Java
 * Spring Boot
+* Spring Web
 * MySQL
 * HTML
 * CSS
+* Tailwind
 * Thymeleaf
 * Docker
 * Tomcat
 
 ## Getting Started
 
-#### To get started contributing to projectPeak, you'll need to:
+#### To get started contributing to project Peak, you'll need to:
 
 1. Fork the repository
 2. Clone your forked repository to your local machine
@@ -45,10 +48,10 @@ We use JUnit 5 for unit testing. To run the unit tests, run mvn test.
 
 ## Reporting Bugs
 
-If you find a bug in WishlistMCM, please report it by opening an issue in the project's GitHub repository. Be sure to include a detailed description of the bug, steps to reproduce it, and any relevant code or error messages.
+If you find a bug in Project Peak, please report it by opening an issue in the project's GitHub repository. Be sure to include a detailed description of the bug, steps to reproduce it, and any relevant code or error messages.
 
 ## Feature Requests
 
-If you have an idea for a new feature for WishlistMCM, please open an issue in the project's GitHub repository. Be sure to include a detailed description of the feature, as well as any relevant use cases or code examples.
+If you have an idea for a new feature for Project Peak, please open an issue in the project's GitHub repository. Be sure to include a detailed description of the feature, as well as any relevant use cases or code examples.
 
-Thank you for contributing to ProjectPeak!
+Thank you for contributing to Project Peak!
