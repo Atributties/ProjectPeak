@@ -21,7 +21,7 @@ Here are some guidelines for contributing.
 ## Getting Started
 We are using MySQL database, here are a few steps to get MySQL up and running on your computer 
 
-Download MySQL: https://dev.mysql.com/downloads/mysql/ verson: 8.0.30
+Download MySQL: https://dev.mysql.com/downloads/mysql/ verson: 8.0.30 <br>
 Download MySQL Workbench: https://dev.mysql.com/downloads/workbench/ version: 8.0.30
 
 Now, on MySQL Workbench open a new tab and run this script: 
@@ -158,7 +158,7 @@ INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, st
 VALUES 
 (1, 'Done Subtask 1', 'This is a completed subtask', '2023-06-02', '2023-06-04', 'Completed', 1);
 ```
-Now, you have access to MySQL database, and you can now create a user in Project Peak! 
+Now, you have access to MySQL database, and you can now create a user in Project Peak! <br>
 Feel free to try our test client also
 
 When you have downloaded MySQL and runned the script, then you have to modify the fields in application.properties
