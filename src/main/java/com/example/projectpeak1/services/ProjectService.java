@@ -69,6 +69,8 @@ public class ProjectService {
         return projectRepository.getProjectById(id);
     }
 
+
+
     public void createProject(Project list, int projectId){
         projectRepository.createProject(list, projectId);
     }
@@ -139,36 +141,37 @@ public class ProjectService {
 
 
     public void updateTaskAndSubtaskDates(Project project, Project originalProject) {
-        // Calculate the period between the original and updated project start dates
-        Period startDateDifference = Period.between(originalProject.getProjectStartDate(), project.getProjectStartDate());
+        LocalDate originalStartDate = originalProject.getProjectStartDate();
+        LocalDate originalEndDate = originalProject.getProjectEndDate();
+        LocalDate newStartDate = project.getProjectStartDate();
+        LocalDate newEndDate = project.getProjectEndDate();
 
-        // Calculate the period between the original and updated project end dates
-        Period endDateDifference = Period.between(originalProject.getProjectEndDate(), project.getProjectEndDate());
+        // Calculate the difference between the original and new project start dates
+        Period startDateDifference = Period.between(originalStartDate, newStartDate);
 
-        if (endDateDifference.isZero()) {
-            // Only the start date has changed, so use the start date difference
-            endDateDifference = startDateDifference;
-        } else {
-            // Only update the end date, so reset the start date difference to zero
-            startDateDifference = Period.ZERO;
-            endDateDifference = Period.ZERO;
-        }
+        // Calculate the difference between the original and new project end dates
+        Period endDateDifference = Period.between(originalEndDate, newEndDate);
 
         List<TaskAndSubtaskDTO> list = projectRepository.getTaskAndSubTaskList(project.getProjectId());
 
         for (TaskAndSubtaskDTO task : list) {
             // Update task start and end dates based on the project's start and end date differences
-            task.setStartDate(task.getStartDate().plusDays(startDateDifference.getDays()));
-            task.setEndDate(task.getEndDate().plusDays(endDateDifference.getDays()));
+            LocalDate taskStartDate = task.getStartDate().plus(startDateDifference);
+            LocalDate taskEndDate = task.getEndDate().plus(endDateDifference);
+            task.setStartDate(taskStartDate);
+            task.setEndDate(taskEndDate);
 
             // Update subtask start and end dates based on the task's start and end date differences
             for (Subtask subtask : task.getSubTaskList()) {
-                subtask.setSubTaskStartDate(subtask.getSubTaskStartDate().plusDays(startDateDifference.getDays()));
-                subtask.setSubTaskEndDate(subtask.getSubTaskEndDate().plusDays(endDateDifference.getDays()));
+                LocalDate subtaskStartDate = subtask.getSubTaskStartDate().plus(startDateDifference);
+                LocalDate subtaskEndDate = subtask.getSubTaskEndDate().plus(endDateDifference);
+                subtask.setSubTaskStartDate(subtaskStartDate);
+                subtask.setSubTaskEndDate(subtaskEndDate);
             }
             projectRepository.updateTaskAndSubtaskDates(task);
         }
     }
+
 
     public void doneProject(int id) {
         projectRepository.doneAllSubtask(id);

@@ -3,7 +3,6 @@
 // Function to toggle between light and dark themes
 
 
-
 function toggleTheme() {
     const themeLink = document.getElementById('theme-style');
     const logoImage = document.getElementById("logo-img");
@@ -26,8 +25,6 @@ function toggleTheme() {
     }
 }
 
-
-
 // Check the current theme when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     const themeLink = document.getElementById('theme-style');
@@ -42,13 +39,19 @@ document.addEventListener('DOMContentLoaded', function() {
         themeLink.setAttribute('href', lightTheme);
         frontImage.src = "/images/frontUser-white.png"
         logoImage.src = "/images/logo-md-dark.png";
+    } else if (savedTheme === 'dark') {
+        themeLink.setAttribute('href', darkTheme);
+        frontImage.src = "/images/frontUser-dark.png"
+        logoImage.src = "/images/logo-md-white.png";
     } else {
+        // If the saved theme preference is not found or invalid, use the default dark theme
         themeLink.setAttribute('href', darkTheme);
         frontImage.src = "/images/frontUser-dark.png"
         logoImage.src = "/images/logo-md-white.png";
         localStorage.setItem('theme', 'dark'); // Save the theme preference in localStorage
     }
 });
+
 
 
 

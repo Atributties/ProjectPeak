@@ -22,6 +22,7 @@ public interface IProjectRepository {
 
     Project getProjectById(int id);
 
+
     void createProject(Project project, int userId);
 
     void deleteProject(int projectId) throws LoginException;
