@@ -28,6 +28,9 @@ Now, on MySQL Workbench open a new tab and run this script:
 
 https://github.com/Atributties/ProjectPeak/blob/main/src/mysql/init/1-schema.sql 
 
+And remeber to set the MySQL test data in: 
+https://github.com/Atributties/ProjectPeak/blob/main/src/mysql/init/2-data.sql 
+
 Now, you have access to MySQL database, and you can now create a user in Project Peak! <br>
 Feel free to try our test client also
 
