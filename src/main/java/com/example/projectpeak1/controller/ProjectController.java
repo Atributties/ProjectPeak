@@ -27,6 +27,10 @@ public class ProjectController {
         return (int) session.getAttribute("userId");
     }
 
+    private boolean isLoggedIn(HttpSession session){
+        return session.getAttribute("userId") != null;
+    }
+
     public boolean isUserAuthorized(HttpSession session, int id) {
         int userId = getUserId(session);
         return projectService.isUserAuthorized(userId, id);
@@ -35,41 +39,46 @@ public class ProjectController {
 
     @GetMapping(value = {"/frontendWithProjects"})
     public String index(HttpSession session, Model model) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        User user = projectService.getUserFromId(userId);
-        model.addAttribute("user", user);
+        else {
+            int userId = getUserId(session);
+            User user = projectService.getUserFromId(userId);
+            model.addAttribute("user", user);
 
-        List<Project> list = projectService.getAllProjectById(userId);
+            List<Project> list = projectService.getAllProjectById(userId);
 
-        model.addAttribute("projects", list);
-        return "project_HTML/frontendWithProjects";
+            model.addAttribute("projects", list);
+            return "project_HTML/frontendWithProjects";
+        }
     }
 
     @GetMapping("/showProject/{id}")
     public String showProjectDetails(HttpSession session, @PathVariable("id") int projectId, Model model) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        if(!isUserAuthorized(session, projectId)){
+        else if(!isUserAuthorized(session, projectId)){
             return "error_HTML/accessDenied";
         }
-        User user = projectService.getUserFromId(userId);
-        model.addAttribute("user", user);
+        else {
+            int userId = getUserId(session);
+            User user = projectService.getUserFromId(userId);
+            model.addAttribute("user", user);
 
-        Project project = projectService.getProjectById(projectId);
-        model.addAttribute("project", project);
+            Project project = projectService.getProjectById(projectId);
+            model.addAttribute("project", project);
 
-        List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
-        model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
+            List<TaskAndSubtaskDTO> listOfTaskAndSub = projectService.getTaskAndSubTask(projectId);
+            model.addAttribute("listOfTaskAndSub", listOfTaskAndSub);
 
-        List<String> allEmailsOnAProject = projectService.getAllEmailsOnProject(projectId);
-        model.addAttribute("allEmails", allEmailsOnAProject);
+            List<String> allEmailsOnAProject = projectService.getAllEmailsOnProject(projectId);
+            model.addAttribute("allEmails", allEmailsOnAProject);
 
-        return "project_HTML/project";
+            return "project_HTML/project";
+        }
+
     }
 
 
@@ -79,15 +88,18 @@ public class ProjectController {
 
     @GetMapping("/createProject")
     public String createProject(HttpSession session, Model model) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        User user = projectService.getUserFromId(userId);
-        model.addAttribute("user", user);
+        else {
+            int userId = getUserId(session);
+            User user = projectService.getUserFromId(userId);
+            model.addAttribute("user", user);
 
-        model.addAttribute("project", new Project());
-        return "project_HTML/createProject";
+            model.addAttribute("project", new Project());
+            return "project_HTML/createProject";
+        }
+
     }
 
 
@@ -100,15 +112,16 @@ public class ProjectController {
 
     @GetMapping(value = {"/deleteProject/{id}"})
     public String deleteProject(HttpSession session, @PathVariable("id") int id) throws LoginException {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        if(!isUserAuthorized(session, id)){
+        else if(!isUserAuthorized(session, id)){
             return "error_HTML/accessDenied";
         }
-        projectService.deleteProject(id);
-        return "redirect:/frontendWithProjects";
+        else {
+            projectService.deleteProject(id);
+            return "redirect:/frontendWithProjects";
+        }
 
     }
 
@@ -116,22 +129,22 @@ public class ProjectController {
 
     @GetMapping("/editProject/{id}")
     public String editProject(HttpSession session, @PathVariable("id") int projectId, Model model) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        if(!isUserAuthorized(session, projectId)){
+        else if(!isUserAuthorized(session, projectId)){
             return "error_HTML/accessDenied";
         }
+        else {
+            int userId = getUserId(session);
+            User user = projectService.getUserFromId(userId);
+            model.addAttribute("user", user);
 
+            Project project = projectService.getProjectById(projectId);
+            model.addAttribute("project", project);
 
-        User user = projectService.getUserFromId(userId);
-        model.addAttribute("user", user);
-
-        Project project = projectService.getProjectById(projectId);
-        model.addAttribute("project", project);
-
-        return "project_HTML/editProject";
+            return "project_HTML/editProject";
+        }
     }
     @PostMapping("/editProject")
     public String updateProject(@ModelAttribute Project project) {
@@ -142,51 +155,56 @@ public class ProjectController {
 
     @GetMapping(value = {"/doneProject/{id}"})
     public String doneProject(HttpSession session, @PathVariable("id") int id){
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        if(!isUserAuthorized(session, id)){
+        else if(!isUserAuthorized(session, id)){
             return "error_HTML/accessDenied";
         }
-        projectService.doneProject(id);
-        return "redirect:/frontendWithProjects";
+        else {
+            projectService.doneProject(id);
+            return "redirect:/frontendWithProjects";
+        }
 
     }
 
     @GetMapping(value = {"/showAllDoneProjects"})
     public String seeAllDoneProjects(HttpSession session, Model model) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        User user = projectService.getUserFromId(userId);
-        model.addAttribute("user", user);
+        else {
+            int userId = getUserId(session);
+            User user = projectService.getUserFromId(userId);
+            model.addAttribute("user", user);
 
-        List<DoneProjectDTO> doneProjectDTO = projectService.seeAllDoneProjects(userId);
-        model.addAttribute("seeDoneProject", doneProjectDTO);
-        return "project_HTML/showAllDoneProjects";
+            List<DoneProjectDTO> doneProjectDTO = projectService.seeAllDoneProjects(userId);
+            model.addAttribute("seeDoneProject", doneProjectDTO);
+            return "project_HTML/showAllDoneProjects";
+        }
 
     }
 
     @GetMapping(value = {"/ganttChartProject/{projectId}"})
     public String showGanttChart(HttpSession session, Model model, @PathVariable int projectId){
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-
-        if(!isUserAuthorized(session, projectId)){
+        else if(!isUserAuthorized(session, projectId)){
             return "error_HTML/accessDenied";
         }
-        User user = projectService.getUserFromId(userId);
-        model.addAttribute("user", user);
+        else {
+            int userId = getUserId(session);
+            User user = projectService.getUserFromId(userId);
+            model.addAttribute("user", user);
 
-        List<List<Object>> chartData = projectService.getTaskAndSubtaskDisplayGantt(projectId);
+            List<List<Object>> chartData = projectService.getTaskAndSubtaskDisplayGantt(projectId);
 
-        model.addAttribute("chartData", chartData);
+            model.addAttribute("chartData", chartData);
 
-        return "project_HTML/ganttChartProject";
+            return "project_HTML/ganttChartProject";
+        }
+
     }
 
     @PostMapping(value = {"/addMemberToProject/{projectId}"})
