@@ -1,25 +1,25 @@
 USE projectpeak;
 
 
-INSERT INTO User (fullname, email, user_password) 
+INSERT INTO USER (fullname, email, user_password) 
 VALUES 
 ('John Doe', 'john.doe@example.com', 'password1'),
 ('Jane Doe', 'jane.doe@example.com', 'password2');
 
 
-INSERT INTO Project (name, description, start_date, end_date, user_id) 
+INSERT INTO PROJECT (name, description, start_date, end_date, user_id) 
 VALUES 
 ('Project 1', 'This is project 1', '2023-07-22', '2023-08-22', 1),
 ('Project 2', 'This is project 2', '2023-08-29', '2023-09-23', 2);
 
 
-INSERT INTO ProjectMember (project_id, user_id) 
+INSERT INTO PROJECTMEMBER (project_id, user_id) 
 VALUES 
 (1, 1),
 (2, 2);
 
 
-INSERT INTO Task (name, description, start_date, end_date, status, project_id) 
+INSERT INTO TASK (name, description, start_date, end_date, status, project_id) 
 VALUES 
 ('Task 1.1', 'This is task 1.1 for project 1', '2023-07-22', '2023-07-24', 'Not Started', 1),
 ('Task 1.2', 'This is task 1.2 for project 1', '2023-07-22', '2023-07-26', 'Not Started', 1),
@@ -36,7 +36,7 @@ VALUES
 
 
 
-INSERT INTO Subtask (name, description, start_date, end_date, status, task_id) 
+INSERT INTO SUBTASK (name, description, start_date, end_date, status, task_id) 
 VALUES 
 ('Subtask 1.1.1', 'This is subtask 1 for task 1.1', '2023-07-22', '2023-07-23', 'Not Started', 1),
 ('Subtask 1.1.2', 'This is subtask 2 for task 1.1', '2023-07-23', '2023-07-24', 'Not Started', 1),
