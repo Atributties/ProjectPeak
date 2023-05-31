@@ -22,7 +22,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
     public boolean isUserAuthorized(int userId, int projectId){
         try {
             Connection con = DbManager.getConnection();
-            String query = "SELECT COUNT(*) FROM ProjectMember WHERE project_id = ? AND user_id = ?";
+            String query = "SELECT COUNT(*) FROM projectmember WHERE project_id = ? AND user_id = ?";
             PreparedStatement stmt = con.prepareStatement(query);
             stmt.setInt(1, projectId);
             stmt.setInt(2, userId);
@@ -41,16 +41,16 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
     public User getUserFromId(int id) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM USER WHERE USER_ID = ?;";
+            String SQL = "SELECT * FROM user WHERE USER_ID = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             User user1 = null;
             if (rs.next()) {
-                int userId = rs.getInt("USER_ID");
-                String fullName = rs.getString("FULLNAME");
-                String email = rs.getString("EMAIL");
-                String userPassword = rs.getString("USER_PASSWORD");
+                int userId = rs.getInt("user_id");
+                String fullName = rs.getString("fullname");
+                String email = rs.getString("email");
+                String userPassword = rs.getString("user_password");
                 user1 = new User(userId, fullName, email, userPassword);
             }
             return user1;
@@ -68,10 +68,10 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
 
         try {
             Connection con = DbManager.getConnection();
-            String sql = "SELECT P.project_id FROM Project P " +
-                    "INNER JOIN Task T ON P.project_id = T.project_id " +
-                    "INNER JOIN Subtask S ON T.task_id = S.task_id " +
-                    "WHERE S.subtask_id = ?";
+            String sql = "SELECT p.project_id FROM project p " +
+                    "INNER JOIN task t ON p.project_id = t.project_id " +
+                    "INNER JOIN subtask s ON t.task_id = s.task_id " +
+                    "WHERE s.subtask_id = ?";
 
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, subtaskId);
@@ -118,7 +118,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
     public Subtask getSubtaskById(int id) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM Subtask WHERE subtask_id = ?;";
+            String SQL = "SELECT * FROM subtask WHERE subtask_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -147,7 +147,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
 
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM Subtask WHERE task_id = ?;";
+            String SQL = "SELECT * FROM subtask WHERE task_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ResultSet rs = ps.executeQuery();
@@ -192,7 +192,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
     public void deleteSubtask(int subtaskId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
             // delete the project record
-            String SQL = "DELETE FROM Subtask WHERE subtask_id = ?";
+            String SQL = "DELETE FROM subtask WHERE subtask_id = ?";
             try (PreparedStatement stmt = con.prepareStatement(SQL)) {
                 stmt.setInt(1, subtaskId);
                 stmt.executeUpdate();
@@ -207,7 +207,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
             Connection con = DbManager.getConnection();
 
             // Retrieve the task
-            String taskSql = "SELECT * FROM Task WHERE task_id = ?;";
+            String taskSql = "SELECT * FROM task WHERE task_id = ?;";
             PreparedStatement taskPs = con.prepareStatement(taskSql);
             taskPs.setInt(1, taskId);
             ResultSet taskRs = taskPs.executeQuery();
@@ -221,7 +221,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
                 String taskStatus = taskRs.getString("status");
 
                 // Retrieve the subtasks for the task
-                String subtaskSql = "SELECT * FROM Subtask WHERE task_id = ?;";
+                String subtaskSql = "SELECT * FROM subtask WHERE task_id = ?;";
                 PreparedStatement subtaskPs = con.prepareStatement(subtaskSql);
                 subtaskPs.setInt(1, taskId);
                 ResultSet subtaskRs = subtaskPs.executeQuery();
@@ -250,7 +250,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
     @Override
     public int getTaskIdBySubtaskId(int subtaskId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
-            String SQL = "SELECT task_id FROM Subtask WHERE subtask_id = ?";
+            String SQL = "SELECT task_id FROM subtask WHERE subtask_id = ?";
             try (PreparedStatement stmt = con.prepareStatement(SQL)) {
                 stmt.setInt(1, subtaskId);
                 ResultSet rs = stmt.executeQuery();
@@ -289,7 +289,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
         LocalDate endDate = null;
 
         try (Connection con = DbManager.getConnection();
-             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM Subtask WHERE subtask_id = ?")) {
+             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM subtask WHERE subtask_id = ?")) {
 
             statement.setInt(1, subTaskId);
             ResultSet resultSet = statement.executeQuery();
@@ -307,9 +307,9 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
     public void doneSubtask(int subtaskId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move subtasks to DoneSubtask table
-            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, name, description, start_date, end_date, status, task_id) " +
+            String moveSubtasksQuery = "INSERT INTO donesubtask (subtask_id, name, description, start_date, end_date, status, task_id) " +
                     "SELECT subtask_id, name, description, start_date, end_date, status, task_id " +
-                    "FROM Subtask " +
+                    "FROM subtask " +
                     "WHERE subtask_id = ?;";
 
             try (PreparedStatement moveSubtasksStmt = conn.prepareStatement(moveSubtasksQuery)) {
@@ -318,7 +318,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
             }
 
             // Remove subtasks from Subtask table
-            String deleteSubtasksQuery = "DELETE FROM Subtask WHERE subtask_id = ?";
+            String deleteSubtasksQuery = "DELETE FROM subtask WHERE subtask_id = ?";
 
             try (PreparedStatement deleteSubtasksStmt = conn.prepareStatement(deleteSubtasksQuery)) {
                 deleteSubtasksStmt.setInt(1, subtaskId);
@@ -334,7 +334,7 @@ public class SubtaskRepository_DB implements ISubtaskRepository {
         List<DoneSubtaskDTO> doneSubtaskDTOS = new ArrayList<>();
 
         try (Connection conn = DbManager.getConnection()) {
-            String query = "SELECT * FROM DoneSubtask WHERE task_id = ?";
+            String query = "SELECT * FROM donesubtask WHERE task_id = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, taskId);
             ResultSet rs = stmt.executeQuery();

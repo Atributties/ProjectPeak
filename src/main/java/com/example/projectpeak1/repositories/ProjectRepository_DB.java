@@ -22,7 +22,7 @@ public class ProjectRepository_DB implements IProjectRepository {
     public boolean isUserAuthorized(int userId, int projectId){
         try {
             Connection con = DbManager.getConnection();
-            String query = "SELECT COUNT(*) FROM ProjectMember WHERE project_id = ? AND user_id = ?";
+            String query = "SELECT COUNT(*) FROM projectmember WHERE project_id = ? AND user_id = ?";
             PreparedStatement stmt = con.prepareStatement(query);
             stmt.setInt(1, projectId);
             stmt.setInt(2, userId);
@@ -41,16 +41,16 @@ public class ProjectRepository_DB implements IProjectRepository {
     public User getUserFromId(int id) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM USER WHERE USER_ID = ?;";
+            String SQL = "SELECT * FROM user WHERE user_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             User user1 = null;
             if (rs.next()) {
-                int userId = rs.getInt("USER_ID");
-                String fullName = rs.getString("FULLNAME");
-                String email = rs.getString("EMAIL");
-                String userPassword = rs.getString("USER_PASSWORD");
+                int userId = rs.getInt("user_id");
+                String fullName = rs.getString("fullname");
+                String email = rs.getString("email");
+                String userPassword = rs.getString("user_password");
                 user1 = new User(userId, fullName, email, userPassword);
             }
 
@@ -66,7 +66,7 @@ public class ProjectRepository_DB implements IProjectRepository {
 
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT user_id FROM User WHERE email = ?";
+            String SQL = "SELECT user_id FROM user WHERE email = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -94,8 +94,8 @@ public class ProjectRepository_DB implements IProjectRepository {
     public List<Project> getAllProjectById(int userId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT p.* FROM Project p " +
-                    "INNER JOIN ProjectMember pm ON p.project_id = pm.project_id " +
+            String SQL = "SELECT p.* FROM project p " +
+                    "INNER JOIN projectmember pm ON p.project_id = pm.project_id " +
                     "WHERE pm.user_id = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, userId);
@@ -144,7 +144,7 @@ public class ProjectRepository_DB implements IProjectRepository {
     public void createProject(Project project, int userId) {
         try {
             Connection con = DbManager.getConnection();
-            String projectSQL = "INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
+            String projectSQL = "INSERT INTO project (name, description, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement projectPs = con.prepareStatement(projectSQL, PreparedStatement.RETURN_GENERATED_KEYS);
 
             projectPs.setString(1, project.getProjectName());
@@ -157,7 +157,7 @@ public class ProjectRepository_DB implements IProjectRepository {
             projectIds.next();
             int projectId = projectIds.getInt(1);
 
-            String projectMemberSQL = "INSERT INTO ProjectMember (project_id, user_id) VALUES (?, ?)";
+            String projectMemberSQL = "INSERT INTO projectMember (project_id, user_id) VALUES (?, ?)";
             PreparedStatement projectMemberPs = con.prepareStatement(projectMemberSQL);
             projectMemberPs.setInt(1, projectId);
             projectMemberPs.setInt(2, userId);
@@ -173,28 +173,28 @@ public class ProjectRepository_DB implements IProjectRepository {
     public void deleteProject(int projectId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
             // Delete project from ProjectMember
-            String deleteProjectMemberSQL = "DELETE FROM ProjectMember WHERE project_id = ?";
+            String deleteProjectMemberSQL = "DELETE FROM projectmember WHERE project_id = ?";
             try (PreparedStatement deleteProjectMemberStmt = con.prepareStatement(deleteProjectMemberSQL)) {
                 deleteProjectMemberStmt.setInt(1, projectId);
                 deleteProjectMemberStmt.executeUpdate();
             }
 
             // Delete subtasks
-            String deleteSubtasksSQL = "DELETE FROM Subtask WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+            String deleteSubtasksSQL = "DELETE FROM subtask WHERE task_id IN (SELECT task_id FROM task WHERE project_id = ?)";
             try (PreparedStatement deleteSubtasksStmt = con.prepareStatement(deleteSubtasksSQL)) {
                 deleteSubtasksStmt.setInt(1, projectId);
                 deleteSubtasksStmt.executeUpdate();
             }
 
             // Delete tasks
-            String deleteTasksSQL = "DELETE FROM Task WHERE project_id = ?";
+            String deleteTasksSQL = "DELETE FROM task WHERE project_id = ?";
             try (PreparedStatement deleteTasksStmt = con.prepareStatement(deleteTasksSQL)) {
                 deleteTasksStmt.setInt(1, projectId);
                 deleteTasksStmt.executeUpdate();
             }
 
             // Delete the project record
-            String deleteProjectSQL = "DELETE FROM Project WHERE project_id = ?";
+            String deleteProjectSQL = "DELETE FROM project WHERE project_id = ?";
             try (PreparedStatement deleteProjectStmt = con.prepareStatement(deleteProjectSQL)) {
                 deleteProjectStmt.setInt(1, projectId);
                 deleteProjectStmt.executeUpdate();
@@ -224,7 +224,7 @@ public class ProjectRepository_DB implements IProjectRepository {
         LocalDate startDate = null;
 
         try (Connection con = DbManager.getConnection();
-             PreparedStatement statement = con.prepareStatement("SELECT start_date FROM Project WHERE project_id = ?")) {
+             PreparedStatement statement = con.prepareStatement("SELECT start_date FROM project WHERE project_id = ?")) {
 
             statement.setInt(1, projectId);
             ResultSet resultSet = statement.executeQuery();
@@ -243,7 +243,7 @@ public class ProjectRepository_DB implements IProjectRepository {
         LocalDate endDate = null;
 
         try (Connection con = DbManager.getConnection();
-             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM Project WHERE project_id = ?")) {
+             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM project WHERE project_id = ?")) {
 
             statement.setInt(1, projectId);
             ResultSet resultSet = statement.executeQuery();
@@ -261,9 +261,9 @@ public class ProjectRepository_DB implements IProjectRepository {
     public List<String> getAllEmailsOnProject(int projectId) {
         List<String> emails = new ArrayList<>();
 
-        String sql = "SELECT DISTINCT User.email FROM User " +
-                "JOIN ProjectMember ON User.user_id = ProjectMember.user_id " +
-                "WHERE ProjectMember.project_id = ?";
+        String sql = "SELECT DISTINCT user.email FROM user " +
+                "JOIN projectmember ON user.user_id = projectmember.user_id " +
+                "WHERE projectmember.project_id = ?";
         Connection con = DbManager.getConnection();
 
         try (PreparedStatement statement = con.prepareStatement(sql)) {
@@ -285,9 +285,9 @@ public class ProjectRepository_DB implements IProjectRepository {
     public void doneProject(int projectId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move project to DoneProject table
-            String moveProjectQuery = "INSERT INTO DoneProject (project_id, name, description, start_date, end_date, user_id) " +
+            String moveProjectQuery = "INSERT INTO doneproject (project_id, name, description, start_date, end_date, user_id) " +
                     "SELECT project_id, name, description, start_date, end_date, user_id " +
-                    "FROM Project " +
+                    "FROM project " +
                     "WHERE project_id = ?";
 
             try (PreparedStatement moveProjectStmt = conn.prepareStatement(moveProjectQuery)) {
@@ -296,7 +296,7 @@ public class ProjectRepository_DB implements IProjectRepository {
             }
 
             // Remove project from Project table
-            String deleteProjectQuery = "DELETE FROM Project WHERE project_id = ?";
+            String deleteProjectQuery = "DELETE FROM project WHERE project_id = ?";
 
             try (PreparedStatement deleteProjectStmt = conn.prepareStatement(deleteProjectQuery)) {
                 deleteProjectStmt.setInt(1, projectId);
@@ -314,7 +314,7 @@ public class ProjectRepository_DB implements IProjectRepository {
         List<DoneProjectDTO> doneProjects = new ArrayList<>();
 
         try (Connection conn = DbManager.getConnection()) {
-            String query = "SELECT * FROM DoneProject WHERE user_id = ?";
+            String query = "SELECT * FROM doneproject WHERE user_id = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
@@ -343,7 +343,7 @@ public class ProjectRepository_DB implements IProjectRepository {
     public void addMemberToProject(int projectId, int memberUserId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "INSERT INTO ProjectMember (project_id, user_id) VALUES (?, ?)";
+            String SQL = "INSERT INTO projectmember (project_id, user_id) VALUES (?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, projectId);
             ps.setInt(2, memberUserId);
@@ -365,7 +365,7 @@ public class ProjectRepository_DB implements IProjectRepository {
         try {
             List<TaskAndSubtaskDTO> taskAndSubtaskDTOs = new ArrayList<>();
             Connection con = DbManager.getConnection();
-            String taskSql = "SELECT * FROM Task WHERE project_id = ?;";
+            String taskSql = "SELECT * FROM task WHERE project_id = ?;";
             PreparedStatement taskPs = con.prepareStatement(taskSql);
             taskPs.setInt(1, projectId);
             ResultSet taskRs = taskPs.executeQuery();
@@ -378,7 +378,7 @@ public class ProjectRepository_DB implements IProjectRepository {
                 LocalDate taskEndDate = taskRs.getDate("end_date").toLocalDate();
                 String taskStatus = taskRs.getString("status");
 
-                String subtaskSql = "SELECT * FROM Subtask WHERE task_id = ?;";
+                String subtaskSql = "SELECT * FROM subtask WHERE task_id = ?;";
                 PreparedStatement subtaskPs = con.prepareStatement(subtaskSql);
                 subtaskPs.setInt(1, taskId);
                 ResultSet subtaskRs = subtaskPs.executeQuery();
@@ -410,7 +410,7 @@ public class ProjectRepository_DB implements IProjectRepository {
         LocalDate startDate = null;
 
         try (Connection con = DbManager.getConnection();
-             PreparedStatement statement = con.prepareStatement("SELECT start_date FROM Task WHERE task_id = ?")) {
+             PreparedStatement statement = con.prepareStatement("SELECT start_date FROM task WHERE task_id = ?")) {
 
             statement.setInt(1, taskId);
             ResultSet resultSet = statement.executeQuery();
@@ -429,7 +429,7 @@ public class ProjectRepository_DB implements IProjectRepository {
         LocalDate endDate = null;
 
         try (Connection con = DbManager.getConnection();
-             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM Task WHERE task_id = ?")) {
+             PreparedStatement statement = con.prepareStatement("SELECT end_date FROM task WHERE task_id = ?")) {
 
             statement.setInt(1, taskId);
             ResultSet resultSet = statement.executeQuery();
@@ -446,8 +446,8 @@ public class ProjectRepository_DB implements IProjectRepository {
     @Override
     public void updateTaskAndSubtaskDates(TaskAndSubtaskDTO task) {
         try (Connection con = DbManager.getConnection()) {
-            String updateTaskQuery = "UPDATE Task SET start_date = ?, end_date = ? WHERE task_id = ?";
-            String updateSubtaskQuery = "UPDATE Subtask SET start_date = ?, end_date = ? WHERE subtask_id = ?";
+            String updateTaskQuery = "UPDATE task SET start_date = ?, end_date = ? WHERE task_id = ?";
+            String updateSubtaskQuery = "UPDATE subtask SET start_date = ?, end_date = ? WHERE subtask_id = ?";
 
             // Update task
             PreparedStatement taskStatement = con.prepareStatement(updateTaskQuery);
@@ -474,10 +474,10 @@ public class ProjectRepository_DB implements IProjectRepository {
     public void doneAllSubtask(int id) {
         try (Connection conn = DbManager.getConnection()) {
             // Move subtasks to DoneSubtask table
-            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, task_id, name, description, start_date, end_date, status) " +
+            String moveSubtasksQuery = "INSERT INTO doneSubtask (subtask_id, task_id, name, description, start_date, end_date, status) " +
                     "SELECT subtask_id,task_id, name, description, start_date, end_date, status  " +
-                    "FROM Subtask " +
-                    "WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+                    "FROM subtask " +
+                    "WHERE task_id IN (SELECT task_id FROM task WHERE project_id = ?)";
 
             try (PreparedStatement moveSubtasksStmt = conn.prepareStatement(moveSubtasksQuery)) {
                 moveSubtasksStmt.setInt(1, id);
@@ -485,7 +485,7 @@ public class ProjectRepository_DB implements IProjectRepository {
             }
 
             // Remove subtasks from Subtask table
-            String deleteSubtasksQuery = "DELETE FROM Subtask WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+            String deleteSubtasksQuery = "DELETE FROM subtask WHERE task_id IN (SELECT task_id FROM task WHERE project_id = ?)";
 
             try (PreparedStatement deleteSubtasksStmt = conn.prepareStatement(deleteSubtasksQuery)) {
                 deleteSubtasksStmt.setInt(1, id);
@@ -500,9 +500,9 @@ public class ProjectRepository_DB implements IProjectRepository {
     public void doneAllTask(int projectId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move tasks to DoneTask table
-            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status, project_id) " +
+            String moveTasksQuery = "INSERT INTO doneTask (task_id, name, description, start_date, end_date, status, project_id) " +
                     "SELECT task_id, name, description, start_date, end_date, status, project_id " +
-                    "FROM Task " +
+                    "FROM task " +
                     "WHERE project_id = ?";
 
             try (PreparedStatement moveTasksStmt = conn.prepareStatement(moveTasksQuery)) {
@@ -511,7 +511,7 @@ public class ProjectRepository_DB implements IProjectRepository {
             }
 
             // Remove tasks from Task table
-            String deleteTasksQuery = "DELETE FROM Task WHERE project_id = ?";
+            String deleteTasksQuery = "DELETE FROM task WHERE project_id = ?";
 
             try (PreparedStatement deleteTasksStmt = conn.prepareStatement(deleteTasksQuery)) {
                 deleteTasksStmt.setInt(1, projectId);
