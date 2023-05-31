@@ -23,16 +23,20 @@ public class UserController {
     private int getUserId(HttpSession session) {
         return (int) session.getAttribute("userId");
     }
+    private boolean isLoggedIn(HttpSession session){
+        return session.getAttribute("userId") != null;
+    }
 
     @GetMapping("/editUser/{id}")
     public String editUser(HttpSession session, @PathVariable("id") int userIdPath, Model model) {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        User user = userService.getUserFromId(userIdPath);
-        model.addAttribute("user", user);
-        return "user_HTML/editUser";
+        else {
+            User user = userService.getUserFromId(userIdPath);
+            model.addAttribute("user", user);
+            return "user_HTML/editUser";
+        }
     }
 
     @PostMapping("/editUser")
@@ -43,14 +47,14 @@ public class UserController {
 
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(HttpSession session, @PathVariable("id") int userIdPath) throws LoginException {
-        int userId = getUserId(session);
-        if (userId == 0) {
-            return "login_HTML/login";
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
         }
-        session.invalidate();
-        userService.deleteUser(userIdPath);
-
-        return "redirect:/";
+        else {
+            session.invalidate();
+            userService.deleteUser(userIdPath);
+            return "redirect:/";
+        }
     }
 
 
