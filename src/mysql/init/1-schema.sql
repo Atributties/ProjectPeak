@@ -1,16 +1,9 @@
-CREATE DATABASE IF NOT EXISTS projectpeak;
+CREATE DATABASE projectpeak;
 USE projectpeak;
 
-DROP TABLE IF EXISTS PROJECTMEMBER;
-DROP TABLE IF EXISTS SUBTASK;
-DROP TABLE IF EXISTS TASK;
-DROP TABLE IF EXISTS PROJECT;
-DROP TABLE IF EXISTS USER;
-DROP TABLE IF EXISTS DONEPROJECT;
-DROP TABLE IF EXISTS DONETASK;
-DROP TABLE IF EXISTS DONESUBTASK;
+DROP TABLE IF EXISTS projectpeak;
 
-CREATE TABLE USER (
+CREATE TABLE user (
   user_id INT AUTO_INCREMENT,
   fullname VARCHAR(255),
   email VARCHAR(255),
@@ -18,27 +11,26 @@ CREATE TABLE USER (
   PRIMARY KEY(user_id)
 );
 
-CREATE TABLE PROJECT (
+CREATE TABLE project (
   project_id INT AUTO_INCREMENT,
   name VARCHAR(255),
   description VARCHAR(255),
   start_date DATE,
   end_date DATE,
   user_id INT,
-  PRIMARY KEY(project_id),
-  FOREIGN KEY(user_id) REFERENCES USER(user_id)
+  PRIMARY KEY(project_id)
 );
 
-CREATE TABLE PROJECTMEMBER (
+CREATE TABLE projectmember (
   project_member_id INT AUTO_INCREMENT,
   project_id INT,
   user_id INT,
   PRIMARY KEY(project_member_id),
-  FOREIGN KEY(project_id) REFERENCES PROJECT(project_id) ON DELETE CASCADE,
-  FOREIGN KEY(user_id) REFERENCES USER(user_id)
+  FOREIGN KEY(project_id) REFERENCES project(project_id) ON DELETE CASCADE,
+  FOREIGN KEY(user_id) REFERENCES user(user_id)
 );
 
-CREATE TABLE TASK (
+CREATE TABLE task (
   task_id INT AUTO_INCREMENT,
   name VARCHAR(255),
   description VARCHAR(255),
@@ -47,10 +39,10 @@ CREATE TABLE TASK (
   status VARCHAR(255),
   project_id INT,
   PRIMARY KEY(task_id),
-  FOREIGN KEY(project_id) REFERENCES PROJECT(project_id)
+  FOREIGN KEY(project_id) REFERENCES project(project_id)
 );
 
-CREATE TABLE SUBTASK (
+CREATE TABLE subtask (
   subtask_id INT AUTO_INCREMENT,
   name VARCHAR(255),
   description VARCHAR(255),
@@ -59,10 +51,10 @@ CREATE TABLE SUBTASK (
   status VARCHAR(255),
   task_id INT,
   PRIMARY KEY(subtask_id),
-  FOREIGN KEY(task_id) REFERENCES TASK(task_id)
+  FOREIGN KEY(task_id) REFERENCES task(task_id)
 );
 
-CREATE TABLE DONEPROJECT (
+CREATE TABLE doneproject (
   project_id INT,
   name VARCHAR(255),
   description VARCHAR(255),
@@ -73,7 +65,7 @@ CREATE TABLE DONEPROJECT (
   PRIMARY KEY(project_id)
 );
 
-CREATE TABLE DONETASK (
+CREATE TABLE donetask (
   task_id INT,
   name VARCHAR(255),
   description VARCHAR(255),
@@ -85,7 +77,7 @@ CREATE TABLE DONETASK (
   PRIMARY KEY(task_id)
 );
 
-CREATE TABLE DONESUBTASK (
+CREATE TABLE donesubtask (
   subtask_id INT,
   name VARCHAR(255),
   description VARCHAR(255),
@@ -96,3 +88,5 @@ CREATE TABLE DONESUBTASK (
   task_id INT,
   PRIMARY KEY(subtask_id)
 );
+
+
