@@ -7,6 +7,12 @@ VALUES
 ('Jane Doe', 'jane.doe@example.com', 'password2');
 
 
+
+INSERT INTO Project (name, description, start_date, end_date, user_id) VALUES
+('Project 1', 'This is project 1', '2023-07-22', '2023-08-22', 1),
+('Project 2', 'This is project 2', '2023-08-29', '2023-09-23', 2);
+
+
 INSERT INTO project (name, description, start_date, end_date, user_id) 
 VALUES 
 ('Project 1', 'This is project 1', '2023-07-22', '2023-08-22', 1),
@@ -19,8 +25,13 @@ VALUES
 (2, 2);
 
 
+
+INSERT INTO Task (name, description, start_date, end_date, status, project_id) VALUES
+
+
 INSERT INTO task (name, description, start_date, end_date, status, project_id) 
 VALUES 
+
 ('Task 1.1', 'This is task 1.1 for project 1', '2023-07-22', '2023-07-24', 'Not Started', 1),
 ('Task 1.2', 'This is task 1.2 for project 1', '2023-07-22', '2023-07-26', 'Not Started', 1),
 ('Task 1.3', 'This is task 1.3 for project 1', '2023-07-26', '2023-07-28', 'Not Started', 1),
@@ -36,8 +47,12 @@ VALUES
 
 
 
+INSERT INTO Subtask (name, description, start_date, end_date, status, task_id) VALUES
+
+
 INSERT INTO subtask (name, description, start_date, end_date, status, task_id) 
 VALUES 
+
 ('Subtask 1.1.1', 'This is subtask 1 for task 1.1', '2023-07-22', '2023-07-23', 'Not Started', 1),
 ('Subtask 1.1.2', 'This is subtask 2 for task 1.1', '2023-07-23', '2023-07-24', 'Not Started', 1),
 ('Subtask 1.1.3', 'This is subtask 3 for task 1.1', '2023-07-22', '2023-07-24', 'Not Started', 1),
