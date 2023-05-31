@@ -17,8 +17,7 @@ CREATE TABLE Project (
   start_date DATE,
   end_date DATE,
   user_id INT,
-  PRIMARY KEY(project_id),
-  FOREIGN KEY(user_id) REFERENCES User(user_id)
+  PRIMARY KEY(project_id)
 );
 
 CREATE TABLE ProjectMember (
