@@ -35,15 +35,6 @@ https://github.com/Atributties/ProjectPeak/blob/main/src/mysql/init/2-data.sql
 Now, you have access to MySQL database, and you can now create a user in Project Peak! <br>
 Feel free to try our test client also
 
-When you have downloaded MySQL and runned the script, then you have to modify the fields in application.properties
-
-```
-url=jdbc:mysql://localhost:3306/projectPeak
-username=root
-password=root
-
-```
-
 #### To get started contributing to project Peak, you'll need to:
 
 1. Fork the repository
