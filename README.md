@@ -30,19 +30,19 @@ Whether you're a small business owner or a project manager, Project Peak can hel
 ___
 2. If you don't have an account, click on the "Sign up" button to create a new account. If you already have an account, click "Log in".
 ___
-3. Once you're logged in, you can start creating new wishlists by clicking on the "New List" button.
+3. Once you're logged in, you can start creating a new project by clicking on the "Create Project" button.
 ___
-4. Enter a name for your list, and optionally add a description.
+4. Enter a name for your project, and a description.
 ___
-5. You can add items to your list by clicking on the "Add Item" button, then entering details such as name, description, and link. You can also set a priority level and add notes.
+5. To view your project, click on the "Eye" icon. 
 ___
-6. You can share your list with friends and family members by clicking on the "Share" button and entering their email addresses.
+6. You can share your project with other members by clicking on the "Add member" button and entering their email addresses.
 ___
-7. To view your lists, click on the "Lists" button in the main menu.
+7. You can add task to your project by clicking on the "Add task" button, when viewing the project
 ___
-8. To edit an existing list, click on the list name and then click on the "Edit" button.
+8. To edit an existing project, click on "Edit" icon. 
 ___
-9. To delete a list, click on the list name and then click on the "Delete" button.
+9. To delete a project, click on "Trashcan" icon.
 ___
 </details>
 
@@ -51,11 +51,6 @@ ___
 * Mathias-Thomsen
 * ChristianMN
 * MaruusFN
-
-## Additional Notes
-___Colorcodes___
-* background blue: #0E2355
-* Logo green color: #09F885
 
 ## FAQs
 
