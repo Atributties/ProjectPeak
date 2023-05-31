@@ -23,7 +23,7 @@ public class TaskRepository_DB implements ITaskRepository {
     public boolean isUserAuthorized(int userId, int projectId){
         try {
             Connection con = DbManager.getConnection();
-            String query = "SELECT COUNT(*) FROM ProjectMember WHERE project_id = ? AND user_id = ?";
+            String query = "SELECT COUNT(*) FROM projectmember WHERE project_id = ? AND user_id = ?";
             PreparedStatement stmt = con.prepareStatement(query);
             stmt.setInt(1, projectId);
             stmt.setInt(2, userId);
@@ -42,16 +42,16 @@ public class TaskRepository_DB implements ITaskRepository {
     public User getUserFromId(int id) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM USER WHERE USER_ID = ?;";
+            String SQL = "SELECT * FROM user WHERE user_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             User user1 = null;
             if (rs.next()) {
-                int userId = rs.getInt("USER_ID");
-                String fullName = rs.getString("FULLNAME");
-                String email = rs.getString("EMAIL");
-                String userPassword = rs.getString("USER_PASSWORD");
+                int userId = rs.getInt("user_id");
+                String fullName = rs.getString("fullname");
+                String email = rs.getString("email");
+                String userPassword = rs.getString("user_password");
                 user1 = new User(userId, fullName, email, userPassword);
             }
 
@@ -65,7 +65,7 @@ public class TaskRepository_DB implements ITaskRepository {
     public void createTask(Task task, int projectId) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "INSERT INTO Task (name, description, start_date, end_date, status, project_id) VALUES (?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO task (name, description, start_date, end_date, status, project_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, task.getTaskName());
             ps.setString(2, task.getTaskDescription());
@@ -118,7 +118,7 @@ public class TaskRepository_DB implements ITaskRepository {
 
         try {
             Connection con = DbManager.getConnection();
-            String sql = "SELECT project_id FROM Task WHERE task_id = ?";
+            String sql = "SELECT project_id FROM task WHERE task_id = ?";
 
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, taskId);
@@ -140,7 +140,7 @@ public class TaskRepository_DB implements ITaskRepository {
     public Task getTaskById(int id) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM Task WHERE task_id = ?;";
+            String SQL = "SELECT * FROM task WHERE task_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -167,14 +167,14 @@ public class TaskRepository_DB implements ITaskRepository {
     public void deleteTask(int taskId) throws LoginException {
         try (Connection con = DbManager.getConnection()) {
             // Delete the subtasks linked to the task
-            String deleteSubtasksSQL = "DELETE FROM Subtask WHERE task_id = ?";
+            String deleteSubtasksSQL = "DELETE FROM subtask WHERE task_id = ?";
             try (PreparedStatement deleteSubtasksStmt = con.prepareStatement(deleteSubtasksSQL)) {
                 deleteSubtasksStmt.setInt(1, taskId);
                 deleteSubtasksStmt.executeUpdate();
             }
 
             // Delete the task
-            String deleteTaskSQL = "DELETE FROM Task WHERE task_id = ?";
+            String deleteTaskSQL = "DELETE FROM task WHERE task_id = ?";
             try (PreparedStatement deleteTaskStmt = con.prepareStatement(deleteTaskSQL)) {
                 deleteTaskStmt.setInt(1, taskId);
                 deleteTaskStmt.executeUpdate();
@@ -187,7 +187,7 @@ public class TaskRepository_DB implements ITaskRepository {
     public void editTask(Task task) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "UPDATE Task SET name = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE task_id = ?";
+            String SQL = "UPDATE task SET name = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE task_id = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, task.getTaskName());
             ps.setString(2, task.getTaskDescription());
@@ -206,7 +206,7 @@ public class TaskRepository_DB implements ITaskRepository {
 
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM Subtask WHERE task_id = ?;";
+            String SQL = "SELECT * FROM subtask WHERE task_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, taskId);
             ResultSet rs = ps.executeQuery();
@@ -234,7 +234,7 @@ public class TaskRepository_DB implements ITaskRepository {
     public void updateSubtaskDates(Subtask subtask) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "UPDATE Subtask SET start_date = ?, end_date = ? WHERE subtask_id = ?;";
+            String SQL = "UPDATE subtask SET start_date = ?, end_date = ? WHERE subtask_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setDate(1, java.sql.Date.valueOf(subtask.getSubTaskStartDate()));
             ps.setDate(2, java.sql.Date.valueOf(subtask.getSubTaskEndDate()));
@@ -248,10 +248,10 @@ public class TaskRepository_DB implements ITaskRepository {
     public void doneAllSubtask(int id) {
         try (Connection conn = DbManager.getConnection()) {
             // Move subtasks to DoneSubtask table
-            String moveSubtasksQuery = "INSERT INTO DoneSubtask (subtask_id, task_id, name, description, start_date, end_date, status) " +
+            String moveSubtasksQuery = "INSERT INTO doneSubtask (subtask_id, task_id, name, description, start_date, end_date, status) " +
                     "SELECT subtask_id,task_id, name, description, start_date, end_date, status  " +
-                    "FROM Subtask " +
-                    "WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+                    "FROM subtask " +
+                    "WHERE task_id IN (SELECT task_id FROM task WHERE project_id = ?)";
 
             try (PreparedStatement moveSubtasksStmt = conn.prepareStatement(moveSubtasksQuery)) {
                 moveSubtasksStmt.setInt(1, id);
@@ -259,7 +259,7 @@ public class TaskRepository_DB implements ITaskRepository {
             }
 
             // Remove subtasks from Subtask table
-            String deleteSubtasksQuery = "DELETE FROM Subtask WHERE task_id IN (SELECT task_id FROM Task WHERE project_id = ?)";
+            String deleteSubtasksQuery = "DELETE FROM subtask WHERE task_id IN (SELECT task_id FROM task WHERE project_id = ?)";
 
             try (PreparedStatement deleteSubtasksStmt = conn.prepareStatement(deleteSubtasksQuery)) {
                 deleteSubtasksStmt.setInt(1, id);
@@ -274,8 +274,8 @@ public class TaskRepository_DB implements ITaskRepository {
     public void doneTask(int taskId) {
         try (Connection conn = DbManager.getConnection()) {
             // Move tasks to DoneTask table
-            String moveTasksQuery = "INSERT INTO DoneTask (task_id, name, description, start_date, end_date, status, project_id) " +
-                    "SELECT task_id, name, description, start_date, end_date, status, project_id FROM Task WHERE task_id = ?;";
+            String moveTasksQuery = "INSERT INTO doneTask (task_id, name, description, start_date, end_date, status, project_id) " +
+                    "SELECT task_id, name, description, start_date, end_date, status, project_id FROM task WHERE task_id = ?;";
 
             try (PreparedStatement moveTasksStmt = conn.prepareStatement(moveTasksQuery)) {
                 moveTasksStmt.setInt(1, taskId);
@@ -283,7 +283,7 @@ public class TaskRepository_DB implements ITaskRepository {
             }
 
             // Remove tasks from Task table
-            String deleteTasksQuery = "DELETE FROM Task WHERE task_id = ?";
+            String deleteTasksQuery = "DELETE FROM task WHERE task_id = ?";
 
             try (PreparedStatement deleteTasksStmt = conn.prepareStatement(deleteTasksQuery)) {
                 deleteTasksStmt.setInt(1, taskId);
@@ -299,7 +299,7 @@ public class TaskRepository_DB implements ITaskRepository {
         List<DoneTaskDTO> doneTaskDTOS = new ArrayList<>();
 
         try (Connection conn = DbManager.getConnection()) {
-            String query = "SELECT * FROM DoneTask WHERE project_id = ?";
+            String query = "SELECT * FROM donetask WHERE project_id = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();

@@ -16,16 +16,16 @@ public class UserRepository_DB implements IUserRepository {
     public User getUserFromId(int id) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "SELECT * FROM USER WHERE USER_ID = ?;";
+            String SQL = "SELECT * FROM user WHERE user_id = ?;";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             User user1 = null;
             if (rs.next()) {
-                int userId = rs.getInt("USER_ID");
-                String fullName = rs.getString("FULLNAME");
-                String email = rs.getString("EMAIL");
-                String userPassword = rs.getString("USER_PASSWORD");
+                int userId = rs.getInt("user_id");
+                String fullName = rs.getString("fullname");
+                String email = rs.getString("email");
+                String userPassword = rs.getString("user_password");
                 user1 = new User(userId, fullName, email, userPassword);
             }
 
@@ -40,7 +40,7 @@ public class UserRepository_DB implements IUserRepository {
     public void updateUser(User user) {
         try {
             Connection con = DbManager.getConnection();
-            String SQL = "UPDATE User SET fullname = ?, email = ?, user_password = ? WHERE user_id = ?";
+            String SQL = "UPDATE user SET fullname = ?, email = ?, user_password = ? WHERE user_id = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, user.getFullName());
             ps.setString(2, user.getEmail());
@@ -54,7 +54,7 @@ public class UserRepository_DB implements IUserRepository {
     @Override
     public void deleteUser(int userId) {
         try (Connection con = DbManager.getConnection();
-             PreparedStatement ps = con.prepareStatement("DELETE FROM User WHERE user_id = ?")) {
+             PreparedStatement ps = con.prepareStatement("DELETE FROM user WHERE user_id = ?")) {
             ps.setInt(1, userId);
             ps.executeUpdate();
         } catch (SQLException ex) {
