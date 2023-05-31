@@ -1,6 +1,8 @@
 CREATE DATABASE projectpeak;
 USE projectpeak;
 
+DROP TABLE IF EXISTS projectpeak;
+
 CREATE TABLE User (
   user_id INT AUTO_INCREMENT,
   fullname VARCHAR(255),
