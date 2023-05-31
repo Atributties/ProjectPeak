@@ -152,6 +152,14 @@ public class ProjectService {
         // Calculate the difference between the original and new project end dates
         Period endDateDifference = Period.between(originalEndDate, newEndDate);
 
+        //If end date is not change, we set the end date to start to end date to the task and subtask move with the project dates.
+        if(startDateDifference.isZero() && !endDateDifference.isZero()){
+            endDateDifference = Period.ZERO;
+        } else if (endDateDifference.isZero()) {
+            endDateDifference = startDateDifference;
+        }
+
+
         List<TaskAndSubtaskDTO> list = projectRepository.getTaskAndSubTaskList(project.getProjectId());
 
         for (TaskAndSubtaskDTO task : list) {
