@@ -1,6 +1,5 @@
-DROP DATABASE IF EXISTS projectPeak;
-CREATE DATABASE projectPeak;
-USE projectPeak;
+CREATE DATABASE projectpeak;
+USE projectpeak;
 
 CREATE TABLE User (
   user_id INT AUTO_INCREMENT,

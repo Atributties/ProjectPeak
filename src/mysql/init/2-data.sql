@@ -1,4 +1,4 @@
-USE projectPeak;
+USE projectpeak;
 
 -- Users
 INSERT INTO User (fullname, email, user_password) VALUES 
